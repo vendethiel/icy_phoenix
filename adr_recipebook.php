@@ -26,6 +26,7 @@ define('IN_ADR_COOKING', true);
 define('IN_ADR_BLACKSMITHING', true);
 
 define('IP_ROOT_PATH', './'); 
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . $phpEx);
 
 $loc = 'town';

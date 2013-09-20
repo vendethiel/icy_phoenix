@@ -1,0 +1,94 @@
+(note : mods listed as "ADR (ST)" were part of ShadowTek's old ADR Premod, not installed by myself, Informpro)
+
+# Advanced Dungeons & Rabbits 0.4.5 - Dr DLP, Seteo-Bloke
+Addons :
+ - Addon pour RCS - Informpro
+ - Addon Fix Bare Attacks (fix $dice's rand() ...) - Informpro
+ - Addon Fix element colors - Informpro
+ - Addon anti SQL Injection for mods - Informpro
+# ADR : Advanced Loot System 1.0.3 - Himmelweiss
+# ADR : Advanced NPC System 2.2.0-beta - Dedo
+# ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
+# ADR : Advanced Spell Addon 0.4.10 - AnimeMaster, egdcltd
+Addons :
+ - Addon Spells in PvP - Informpro
+# ADR : Advanced Zone Restrictions - Informpro
+ - beggar
+ - blacksmith
+ - brewing
+ - cauldron
+ - clans
+ - cooking
+ - fish
+ - herbal
+ - hunting
+ - jobs
+ - lake
+ - lumberjack
+ - research
+ - tailor
+# ADR : Blacksmithing 0.3.0 - Himmelweiss
+# ADR : Brewing 0.5.3 - Himmelweiss
+# ADR : (Brewing) Crafting 0.5.3 - Himmelweiss
+# ADR : (Brewing+Crafting) Cooking 0.3.5 - Himmelweiss
+# ADR : Clans Mod
+Addons :
+ - Addon Clan Restriction for Party Mod - Informpro
+# ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
+Addons :
+ - Addon pour Town Environment Enhanced into Zone Mod - Informpro
+ - Addon pour Enchant&Mine Links in header - Informpro
+ - Addon Assisted Cell Selection - Informpro
+# ADR : Items no sell 0.0.2 - Makien
+# ADR : Level Required Zones 1.0.0 - Insydius
+Addons :
+ - Addon pour NSEW Navigation - Informpro
+ - Addon pour Dynamic Town Maps - Informpro
+# ADR : Monster Abilities 0.4.2 - egdcltd
+# ADR : Monster in multiple zones 1.0-beta - Dedo
+# ADR : New Header - Informpro
+Addons :
+ - Addon pour Rabbitoshi - Infomrpro
+# ADR : Night & Day 1.0-beta - Raven
+# ADR : Party 1.1 - Spikez
+# ADR : Pet auto-summon 1.0 - Informpro
+# ADR : QuestBook System v1.0.2 - Himmelweiss
+# ADR : Research 0.2.3-beta - egdcltd
+Addons :
+ - Addon Research Crafting - egdcltd
+# ADR : Restrict Char Names against XSS 1.0 - Informpro
+# ADR : Shops in multiple zones 1.0-beta - Makien
+Addons :
+ - Addon Make It Work(tm) - Informpro
+# ADR : Skills 1.4 - Makien
+# ADR : Town Environment Enhanced into Zone Mod - Informpro
+# ADR : Weapon Proficiency 1.0.0-beta3 - Dyrwnyn
+Addons :
+ - Addon Spell Proficiency 0.2.1-alpha - egdcltd
+ - Addon Shield Proficiency 0.2.2 - egdcltd
+# ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
+# ADR : Zone Loottable for Gather Skills 1.1-beta - St Gryphon
+Addons :
+ - Addon Fix Zone infos - Informpro
+ - Addon pour Tailor + Alchemy - Informpro
+# ADR (ST) : Armor Sets 0.1.5 - Seteo-Bloke
+(version 0.1.2 in ST's premod)
+# ADR (ST) : Cauldron 2.0.0 - one_piece
+# ADR (ST) : Donation Mod - Seteo-Bloke
+# ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
+# ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
+# ADR (ST) : Offensive spells with elements - Dedo
+# ADR (ST) : Mine update - cedô l'immortel
+# ADR (ST) : NSEW Navigation - ShadowTek
+Addons :
+ - Addon hide price if free - Informpro
+# ADR (ST) : Town Environment 4.1.0 - one_piece
+# ADR (ST) : Zone 1.0 - one_piece
+# Rabbitoshi 3.1.3 - one_piece
+(version 2.0 in ST's premod)
+Addons :
+ - Fix adr_battle not changing turn when rabbit's playing - Informpro
+ - Addon adr_battle display enhancement - Informpro
+# Rabbitoshi : Fix for vanishing Pets
+# Rabbitoshi : Level Up Penalty 0.2.0 - egdcltd
+# Rabbitoshi : Pet Specific Levelup 0.2.1 - egdcltd

@@ -24,7 +24,8 @@ if( !empty($setmodules) )
 
 define('IP_ROOT_PATH', "./../");
 
-require('./pagestart.' . $phpEx);
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
+require('pagestart.' . PHP_EXT);
 require(IP_ROOT_PATH . 'includes/functions_selects.'.$phpEx);
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 

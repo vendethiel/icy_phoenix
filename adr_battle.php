@@ -26,6 +26,7 @@ define('IN_ADR_LOOTTABLES', true);
 define('IN_ADR_ZONES', true);
 define('IP_ROOT_PATH', './');
 // old require extension.inc
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . $phpEx);
 
 $loc     = 'town';
