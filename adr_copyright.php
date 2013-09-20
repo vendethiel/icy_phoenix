@@ -21,6 +21,7 @@
 define('IN_ICYPHOENIX', true); 
 define('IN_ADR_COPYRIGHT', true); 
 define('IP_ROOT_PATH', './'); 
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . $phpEx);
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 

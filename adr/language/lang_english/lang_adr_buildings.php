@@ -7,23 +7,23 @@
 *   ! Do NOT use double quotes !
 *
 * Cette page contient les traductions des noms de buildings
-* Chaque clef doit être préfixée par "Adr_building_"
+* Chaque clef doit Ãªtre prÃ©fixÃ©e par "Adr_building_"
 * ! N'utilisez pas de guillement !
 ***********/
-$lang['Adr_building_Battle Arena'] = 'Arène de Monstre';
-$lang['Adr_building_Battle Arena 2'] = 'Arène de Monstre #2';
+$lang['Adr_building_Battle Arena'] = 'ArÃ¨ne de Monstre';
+$lang['Adr_building_Battle Arena 2'] = 'ArÃ¨ne de Monstre #2';
 $lang['Adr_building_Town Bank'] = 'Banque';
 $lang['Adr_building_Magical Cauldron'] = 'Chaudron Magique';
 $lang['Adr_building_Compass1'] = 'Boussole #1';
 $lang['Adr_building_Compass2'] = 'Boussole #2';
 $lang['Adr_building_Compass3'] = 'Boussole #3';
-$lang['Adr_building_Dirt Patch'] = 'Carré de terre';
+$lang['Adr_building_Dirt Patch'] = 'CarrÃ© de terre';
 $lang['Adr_building_Dragon Image'] = 'Image de Dragon';
 $lang['Adr_building_Exit Tower'] = 'Tour de sortie';
 $lang['Adr_building_Hill'] = 'Colline';
 $lang['Adr_building_Character Home'] = 'Maison';
 $lang['Adr_building_Character Home 2'] = 'Maison #2';
-$lang['Adr_building_Tower of Knowledge'] = 'Tour - Bibliothèque';
+$lang['Adr_building_Tower of Knowledge'] = 'Tour - BibliothÃ¨que';
 $lang['Adr_building_Village Inn'] = 'Auberge';
 $lang['Adr_building_Village Inn 2'] = 'Auberge #2';
 $lang['Adr_building_Prison 2'] = 'Prison #2'; // just 4 "#"
@@ -45,9 +45,9 @@ $lang['Adr_building_Temple 2'] = 'Temple #2';
 $lang['Adr_building_Trees 1'] = 'Arbres #1';
 $lang['Adr_building_Trees 2'] = 'Arbres #2';
 $lang['Adr_building_Trees 3'] = 'Arbres #3';
-$lang['Adr_building_Castle'] = 'Château';
-$lang['Adr_building_Training Grounds'] = 'Terrain d\'entraînement';
-$lang['Adr_building_Training Grounds2'] = 'Terrain d\'entraînement #2';
+$lang['Adr_building_Castle'] = 'ChÃ¢teau';
+$lang['Adr_building_Training Grounds'] = 'Terrain d\'entraÃ®nement';
+$lang['Adr_building_Training Grounds2'] = 'Terrain d\'entraÃ®nement #2';
 $lang['Adr_building_Rune Stone'] = 'Pierre Runique';
 $lang['Adr_building_Tower'] = 'Tour';
 $lang['Adr_building_Forge1'] = 'Forge';
@@ -59,12 +59,12 @@ $lang['Adr_building_Blacksmithing'] = 'Forgeron';
 $lang['Adr_building_Brewing'] = 'Brassage';
 $lang['Adr_building_Cooking'] = 'Cuisine';
 $lang['Adr_building_Enchant'] = 'Enchantement';
-$lang['Adr_building_Fishing'] = 'Pêche';
+$lang['Adr_building_Fishing'] = 'PÃªche';
 $lang['Adr_building_Herbalism'] = 'Herboristerie';
 $lang['Adr_building_Hunting'] = 'Chasse';
 $lang['Adr_building_Magic Lake'] = 'Lac magique';
-$lang['Adr_building_Jobs'] = 'Tour des métiers';
-$lang['Adr_building_Lumberjacking'] = 'Bûcheronnage';
+$lang['Adr_building_Jobs'] = 'Tour des mÃ©tiers';
+$lang['Adr_building_Lumberjacking'] = 'BÃ»cheronnage';
 $lang['Adr_building_Party'] = 'Groupe';
 $lang['Adr_building_Tailor'] = 'Couture';
 $lang['Adr_building_Headquarters'] = 'Clans #2';

@@ -14,6 +14,7 @@ define('CELL', true);
 define('IN_ADR_CHARACTER', true); 
 
 define('IP_ROOT_PATH', './'); 
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . $phpEx);
 include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
