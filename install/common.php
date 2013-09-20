@@ -55,7 +55,7 @@ else
 if (defined('BASIC_COMMON'))
 {
 	// extension.inc replaced by its content
-	//include(IP_ROOT_PATH . 'extension.inc');
+	//// old require extension.inc
 	// extension.inc - BEGIN
 	$starttime = 0;
 	// extension.inc - END

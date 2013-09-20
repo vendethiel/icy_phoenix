@@ -294,6 +294,10 @@ if ((isset($_GET['lofi']) && (intval($_GET['lofi']) == 1)) || (isset($_COOKIE[$c
 	$lofi = 1;
 }
 
+// ADR COMPAT
+$board_config = &$config;
+$userdata = &$user->data;
+
 /*
 foreach ($cache->obtain_hooks() as $hook)
 {
