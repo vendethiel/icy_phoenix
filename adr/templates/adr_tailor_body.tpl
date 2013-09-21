@@ -11,7 +11,7 @@
 <!-- BEGIN tailoring -->
 <table width="100%" align="center" border="1">
 	<tr>
-		<th align="center" colspan="3" >Tailoring</td>
+		<th align="center" colspan="3" >{L_Adr_Tailoring}</td>
 	</tr>
 	<tr>
 		<td align="center" valign="top" class="row2" width="20%" ><span class="gen">

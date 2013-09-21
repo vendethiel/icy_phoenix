@@ -2339,4 +2339,9 @@ $lang['230_Check_Games'] = 'Games List'; // admin_ina_xtras.php
 
 // ####################### [ ACP Navigation END ] #######################
 
+##=== START ADR: admin keys ===##
+$lang['User_adr_ban']='ADR Ban?';
+$lang['User_adr_ban_explain']='Ban this user from using any of the Advanced Dungeons & Rabbits (ADR) features';
+##=== END ADR ===##
+
 ?>

@@ -515,6 +515,15 @@ function ColorExample(ColorCode)
 	<td class="row1"><span class="gen"><i>{L_INACTIVE_USER_FEATURE}</i></span><br /><span class="gensmall">{L_INACTIVE_USER_FEATURE_EXPLAIN}</span></td>
 	<td class="row2"><input type="radio" name="user_mask" value="1" {USER_MASK_YES} /><span class="gen">{L_YES}</span>&nbsp;&nbsp;<input type="radio" name="user_mask" value="0" {USER_MASK_NO} /><span class="gen">{L_NO}</span></td>
 </tr>
+   <tr>
+     <td class="row1"><span class="gen">{L_USER_ADR_BAN}</span></td>
+     <td class="row2">
+      <input type="radio" name="user_adr_ban" value="1" {ADR_BAN_YES} />
+      <span class="gen">{L_YES}</span>&nbsp;&nbsp;
+      <input type="radio" name="user_adr_ban" value="0" {ADR_BAN_NO} />
+      <span class="gen">{L_NO}</span></td>
+   </tr>
+
 <tr>
 	<td class="row1"><span class="gen"><strong><i>{L_DELETE_USER}</i></strong></span></td>
 	<td class="row2"><input type="checkbox" name="deleteuser" />&nbsp;{L_DELETE_USER_EXPLAIN}</td>

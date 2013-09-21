@@ -398,6 +398,49 @@ $decoded_ip = ($encoded_ip == '0.0.0.0') ? $lang['Not_recorded'] : $encoded_ip;
 $hostname = ($profiledata['user_registered_hostname'] == '') ? $lang['Not_recorded'] : htmlspecialchars($profiledata['user_registered_hostname']);
 // End Advanced IP Tools Pack MOD
 
+$template->assign_var('ADR_PROFILE_DISPLAY', $config['Adr_profile_display']);
+if ( $config['Adr_profile_display'] ) 
+{ 
+   define ( 'IN_ADR_CHARACTER' , true ); 
+   define ( 'IN_ADR_SHOPS' , true ); 
+   define ( 'IN_ADR_SKILLS' , true ); 
+   define ( 'IN_ADR_BATTLE' , true ); 
+   define('ADR_NO_HEADER', true);
+   include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.PHP_EXT); 
+
+	// Get the general config 
+	$adr_general = adr_get_general_config(); 
+	$searchid = $profiledata['user_id']; 
+
+	$sql = "SELECT c.* , r.race_name , r.race_img , r.race_weight , r.race_weight_per_level , e.element_name , e.element_img , a.alignment_name , a.alignment_img , cl.class_name , cl.class_img , cl.class_update_xp_req 
+		FROM  " . ADR_CHARACTERS_TABLE . " c , " . ADR_RACES_TABLE . " r , " . ADR_ELEMENTS_TABLE . " e , " . ADR_ALIGNMENTS_TABLE . " a , " . ADR_CLASSES_TABLE . " cl 
+		WHERE c.character_id= $searchid 
+		AND cl.class_id = c.character_class 
+		AND r.race_id = c.character_race 
+		AND e.element_id = c.character_element 
+		AND a.alignment_id = c.character_alignment "; 
+	if ( !($result = $db->sql_query($sql)) ) 
+	{ 
+		message_die(CRITICAL_ERROR, 'Error Getting Adr Users!'); 
+	}    
+	$row = $db->sql_fetchrow($result); 
+	$rabbitoshi_link = append_sid("rabbitoshi.".PHP_EXT."?" . POST_USERS_URL . "=" . $profiledata['user_id']); 
+
+	if ( !(is_numeric($row['character_class']))) 
+	{ 
+		$template->assign_block_vars('adr_profile_none', array()); 
+	} 
+	else 
+	{ 
+		$template->assign_block_vars('adr_profile' , array(
+			'NAME' => $row['character_name'], 
+			'U_NAME' => append_sid("adr_character.".PHP_EXT."?" . POST_USERS_URL . "=" . $profiledata['user_id']),
+			'RABBITOSHI_LINK' => $rabbitoshi_link,
+		)); 
+	}
+}
+
+
 // BBCode - BEGIN
 @include_once(IP_ROOT_PATH . 'includes/bbcode.' . PHP_EXT);
 $bbcode->allow_html = $config['allow_html'];

@@ -28,7 +28,7 @@ if( !empty($setmodules) )
 }
 
 define('IP_ROOT_PATH', "./../");
-
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 require("pagestart.$phpEx");
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
@@ -65,13 +65,7 @@ if($rebuild_cache)
 
 if($zero_dura)
 {
-	$sql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-		WHERE item_owner_id > '1'
-		AND item_duration < '1'";
-	if( !$db->sql_query($sql))
-	{
-		message_die(GENERAL_ERROR, 'Could not clear low dura items ', "", __LINE__, __FILE__, $csql);
-	}
+	items_remove_broken();
 
 	adr_previous(Adr_admin_tools_armaggedon_done, admin_adr_tools, '');
 }

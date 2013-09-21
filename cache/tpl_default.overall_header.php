@@ -1,19 +1,19 @@
 <?php
 
-// eXtreme Styles mod cache. Generated on Fri, 20 Sep 2013 22:21:27 +0000 (time = 1379715687)
+// eXtreme Styles mod cache. Generated on Sat, 21 Sep 2013 19:36:10 +0000 (time = 1379792170)
 
 if (!defined('IN_ICYPHOENIX')) exit;
 
 ?><?php if ($this->vars['S_LOFI']) {  ?>
 <?php if ($this->vars['S_LOFI_BOTS']) {  ?>
-<?php  $this->set_filename('xs_include_2c7ffc32cf842a61238eabe93dbeac41', '../common/lofi/bots/lofi_bots_header.tpl', true);  $this->pparse('xs_include_2c7ffc32cf842a61238eabe93dbeac41');  ?>
+<?php  $this->set_filename('xs_include_d75651bf1ef0916157e018b24095bdd8', '../common/lofi/bots/lofi_bots_header.tpl', true);  $this->pparse('xs_include_d75651bf1ef0916157e018b24095bdd8');  ?>
 <?php } else { ?>
-<?php  $this->set_filename('xs_include_beba3d7b3caec4f0dfa1c19606ed47a6', '../common/lofi/lofi_header.tpl', true);  $this->pparse('xs_include_beba3d7b3caec4f0dfa1c19606ed47a6');  ?>
+<?php  $this->set_filename('xs_include_caa09c14173ce92a42dc44bc2c44b915', '../common/lofi/lofi_header.tpl', true);  $this->pparse('xs_include_caa09c14173ce92a42dc44bc2c44b915');  ?>
 <?php } ?>
 <?php } else { ?>
 <?php echo isset($this->vars['DOCTYPE_HTML']) ? $this->vars['DOCTYPE_HTML'] : $this->lang('DOCTYPE_HTML'); ?>
 <head>
-<?php  $this->set_filename('xs_include_a5ebafc3b6a1464ce767d9960b723ecb', 'overall_inc_header.tpl', true);  $this->pparse('xs_include_a5ebafc3b6a1464ce767d9960b723ecb');  ?>
+<?php  $this->set_filename('xs_include_72d24309d69bbe277f26f224b511096f', 'overall_inc_header.tpl', true);  $this->pparse('xs_include_72d24309d69bbe277f26f224b511096f');  ?>
 <?php echo isset($this->vars['EXTRA_CSS_JS']) ? $this->vars['EXTRA_CSS_JS'] : $this->lang('EXTRA_CSS_JS'); ?>
 
 <?php if ($this->vars['S_HEADER_DROPDOWN']) {  ?>
@@ -48,7 +48,7 @@ if (ie4 || ns6)
 </script>
 
 <script type="text/javascript" src="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['T_COMMON_TPL_PATH']) ? $this->vars['T_COMMON_TPL_PATH'] : $this->lang('T_COMMON_TPL_PATH'); ?>js/ddmenu.js"></script>
-
+<script src="adr/includes/functions_adr_buildings_popup.js"></SCRIPT>
 <script type="text/javascript">
 if (hidemenu_onclick == "yes")
 {
@@ -217,7 +217,7 @@ if(isset($switch_upi2db_on_item)) { unset($switch_upi2db_on_item); }
 
 ?>
 		<?php if ($this->vars['S_LOGGED_IN']) {  ?>
-		<a href="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['U_PROFILE']) ? $this->vars['U_PROFILE'] : $this->lang('U_PROFILE'); ?>"><?php echo isset($this->vars['L_PROFILE']) ? $this->vars['L_PROFILE'] : $this->lang('L_PROFILE'); ?></a>&nbsp;&nbsp;<img src="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['IMG_MENU_SEP']) ? $this->vars['IMG_MENU_SEP'] : $this->lang('IMG_MENU_SEP'); ?>" alt="" />&nbsp;
+		<a href="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['U_PROFILE']) ? $this->vars['U_PROFILE'] : $this->lang('U_PROFILE'); ?>"><?php echo isset($this->vars['L_PROFILE']) ? $this->vars['L_PROFILE'] : $this->lang('L_PROFILE'); ?></a>&nbsp;&nbsp;<img src="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['IMG_MENU_SEP']) ? $this->vars['IMG_MENU_SEP'] : $this->lang('IMG_MENU_SEP'); ?>" alt="" />&nbsp;<a href="<?php echo isset($this->vars['U_ADR']) ? $this->vars['U_ADR'] : $this->lang('U_ADR'); ?>" class="mainmenu">RPG</a>&nbsp;&nbsp;<img src="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['IMG_MENU_SEP']) ? $this->vars['IMG_MENU_SEP'] : $this->lang('IMG_MENU_SEP'); ?>" alt="" />&nbsp;
 		<?php } ?>
 		<?php if ($this->vars['S_HEADER_DROPDOWN']) {  ?>
 		<a href="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['U_SEARCH']) ? $this->vars['U_SEARCH'] : $this->lang('U_SEARCH'); ?>" onmouseover="dropdownmenu(this, event, menu1, '250px');" onmouseout="delayhidemenu();"><?php echo isset($this->vars['L_SEARCH']) ? $this->vars['L_SEARCH'] : $this->lang('L_SEARCH'); ?></a>&nbsp;&nbsp;<img src="<?php echo isset($this->vars['FULL_SITE_PATH']) ? $this->vars['FULL_SITE_PATH'] : $this->lang('FULL_SITE_PATH'); ?><?php echo isset($this->vars['IMG_MENU_SEP']) ? $this->vars['IMG_MENU_SEP'] : $this->lang('IMG_MENU_SEP'); ?>" alt="" />&nbsp;
@@ -233,8 +233,8 @@ if(isset($switch_upi2db_on_item)) { unset($switch_upi2db_on_item); }
 </tr>
 <?php } ?>
 
-<?php if ($this->vars['S_PAGE_NAV']) {  ?><tr><td width="100%" colspan="3"><div style="margin-left: 7px; margin-right: 7px;"><?php  $this->set_filename('xs_include_299ccc5335464f5774bd1130273c2487', 'breadcrumbs_main.tpl', true);  $this->pparse('xs_include_299ccc5335464f5774bd1130273c2487');  ?></div></td></tr><?php } ?>
+<?php if ($this->vars['S_PAGE_NAV']) {  ?><tr><td width="100%" colspan="3"><div style="margin-left: 7px; margin-right: 7px;"><?php  $this->set_filename('xs_include_f0c2ca2f9d4541f68d4e2f932e084f0c', 'breadcrumbs_main.tpl', true);  $this->pparse('xs_include_f0c2ca2f9d4541f68d4e2f932e084f0c');  ?></div></td></tr><?php } ?>
 
-<?php  $this->set_filename('xs_include_bb4a5174d63eb55e2562201f9894e3c2', 'overall_inc_body.tpl', true);  $this->pparse('xs_include_bb4a5174d63eb55e2562201f9894e3c2');  ?>
+<?php  $this->set_filename('xs_include_ca999d615be6cd099803b137d6ff8b29', 'overall_inc_body.tpl', true);  $this->pparse('xs_include_ca999d615be6cd099803b137d6ff8b29');  ?>
 
 <?php } ?>

@@ -6,15 +6,21 @@
  * Do note that the file name should be changed, though ...
  *
  * Contains :
- *  - Zone functions
- *  -
+ *  - Zone :
+ *    - general
+ *    - infos
+ *    - npc
+ *  - Battle :
+ *    - HP/MP regens
+ *  - Items :
+ *    - Deletion
  */
 
 //!!! ZONE FUNCTIONS
 
 function zone_goto($goto_name, $cost_goto)
 {
-	global $board_config, $adr_user;
+	global $board_config, $adr_user, $db, $adr_user, $user_id;
 
 	if ( ( $board_config['zone_dead_travel'] == '1' ) && ( $adr_user['character_hp'] < '1' ) )
 		adr_previous( Adr_zone_change_dead , adr_zones , '' );
@@ -38,15 +44,8 @@ function zone_goto($goto_name, $cost_goto)
 	$required_item = $zone_id['zone_item'];
 
 	$required_level = $zone_id['zone_level'];
-    // Check if user meets the required level
-	$sql = " SELECT character_id, character_level
-        	FROM  " . ADR_CHARACTERS_TABLE . "
-                WHERE character_id = '$user_id' ";
-	if( !($result = $db->sql_query($sql)) )
-   	{ message_die(GENERAL_ERROR, 'Could not obtain character information', "", __LINE__, __FILE__, $sql); }
-	$char = $db->sql_fetchrow($result);
 
-	if( $char['character_level'] < $required_level )
+	if( $adr_user['character_level'] < $required_level )
 	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
@@ -63,7 +62,7 @@ function zone_goto($goto_name, $cost_goto)
 
 	if ( ( $required_item == '0' ) || ( $required_item == $item_check['item_name'] ) ) 
 	{
-		adr_substract_points( $user_id , $cost_goto , adr_zones , '' );
+		adr_substract_points( $user_id , $cost_goto , 'adr_zones' , '' );
 
 		//Update character zone
 		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
@@ -72,8 +71,8 @@ function zone_goto($goto_name, $cost_goto)
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		@header('Location:'.append_sid("adr_zones.$phpEx"));
-		adr_previous( Adr_zone_change_success , adr_zones , '' );
+		@header('Location:'.append_sid("adr_zones.".PHP_EXT));
+		adr_previous( Adr_zone_change_success , 'adr_zones' , '' );
 		break;
 	}
 	else
@@ -82,6 +81,53 @@ function zone_goto($goto_name, $cost_goto)
 		message_die(GENERAL_ERROR, $message , Zones , '' );
 		break;
 	}
+}
+
+function zone_get_characters($area_id)
+{
+	global $lang, $db;
+
+	$sql = " SELECT * FROM  " . ADR_CHARACTERS_TABLE . "
+	      WHERE character_area = '$area_id'
+		ORDER BY character_name ASC";
+	if( !($result = $db->sql_query($sql)) )
+	        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+	$list = '';
+	while( $row = $db->sql_fetchrow($result)) 
+	{
+		$list .= ($list ? ', ' : '') . '<a href="' . append_sid("profile.".PHP_EXT."?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a>';
+	}
+
+	if ($list) $list .= '.';
+	else $list = $lang['None'];
+
+	return '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $list;
+}
+
+function get_season_infos($season)
+{
+	global $lang;
+	$images = array('spring', 'summer', 'automn', 'winter');
+	$key = $lang['Adr_Zone_Season_' . $season];
+
+	return array($images[$season-1], $key);
+}
+
+function get_weather_infos($weather)
+{
+	global $lang;
+	$images = array('sun', 'night', 'cloud', 'rain', 'cloudsun', 'snow');
+
+	return array($images[$weather-1], $lang['Adr_Zone_Weather_'.$weather]);
+}
+
+function get_time_infos($time)
+{
+	global $lang;
+	$images = array('dawn', 'day', 'dusk', 'night');
+
+	return array($images[$time-1], $lang['Adr_Zone_Time_'.$time]);
 }
 
 function zone_events($zone)
@@ -667,19 +713,19 @@ function zone_npc_item_quest_check($npc_row)
 				if ( $required_items == true && ($npc_row['npc_kill_monster'] == '0' || $npc_row['npc_kill_monster'] == ""))
 				{
 					$give_lang = sprintf($lang['Adr_zone_npc_give_item'], $npc_item_list, $npc_row['npc_name']);
-					$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+					$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.".PHP_EXT)."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
 				}
 				elseif ( $required_items == true && $quest_log['quest_kill_monster_amount'] == $quest_log['quest_kill_monster_current_amount'])
 				{
 					$give_lang = sprintf($lang['Adr_zone_npc_give_item'], $npc_item_list, $npc_row['npc_name']);
-					$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+					$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.".PHP_EXT)."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
 				}
 			}
 		}
 		else
 		{
 			$give_lang = sprintf($lang['Adr_zone_npc_pay_price'], number_format( intval( $npc_row['npc_quest_clue_price'] ) ) . ' ' . $board_config['points_name'], $npc_row['npc_name']);
-			$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"0\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+			$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.".PHP_EXT)."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"0\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
 		}
 	}
 
@@ -721,11 +767,88 @@ function zone_npc_item_quest_check($npc_row)
 		if ($kills_npc['quest_kill_monster'] != "" && $kills_npc['quest_kill_monster'] != '0' && ($kills_npc['quest_item_need'] == '0' || $kills_npc['quest_item_need'] == ""))
 		{
 			$give_lang = sprintf($lang['Adr_zone_npc_complete_kill_quest'], $npc_row['npc_monster_amount'], adr_get_lang($npc_row['npc_kill_monster']));
-			$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+			$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.".PHP_EXT)."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
 		}
 	}
 
 	$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $npc_row['npc_message'] . "\"</i>$give<br /><br />" . $lang['Adr_zone_event_return'];
 	$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
 	message_die(GENERAL_MESSAGE, $message , $adr_zone_npc_title );
+}
+
+//!!! Battle functions
+function battle_regen_rabbitoshi($rabbit_user, &$battle_message)
+{
+	global $rabbit_general;
+
+	// Check if pet have regeneration ability
+	$mp_consumned = '0';
+	$pet_regen    = '0';
+	if ($rabbit_user['creature_ability'] != '1')
+	{
+		return;
+	}
+
+	if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+	{
+		$mp_consumned = $rabbit_general['regeneration_mp_need'];
+		$pet_regen    = $rabbit_general['regeneration_hp_give'];
+		$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+	}
+	$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+		SET creature_health = creature_health + " . intval($pet_regen) . ",
+		    creature_mp = creature_mp - " . intval($mp_consumned) . "
+		WHERE owner_id = $user_id ";
+	if (!$result = $db->sql_query($sql))
+	{
+		message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+	}
+}
+
+function battle_regen_amulet($bat, $challenger, &$battle_message)
+{
+	global $user_id;
+
+	// Check if user a Amulet for HP regen this turn		
+	if ($bat['battle_challenger_hp'] != 0)
+	{
+		if ($challenger['character_hp'] < $challenger['character_hp_max'])
+		{
+			$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+			$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+		}
+	}
+}
+
+function battle_regen_ring($bat, $challenger, &$battle_message)
+{
+	global $user_id;
+
+	// Check if user a Ring for MP regen this turn	
+	if ($bat['battle_challenger_mp'] != 0)
+	{
+		if ($challenger['character_mp'] < $challenger['character_mp_max'])
+		{
+			$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+			$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+		}
+	}
+}
+
+//!!! ITEMS FUNCTIONS
+function items_remove_broken($user_id = null)
+{
+	if ($user_id == null)
+	{
+		$comp = '>';
+		$user_id = '1';
+	} else $comp = '=';
+	// Delete broken items from users inventory
+	$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+	WHERE item_duration < 1 
+	AND item_owner_id $comp $user_id ";
+	if (!($result = $db->sql_query($sql)))
+	{
+		message_die(GENERAL_ERROR, 'Could not delete broken items', '', __LINE__, __FILE__, $sql);
+	}
 }

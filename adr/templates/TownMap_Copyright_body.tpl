@@ -20,15 +20,10 @@
 </table>
 <br clear="all" />
 
+
 <table width="100%" cellspacing="2" cellpadding="2" border="1" align="center">
 	<tr>
-		<th align="center">{L_TRADUCTEUR}</th>
-	</tr>
-	<tr>
-		<td class="row1" align="center"><a href="http://www.mangas-no-ushi.net/"><span class="gen">One_Piece (For English Translation)</span></a></td>
-	</tr>
-	<tr>
-		<td class="row1" align="center"><a href="http://www.twinworlds.ne0-net.com/"><span class="gen">Kirtdawg (Thanks for your help in the English Translation)</span></a></td>
+		<th align="center">Pre-mod "Icy Dungeons &amp; Rabbits" - Informpro</th>
 	</tr>
 </table>
 <br clear="all" />

@@ -59,6 +59,22 @@
 						<td class="row1 post-buttons"><span class="genmed">{custom_contact.VALUE}</span></td>
 					</tr>
 					<!-- END custom_contact -->
+					<!-- IF ADR_PROFILE_DISPLAY -->
+					<tr><th colspan="2"><span class="genmed"><b>RPG</b></span></th></tr>
+					<tr>
+						<td class="row2" valign="top"><b><span class="genmed">{L_Adr_character_see}</span></b></td>
+					<!-- BEGIN adr_profile_none -->
+						<td class="row1 post-buttons"><span class="genmed">{L_Adr_character_lack}</span></td>
+					<!-- END adr_profile_none -->
+					<!-- BEGIN adr_profile -->
+						<td class="row1 post-buttons"><span class="genmed"><a href="{adr_profile.U_NAME}">{adr_profile.NAME}</a></span></td>
+					</tr>
+					<tr>
+						<td class="row2" valign="top"><b><span class="genmed">{L_Rabbitoshi}</span></b></td>
+						<td class="row1 post-buttons"><span class="genmed"><a href="{adr_profile.RABBITOSHI_LINK}">Rabbitoshi</a></span></td>
+					<!-- END adr_profile -->
+					</tr>
+					<!-- ENDIF -->
 				</table>
 			</td>
 			<td width="2"><img src="{SPACER}" width="2" alt="" /></td>

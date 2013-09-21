@@ -1,4 +1,4 @@
-<!-- IF not HAS_DIED -->
+<!-- IF not HAS_DIED && not HEADER_INCLUDED -->
 <!-- INCLUDE overall_header.tpl -->
 <!-- ENDIF -->
 

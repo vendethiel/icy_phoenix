@@ -44,7 +44,7 @@ if(	!empty($setmodules) )
 // Let's set the root dir for phpBB
 //
 define('IP_ROOT_PATH', "./../");
-
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 require('pagestart.' . $phpEx);
 include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 //

@@ -4,7 +4,7 @@
 <!-- BEGIN main -->
 <br />
 <form method="post" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Spells to View</center></h1>
+<h1><center>{L_ADR_SELECT_SPELLS}</center></h1>
 <table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
 		<td align="center">{RECIPEBOOK_SKILL_LINKS}</td>
@@ -22,7 +22,7 @@
 <!-- BEGIN view_spells -->
 <br />
 <form method="post" name="list_spells" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Spells to View</center></h1>
+<h1><center>{L_ADR_SELECT_SPELLS}</center></h1>
 <table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
 		<td align="center">{RECIPEBOOK_SKILL_LINKS}</td>
@@ -49,7 +49,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="font-family:'serif'">
-									<strong>Spell Components Required:</strong>
+									<strong>{L_ADR_SPELL_REQ}</strong>
 									<br />
 									{view_spells.spell.RECIPE_ITEMS_REQ}
 								</td>
@@ -57,23 +57,23 @@
 							<tr>
 								<td colspan="2" style="font-family:'serif'">
 									<br />
-									<strong>Spell Stats</strong>
+									<strong>{L_ADR_CARACS}</strong>
 									<br />
 									<table border="0" width="320" cellspacing="0" cellpadding="0" align="left">
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Spell Level:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_ADR_SPELL_LEVEL}</td>
 											<td style="font-family:'serif'">{view_spells.spell.RECIPE_LEVEL}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Spell Skill</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_ADR_SPELL_SKILL}</td>
 											<td style="font-family:'serif'">{L_SPELL_SKILL}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Description:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_Description}</td>
 											<td style="font-family:'serif'">{view_spells.spell.RECIPE_DESC}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Cast:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_ADR_CAST}</td>
 											<td style="font-family:'serif'">{view_spells.spell.CAST_SPELL}</td>
 										</tr>
 <!--
@@ -104,7 +104,7 @@
 						</table>
 
 						<br />
-							<strong>Spell Effects</strong>
+							<strong>{L_EFFECTS}</strong>
 						<br />
 						<table border="0" width="340" cellspacing="0" cellpadding="0">
 							<tr>
@@ -114,11 +114,11 @@
 							</tr>
 						</table>
 						<br />
-							<strong>Spell Stats</strong>
+							<strong>{L_ADR_CARACS}</strong>
 						<br />
 						<table border="0" width="340" cellspacing="0" cellpadding="0">
 							<tr>
-								<td style="font-family:'serif'" width="180">Level:</td>
+								<td style="font-family:'serif'" width="180"></td>
 								<td style="font-family:'serif'">{view_spells.spell.RESULT_LEVEL}</td>
 							</tr>
 							<tr>
@@ -133,6 +133,7 @@
 								<td style="font-family:'serif'" width="180" valign="top">Price:</td>
 								<td style="font-family:'serif'">{view_spells.spell.RESULT_PRICE}</td>
 							</tr>
+							<!- -
 							<tr>
 								<td style="font-family:'serif'" width="180" valign="top">Weight:</td>
 								<td style="font-family:'serif'">{view_spells.spell.RESULT_WEIGHT}</td>
@@ -141,6 +142,7 @@
 								<td style="font-family:'serif'" width="180" valign="top">Duration:</td>
 								<td style="font-family:'serif'">{view_spells.spell.RESULT_DURATION} / {view_spells.spell.RESULT_DURATION_MAX}</td>
 							</tr>
+						- ->
 						</table>
 -->
 						<!-- END spell -->
@@ -154,9 +156,4 @@
 </form>
 <!-- END view_spells -->
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center"><span class="gen"><a href="http://www.nightcrawlers.be">ADR Spellbook written by: Himmelweiss</a></span></td>
-	</tr>
-</table>
 <br clear="all" />

@@ -11,7 +11,7 @@
 <!-- BEGIN fishing -->
 <table width="100%" align="center" border="1">
 	<tr>
-		<th align="center" colspan="3" >Lac</td>
+		<th align="center" colspan="3" >{L_ADR_LAKE}</td>
 	</tr>
 	<tr>
 		<td align="center" valign="top" class="row2" width="20%" ><span class="gen">

@@ -200,6 +200,12 @@ $auth->acl($user->data);
 $user->setup();
 // End session management
 
+##=== ADR START: check user if in cell or not ===#
+if(($userdata['user_cell_time'] > '0') && (!defined('CELL')) && ($userdata['session_logged_in']) && ($userdata['user_level'] != ADMIN) && (($userdata['user_cell_punishment'] == '2') || ($userdata['user_cell_punishment'] == '3'))){
+	redirect(append_sid("adr_cell.$phpEx", true));
+}
+##=== ADR END ===#
+
 // DNSBL CHECK - BEGIN
 if (!empty($config['check_dnsbl_posting']) && in_array($mode, array('newtopic', 'reply', 'editpost')) && !empty($submit))
 {

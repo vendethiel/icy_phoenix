@@ -39,37 +39,37 @@
 		<td class="row1" width ="33%">
 			<p align="center">
 			<span class="gen">
-			Vie: {HP} / {HP_MAX} <br />
+			{L_ADR_HP} {HP} / {HP_MAX} <br />
 				<img src="adr/images/misc/bar_red_begin.gif" width="6" height="13" /><img src="adr/images/misc/bar_red_middle.gif" width="{HP_WIDTH}" height="13" ><img src="adr/images/misc/bar_red_end.gif" width="6" height="13" ><br />
-			Mana: {MP} / {MP_MAX} <br />
+			{L_ADR_MP} {MP} / {MP_MAX} <br />
 				<img src="adr/images/misc/bar_blue_begin.gif" width="6" height="13" /><img src="adr/images/misc/bar_blue_middle.gif" width="{MP_WIDTH}" height="13" ><img src="adr/images/misc/bar_blue_end.gif" width="6" height="13" ></span><p align="center">
 			&nbsp;</td>
 		<td class="row1" width ="33%" valign="top">
 			<p align="center">
 			<span class="gen">
-			Vie: {MONSTER_HP} / {MONSTER_HP_MAX} <br />
+			{L_ADR_HP} {MONSTER_HP} / {MONSTER_HP_MAX} <br />
 				<img src="adr/images/misc/bar_red_begin.gif" width="6" height="13" ><img src="adr/images/misc/bar_red_middle.gif" width="{MONSTER_HP_WIDTH}" height="13" ><img src="adr/images/misc/bar_red_end.gif" width="6" height="13" ><br />
-			Mana: {MONSTER_MP} / {MONSTER_MP_MAX} <br />
+			{L_ADR_MP} {MONSTER_MP} / {MONSTER_MP_MAX} <br />
 				<img src="adr/images/misc/bar_blue_begin.gif" width="6" height="13" ><img src="adr/images/misc/bar_blue_middle.gif" width="{MONSTER_MP_WIDTH}" height="13" ><img src="adr/images/misc/bar_blue_end.gif" width="6" height="13" ></td>
 	</tr>
 	<tr>
 		<td class="row1" width ="33%">
 		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" class="forumline">
 			<th width="100%" valign="top" colspan="2" style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" bordercolor="#C0C0C0">
-				<span class="gen">Stats personnage :</span>			
+				<span class="gen">{L_ADR_CHAR_STATS}</span>			
 			</th>
               <tr>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Atk physique:</b> {ATT}</span><br />
-			<span class="gensmall"><b>Def physique:</b> {DEF}</span><br />
-			<span class="gensmall"><b>Atk magique:</b> {M_ATT}</span><br />
-			<span class="gensmall"><b>Def magique:</b> {M_DEF}</span>
+			<span class="gensmall"><b>{L_ADR_ATT_PHYS}</b> {ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_PHYS}</b> {DEF}</span><br />
+			<span class="gensmall"><b>{L_ADR_ATT_MAG}</b> {M_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_MAG}</b> {M_DEF}</span>
 			</td>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Alignement:</b> {ALIGNMENT}</span><br />
-			<span class="gensmall"><b>&Eacute;lément:</b> {ELEMENT}</span><br />
-			<span class="gensmall"><b>Classe:</b> {CLASS}</span><br />
-			<span class="gensmall"><b>Panoplie:</b> {ARMOUR_SET}</span>
+			<span class="gensmall"><b>{L_ALGIN}</b> {ALIGNMENT}</span><br />
+			<span class="gensmall"><b>{L_ELEM}</b> {ELEMENT}</span><br />
+			<span class="gensmall"><b>{L_ADR_CLASS}</b> {CLASS}</span><br />
+			<span class="gensmall"><b>{L_ADR_SET}</b> {ARMOUR_SET}</span>
 			</td>
               </tr>
             </table>
@@ -77,19 +77,19 @@
 		<td class="row1" width ="33%">
 			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2" class="forumline">
 			<th width="100%" valign="top" colspan="2" style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" bordercolor="#C0C0C0">
-				<span class="gen">Stats monstre :</span>			
+				<span class="gen">{L_ADR_MOB_STATS}</span>			
 			</th>
               <tr>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Atk physique:</b> {MONSTER_ATT}</span><br />
-			<span class="gensmall"><b>Def physique:</b> {MONSTER_DEF}</span><br /> 
-			<span class="gensmall"><b>Atk magique:</b> {MONSTER_M_ATT}</span><br />
-			<span class="gensmall"><b>Def magique:</b> {MONSTER_M_DEF}</span>
+			<span class="gensmall"><b>{L_ADR_ATT_PHYS}</b> {MONSTER_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_PHYS}</b> {MONSTER_DEF}</span><br /> 
+			<span class="gensmall"><b>{L_ADR_ATT_MAG}</b> {MONSTER_M_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_MAG}</b> {MONSTER_M_DEF}</span>
 			</td>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Alignement:</b> {MONSTER_ALIGNMENT}</span><br />
-			<span class="gensmall"><b>&Eacute;lément:</b> {MONSTER_ELEMENT}</span><br />
-			<span class="gensmall"><b>Niveau:</b> {MONSTER_LEVEL}</span>
+			<span class="gensmall"><b>{L_ALIGN}</b> {MONSTER_ALIGNMENT}</span><br />
+			<span class="gensmall"><b>{L_ELEM}</b> {MONSTER_ELEMENT}</span><br />
+			<span class="gensmall"><b>{L_LEVEL}</b> {MONSTER_LEVEL}</span>
 			</td>
               </tr>
               </table>

@@ -42,7 +42,7 @@ if (ie4 || ns6)
 </script>
 
 <script type="text/javascript" src="{FULL_SITE_PATH}{T_COMMON_TPL_PATH}js/ddmenu.js"></script>
-
+<script src="adr/includes/functions_adr_buildings_popup.js"></SCRIPT>
 <script type="text/javascript">
 if (hidemenu_onclick == "yes")
 {
@@ -106,7 +106,7 @@ if (hidemenu_onclick == "yes")
 		<span style="vertical-align: top;">{L_POSTS}:&nbsp;</span><a href="{FULL_SITE_PATH}{U_SEARCH_NEW}">{L_NEW2}</a><span style="vertical-align: top;">&nbsp;&#8226;&nbsp;</span>{L_DISPLAY_U}<span style="vertical-align: top;">&nbsp;&#8226;&nbsp;</span>{L_DISPLAY_M}<span style="vertical-align: top;">&nbsp;&#8226;&nbsp;</span>{L_DISPLAY_P}&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;
 		<!-- END switch_upi2db_on -->
 		<!-- IF S_LOGGED_IN -->
-		<a href="{FULL_SITE_PATH}{U_PROFILE}">{L_PROFILE}</a>&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;
+		<a href="{FULL_SITE_PATH}{U_PROFILE}">{L_PROFILE}</a>&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;<a href="{U_ADR}" class="mainmenu">RPG</a>&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;
 		<!-- ENDIF -->
 		<!-- IF S_HEADER_DROPDOWN -->
 		<a href="{FULL_SITE_PATH}{U_SEARCH}" onmouseover="dropdownmenu(this, event, menu1, '250px');" onmouseout="delayhidemenu();">{L_SEARCH}</a>&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;

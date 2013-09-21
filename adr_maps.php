@@ -29,8 +29,6 @@ define('IN_ADR_TOWN', true);
 define('IP_ROOT_PATH', './');
 if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1)); 
 include_once(IP_ROOT_PATH . 'common.'.$phpEx);
-include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
-include_once(IP_ROOT_PATH . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
 $loc = 'zones';
 $sub_loc = 'adr_maps';
 
@@ -41,6 +39,7 @@ $auth->acl($user->data);
 $user->setup();
 // End session management
 //
+include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 $user_id = $userdata['user_id'];
 

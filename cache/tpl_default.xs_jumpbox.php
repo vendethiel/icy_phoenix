@@ -1,6 +1,6 @@
 <?php
 
-// eXtreme Styles mod cache. Generated on Fri, 20 Sep 2013 22:32:26 +0000 (time = 1379716346)
+// eXtreme Styles mod cache. Generated on Sat, 21 Sep 2013 16:20:16 +0000 (time = 1379780416)
 
 if (!defined('IN_ICYPHOENIX')) exit;
 
@@ -10,7 +10,7 @@ $browser = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''
 if(strpos($browser, 'AppleWebKit/') > 0)
 {
 ?>
-<?php  $this->set_filename('xs_include_269ce4ef4b63e81173e0c6a1b898cbbd', 'jumpbox.tpl', true);  $this->pparse('xs_include_269ce4ef4b63e81173e0c6a1b898cbbd');  ?>
+<?php  $this->set_filename('xs_include_3413335ca39e3caa572418ae767b74f8', 'jumpbox.tpl', true);  $this->pparse('xs_include_3413335ca39e3caa572418ae767b74f8');  ?>
 <?php
 	return;
 }
@@ -133,4 +133,4 @@ $this->vars['S_JUMPBOX_SELECT'] = $text;
 // End Improved Jumpboxes MOD
 
 ?>
-<?php  $this->set_filename('xs_include_7be43e742e7d6a8dbc0267fe54c591ec', 'jumpbox.tpl', true);  $this->pparse('xs_include_7be43e742e7d6a8dbc0267fe54c591ec');  ?>
+<?php  $this->set_filename('xs_include_d6cc4f7c000181c220fef02b66e7e23f', 'jumpbox.tpl', true);  $this->pparse('xs_include_d6cc4f7c000181c220fef02b66e7e23f');  ?>

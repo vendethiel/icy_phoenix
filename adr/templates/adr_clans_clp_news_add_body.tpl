@@ -30,11 +30,6 @@
 			style="border-left : 1px solid Black; border-top : 1px solid Black; border-right : 1px solid Black; ">
 			<span class="gensmall"><b>{L_NEWS}</b></span>
 		</td>
-		<td nowrap="nowrap" align="right" width="48%" style="border-bottom : 1px solid Black;"><span class="gensmall">
-			<!-- BEGIN nuladion -->
-				{nuladion.NULADION}
-			<!-- END nuladion -->
-		</span></td>
 
 		</tr>
 

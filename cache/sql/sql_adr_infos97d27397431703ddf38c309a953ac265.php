@@ -1,0 +1,5 @@
+<?php exit; ?>
+1411326761
+SELECT * FROM ip_adr_alignments
+853
+a:3:{i:0;a:7:{s:12:"alignment_id";s:1:"1";s:14:"alignment_name";s:21:"Adr_alignment_neutral";s:14:"alignment_desc";s:26:"Adr_alignment_neutral_desc";s:15:"alignment_level";s:1:"0";s:13:"alignment_img";s:11:"Neutral.gif";s:19:"alignment_karma_min";s:1:"0";s:20:"alignment_karma_type";s:1:"0";}i:1;a:7:{s:12:"alignment_id";s:1:"2";s:14:"alignment_name";s:18:"Adr_alignment_evil";s:14:"alignment_desc";s:23:"Adr_alignment_evil_desc";s:15:"alignment_level";s:1:"0";s:13:"alignment_img";s:8:"Evil.gif";s:19:"alignment_karma_min";s:4:"1000";s:20:"alignment_karma_type";s:1:"2";}i:2;a:7:{s:12:"alignment_id";s:1:"3";s:14:"alignment_name";s:18:"Adr_alignment_good";s:14:"alignment_desc";s:23:"Adr_alignment_good_desc";s:15:"alignment_level";s:1:"0";s:13:"alignment_img";s:8:"Good.gif";s:19:"alignment_karma_min";s:4:"1000";s:20:"alignment_karma_type";s:1:"1";}}

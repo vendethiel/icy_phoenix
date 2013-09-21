@@ -1,17 +1,17 @@
 <?php
 
-// eXtreme Styles mod cache. Generated on Fri, 20 Sep 2013 22:21:27 +0000 (time = 1379715687)
+// eXtreme Styles mod cache. Generated on Sat, 21 Sep 2013 11:31:22 +0000 (time = 1379763082)
 
 if (!defined('IN_ICYPHOENIX')) exit;
 
 ?><?php if ($this->vars['S_LOFI']) {  ?>
 <?php if ($this->vars['S_LOFI_BOTS']) {  ?>
-<?php  $this->set_filename('xs_include_0d5479aa80234e38e2d4a22ac8ead6a2', '../common/lofi/bots/lofi_bots_footer.tpl', true);  $this->pparse('xs_include_0d5479aa80234e38e2d4a22ac8ead6a2');  ?>
+<?php  $this->set_filename('xs_include_4adf58cecd08e31bd6066f07ce8cfb6e', '../common/lofi/bots/lofi_bots_footer.tpl', true);  $this->pparse('xs_include_4adf58cecd08e31bd6066f07ce8cfb6e');  ?>
 <?php } else { ?>
-<?php  $this->set_filename('xs_include_21159f7f80f7fd23931e44f17450386f', '../common/lofi/lofi_footer.tpl', true);  $this->pparse('xs_include_21159f7f80f7fd23931e44f17450386f');  ?>
+<?php  $this->set_filename('xs_include_e337972f75a44b2e467781e36d1fa670', '../common/lofi/lofi_footer.tpl', true);  $this->pparse('xs_include_e337972f75a44b2e467781e36d1fa670');  ?>
 <?php } ?>
 <?php } else { ?>
-<?php  $this->set_filename('xs_include_d22118c4e88d6d9f2290d1d8df076eb4', 'overall_inc_footer.tpl', true);  $this->pparse('xs_include_d22118c4e88d6d9f2290d1d8df076eb4');  ?>
+<?php  $this->set_filename('xs_include_819b67c404a3d7e8c560166d5fad38f3', 'overall_inc_footer.tpl', true);  $this->pparse('xs_include_819b67c404a3d7e8c560166d5fad38f3');  ?>
 <tr>
 	<td colspan="3">
 	<div id="bottom_logo_ext">

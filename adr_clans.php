@@ -26,7 +26,6 @@ define('IP_ROOT_PATH', './');
 if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include_once(IP_ROOT_PATH . 'common.' . $phpEx);
 include_once(IP_ROOT_PATH . 'includes/bbcode.'.$phpEx);
-include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 $loc = 'town';
 $sub_loc = 'adr_clans';
@@ -34,6 +33,8 @@ $sub_loc = 'adr_clans';
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
+
+include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 // Pagination Data [START]
 $start = ( isset($_GETS['start']) ) ? intval($_GETS['start']) : 0; 
@@ -1886,10 +1887,6 @@ if($_GET['action'] ==  "clp") {
 		}
 	}
 
-	$template->assign_block_vars('nuladion', array(
-		'NULADION' => 'Clans MOD Advanced made by <a href="http://www.nuladion.com" target="_blank">Nuladion</a>'
-	));
-
 	$template->assign_block_vars('bars', array(
 		'FILE' => $file,
 		'L_BACKTOLIST' => sprintf($lang['clans_backtolist'],'<a href="'.$file.'?action=list">','</a>'),
@@ -1926,7 +1923,7 @@ $template->assign_block_vars('infobar', array(
 //
 
 if(!$shoutbox) {
-	include(IP_ROOT_PATH . 'includes/page_header.' . $phpEx);
+	page_header();
 	include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 }
 

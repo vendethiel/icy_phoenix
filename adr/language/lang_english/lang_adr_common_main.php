@@ -41,6 +41,8 @@ $lang['Adr_see_inventory']='Voir l\'inventaire';
 $lang['Adr_see_shop']='Voir le magasin';
 $lang['Adr_no_shop']='N\'a pas ouvert de magasin';
 
+$lang['Rabbitoshi'] = 'Familier';
+
 //CAULDRON
 $lang['Adr_cauldron_title']='Chaudron Magique';
 //CAULDRON end

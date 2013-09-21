@@ -49,7 +49,7 @@ if ( !$userdata['session_logged_in'] )
 
 
 // Includes the tpl and the header
-include_once(IP_ROOT_PATH . 'includes/page_header.'.$phpEx);
+page_header();
 include_once(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 
 // Who is looking at this page ?

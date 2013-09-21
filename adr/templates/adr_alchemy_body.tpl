@@ -11,7 +11,7 @@
 <!-- BEGIN alchemy -->
 <table width="100%" align="center" border="1">
 	<tr>
-		<th align="center" colspan="3" >Alchemy</td>
+		<th align="center" colspan="3" >{L_ADR_ALCH}</td>
 	</tr>
 	<tr>
 		<td align="center" valign="top" class="row2" width="20%" ><span class="gen">
@@ -27,7 +27,7 @@
 		<img src="adr/images/items/alchemy/alchemyarea.jpg" alt="alchemy house" border="0" /><hr />
 		<br /><span class="gen">{L_SELECT_TOOL}:</span><br /><br />
 		<span class="gen"><img src="adr/images/items/alchemy/alchemy.gif" border="0" />&nbsp;&nbsp;{TOOL_LIST}</span>
-		<br /><br /<br /><img src="adr/images/skills/skill_alchemy.gif.gif" border="0" /><br /><br /><input type="hidden" name="mode" value="alchemy_action"><input type="submit" value="{L_GO_ALCHEMY}" class="mainoption" /><br />
+		<br /><br /<br /><img src="adr/images/skills/skill_alchemyo.gif" border="0" /><br /><br /><input type="hidden" name="mode" value="alchemy_action"><input type="submit" value="{L_GO_ALCHEMY}" class="mainoption" /><br />
 		</td>
 	</tr>
 </table>

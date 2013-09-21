@@ -1,0 +1,5 @@
+<?php exit; ?>
+1411326602
+SELECT * FROM ADR_CHARACTERS_TABLE
+6
+a:0:{}

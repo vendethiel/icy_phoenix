@@ -1,4 +1,4 @@
-<!-- INCLUDE ../../adr/templates/adr_header_body -->
+<!-- INCLUDE ../../adr/templates/adr_header_body.tpl -->
 
 <form action="{S_MODE_ACTION}" method="post">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">

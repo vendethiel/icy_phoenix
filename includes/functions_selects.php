@@ -20,10 +20,6 @@ if (!defined('IN_ICYPHOENIX'))
 	die('Hacking attempt');
 }
 
-if (!function_exists('language_select'))
-{
-
-
 /*
 * Language select box
 */
@@ -442,5 +438,5 @@ function settings_XXX_select($name, $default = '')
 	return $select_box;
 }
 */
-}
+
 ?>
