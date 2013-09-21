@@ -3,7 +3,7 @@
 <!-- BEGIN main -->
 <table cellspacing="2" cellpadding="2" border="1" align="center" class="forumline" width="50%" >
 	<tr>
-		<td align="center" class="row1" onmouseover="this.style.cursor='hand';this.className='row3';" onClick="window.location.href='{U_HERBALISM}';" onmouseout="this.className='row1rt';"><span class="gen">Herbalisming</span></td>
+		<td align="center" class="row1" onmouseover="this.style.cursor='hand';this.className='row3';" onClick="window.location.href='{U_HERBALISM}';" onmouseout="this.className='row1rt';"><span class="gen">{L_Adr_herbalism}</span></td>
 	</tr>
 </table>
 <!-- END main -->
@@ -11,7 +11,7 @@
 <!-- BEGIN herbalism -->
 <table width="100%" align="center" border="1">
 	<tr>
-		<th align="center" colspan="3" >Herbalism</td>
+		<th align="center" colspan="3" >{L_Adr_herbalism}</td>
 	</tr>
 	<tr>
 		<td align="center" valign="top" class="row2" width="20%" ><span class="gen">

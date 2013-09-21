@@ -2399,6 +2399,9 @@ function setup_basic_lang()
 			$config['default_lang'] = 'english';
 		}
 
+		include(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_common_main.' . PHP_EXT); 
+		include(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_TownMap_main.' . PHP_EXT); 
+
 		$lang_files = array(
 			'lang_main',
 			'lang_bbcb_mg',
@@ -2416,6 +2419,9 @@ function setup_basic_lang()
 		$lang_extend_admin = false;
 		if (defined('IN_ADMIN'))
 		{
+			##=== ADR START: include ADR general lang file ===##
+			include_once(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_common_admin.' . PHP_EXT);
+			##=== ADR END ===##
 			$lang_extend_admin = true;
 			$lang_files_admin = array(
 				'lang_admin',
@@ -4994,6 +5000,11 @@ function page_header($title = '', $parse_template = false)
 		$template->assign_vars(array(
 			'TOTAL_USERS_ONLINE' => $l_online_users,
 			'LOGGED_IN_USER_LIST' => $online_userlist,
+			##=== ADR START ===##
+			'U_ADR' => append_sid('adr_zones.'.PHP_EXT),
+			'L_ADR' => $lang['Adr_character_page_name'],
+			'HEADER_INCLUDED' => true,
+			##=== ADR END ===##
 			'BOT_LIST' => !empty($online_botlist) ? $online_botlist : '',
 			'AC_LIST_TEXT' => $ac_online_users['text'],
 			'AC_LIST' => $ac_online_users['list'],
@@ -5353,6 +5364,12 @@ function page_header($title = '', $parse_template = false)
 		header('Expires: 0');
 		header('Pragma: no-cache');
 	}
+	
+	##=== ADR START ===##
+	if(($user->data['user_cell_time'] > '0') && (!defined('CELL')) && ($user->data['session_logged_in']) && ($user->data['user_level'] != ADMIN) && ($user->data['user_cell_punishment'] == '1')){
+		redirect(append_sid("adr_cell.".PHP_EXT, true));
+	}
+	##=== ADR END ===##
 
 	if ($parse_template)
 	{

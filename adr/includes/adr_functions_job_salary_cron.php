@@ -22,11 +22,11 @@ if ( !defined('IN_ICYPHOENIX') )
 	die("Hacking attempt");
 }
 
-include_once(IP_ROOT_PATH . 'adr/includes/adr_functions_communicate.'.$phpEx);
+include_once(IP_ROOT_PATH . 'adr/includes/adr_functions_communicate.'.PHP_EXT);
 
 function adr_job_salary_check( $user_id )
 {
-	global $db , $adr_general , $lang , $phpEx , $board_config, $table_prefix ;
+	global $db , $adr_general , $lang , $board_config, $table_prefix ;
 
 	$user_id = intval($user_id);
 

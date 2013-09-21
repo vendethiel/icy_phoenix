@@ -30,6 +30,8 @@ $user->setup();
 // End session management
 //
 $user_id = $userdata['user_id'];
+// Load the headers
+$gen_simple_header = TRUE;
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 // Sorry , only logged users ...
@@ -43,9 +45,6 @@ if ( !$userdata['session_logged_in'] )
 // Get the general config
 $adr_general = adr_get_general_config();
 
-// Load the headers
-$gen_simple_header = TRUE;
-include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
 
 // Grab info
 adr_template_file('adr_battle_chatbox_body.tpl');

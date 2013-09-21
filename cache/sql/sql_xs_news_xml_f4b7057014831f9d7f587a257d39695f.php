@@ -1,0 +1,5 @@
+<?php exit; ?>
+1411326171
+SELECT * FROM ip_xs_news_xml ORDER BY xml_id ASC
+1010
+a:3:{i:0;a:10:{s:6:"xml_id";s:1:"1";s:9:"xml_title";s:19:"BBC News UK Edition";s:8:"xml_show";s:1:"1";s:8:"xml_feed";s:64:"http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml";s:11:"xml_is_feed";s:1:"1";s:9:"xml_width";s:3:"98%";s:10:"xml_height";s:2:"20";s:8:"xml_font";s:1:"0";s:9:"xml_speed";s:1:"3";s:13:"xml_direction";s:1:"0";}i:1;a:10:{s:6:"xml_id";s:1:"2";s:9:"xml_title";s:16:"Simple Text Test";s:8:"xml_show";s:1:"1";s:8:"xml_feed";s:86:"This is just some text I want to scroll, it could contain just about anything you like";s:11:"xml_is_feed";s:1:"0";s:9:"xml_width";s:3:"98%";s:10:"xml_height";s:2:"20";s:8:"xml_font";s:2:"13";s:9:"xml_speed";s:1:"3";s:13:"xml_direction";s:1:"0";}i:2;a:10:{s:6:"xml_id";s:1:"3";s:9:"xml_title";s:8:"Exchange";s:8:"xml_show";s:1:"1";s:8:"xml_feed";s:37:"http://rss.msexchange.org/allnews.xml";s:11:"xml_is_feed";s:1:"1";s:9:"xml_width";s:3:"98%";s:10:"xml_height";s:2:"20";s:8:"xml_font";s:1:"0";s:9:"xml_speed";s:1:"3";s:13:"xml_direction";s:1:"0";}}

@@ -427,7 +427,7 @@ $template->assign_vars(array(
 	"S_SUBMIT_ACTION" => append_sid("adr_cheat_moderate.$phpEx"),
 ));
 
-include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
+page_header();
 
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 

@@ -9,6 +9,8 @@ ALTER TABLE ip_users ADD COLUMN user_cell_enable_free INT(8) DEFAULT '0' NOT NUL
 ALTER TABLE ip_users ADD COLUMN user_cell_celleds INT(8) DEFAULT '0' NOT NULL;
 ALTER TABLE ip_users ADD COLUMN user_cell_punishment TINYINT(1) DEFAULT '0' NOT NULL;
 
+# cash mod stuff?!
+
 #
 # ADR
 #

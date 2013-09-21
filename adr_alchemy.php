@@ -54,7 +54,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_alchemy_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -130,7 +129,7 @@ if ( $mode != "" )
 			{	
 			    //Tool gets used even if character doesn't find anything
 			    adr_use_item($tool , $user_id);
-				$item = drop_gather_loot($area_id, $user_id, 'herbalism', #N#);
+				$item = drop_gather_loot($area_id, $user_id, 'alchemy', 14);
 
 				if ( !$item )
 				{

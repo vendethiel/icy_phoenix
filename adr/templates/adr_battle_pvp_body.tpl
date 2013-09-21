@@ -57,20 +57,20 @@
 		<td class="row1" width ="33%">
 		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" class="forumline">
 			<th width="100%" valign="top" colspan="2" style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" bordercolor="#C0C0C0">
-				<span class="gen">Stats personnage :</span>			
+				<span class="gen">{L_ADR_CHAR_STATS}</span>			
 			</th>
               <tr>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Physical Att:</b> {ATT}</span><br />
-			<span class="gensmall"><b>Physical Def:</b> {DEF}</span><br />
-			<span class="gensmall"><b>Magic Att:</b> {M_ATT}</span><br />
-			<span class="gensmall"><b>Magic Def:</b> {M_DEF}</span>
+			<span class="gensmall"><b>{L_ADR_ATT_PHY}</b> {ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_PHYS}</b> {DEF}</span><br />
+			<span class="gensmall"><b>{L_ADR_ATT_MAG}</b> {M_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_MAG}</b> {M_DEF}</span>
 			</td>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Alignment:</b> {ALIGNMENT}</span><br />
-			<span class="gensmall"><b>Element:</b> {ELEMENT}</span><br />
-			<span class="gensmall"><b>Class:</b> {CHALLENGER_CLASS}</span><br />
-			<span class="gensmall"><b>Armour Set:</b> {ARMOUR_SET}</span>
+			<span class="gensmall"><b>{L_ALIGN}</b> {ALIGNMENT}</span><br />
+			<span class="gensmall"><b>{L_ELEM}</b> {ELEMENT}</span><br />
+			<span class="gensmall"><b>{L_ADR_CLASS}</b> {CHALLENGER_CLASS}</span><br />
+			<span class="gensmall"><b>{L_ADR_SET}</b> {ARMOUR_SET}</span>
 			</td>
               </tr>
             </table>
@@ -78,20 +78,20 @@
 		<td class="row1" width ="33%">
 			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2" class="forumline">
 			<th width="100%" valign="top" colspan="2" style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" bordercolor="#C0C0C0">
-				<span class="gen">Stats attaquant :</span>			
+				<span class="gen">{L_ADR_OPP_STATS}</span>			
 			</th>
               <tr>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Physical Att:</b> {OPPONENT_ATT}</span><br />
-			<span class="gensmall"><b>Physical Def:</b> {OPPONENT_DEF}</span><br />
-			<span class="gensmall"><b>Magic Att:</b> {OPPONENT_M_ATT}</span><br />
-			<span class="gensmall"><b>Magic Def:</b> {OPPONENT_M_DEF}</span>
+			<span class="gensmall"><b>{L_ADR_ATT_PHY}</b> {OPPONENT_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_PHYS}</b> {OPPONENT_DEF}</span><br />
+			<span class="gensmall"><b>{L_ADR_ATT_MAG}</b> {OPPONENT_M_ATT}</span><br />
+			<span class="gensmall"><b>{L_ADR_DEF_MAG}</b> {OPPONENT_M_DEF}</span>
 			</td>
                 <td class="row1" width="50%" valign="top">
-			<span class="gensmall"><b>Alignment:</b> {OPPONENT_ALIGNMENT}</span><br />
-			<span class="gensmall"><b>Element:</b> {OPPONENT_ELEMENT}</span><br />
-			<span class="gensmall"><b>Class:</b> {OPPONENT_CLASS}</span><br />
-			<span class="gensmall"><b>Armour Set:</b> {OPPONENT_ARMOUR_SET}</span>
+			<span class="gensmall"><b>{L_ALIGN}</b> {OPPONENT_ALIGNMENT}</span><br />
+			<span class="gensmall"><b>{L_ELEM}</b> {OPPONENT_ELEMENT}</span><br />
+			<span class="gensmall"><b>{L_ADR_CLASS}</b> {OPPONENT_CLASS}</span><br />
+			<span class="gensmall"><b>{L_ADR_SET}</b> {OPPONENT_ARMOUR_SET}</span>
 			</td>
               </tr>
               </table>

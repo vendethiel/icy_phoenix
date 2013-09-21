@@ -33,7 +33,7 @@ $user->setup();
 //
 $user_id = $userdata['user_id'];
 $user_points = $userdata['user_points'];
-define('ADR_NO_HEADER', 1);
+if ($only_body) define('ADR_NO_HEADER', true);
 include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 include_once(IP_ROOT_PATH . 'adr/includes/adr_functions_global_chat.'.$phpEx);
 
@@ -46,11 +46,6 @@ if(!$userdata['session_logged_in']){
 
 // Get the general config
 $adr_general = adr_get_general_config();
-if (!$only_body)
-{
-	// Grab template file etc.
-	page_header();
-}
 adr_template_file('adr_battle_community_body.tpl', 'battle_community');
 
 $mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];

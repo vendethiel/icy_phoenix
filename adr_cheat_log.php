@@ -222,7 +222,7 @@ $template->assign_vars(array(
 	'PAGE_NUMBER'		=> $page_number,
 ));
 
-include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
+page_header();
 
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 

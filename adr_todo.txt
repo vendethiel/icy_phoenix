@@ -1,0 +1,5 @@
+Todo :
+
+check additional skills loottables work
+
+check user has an RPG char before accessing rabbitoshi

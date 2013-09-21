@@ -4,7 +4,7 @@
 <!-- BEGIN main -->
 <br />
 <form method="post" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Patterns to View</center></h1>
+<h1><center>{L_ADR_SELECT_RECIPES_TO_VIEW}</center></h1>
 <table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
 		<td>{RECIPEBOOK_SKILL_LINKS}</td>
@@ -22,7 +22,7 @@
 <!-- BEGIN view_recipes -->
 <br />
 <form method="post" name="list_recipes" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Patterns to View</center></h1>
+<h1><center>{L_ADR_SELECT_RECIPES_TO_VIEW}</center></h1>
 <table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
 		<td>{RECIPEBOOK_SKILL_LINKS}</td>
@@ -49,7 +49,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="font-family:'serif'">
-									<strong>Items Required:</strong>
+									<strong>{L_ADR_ITEMS_REQ}</strong>
 									<br />
 									{view_recipes.recipe.RECIPE_ITEMS_REQ}
 								</td>
@@ -61,19 +61,19 @@
 									<br />
 									<table border="0" width="320" cellspacing="0" cellpadding="0" align="left">
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Recipe Level:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_ADR_RECIPE_LEVEL}</td>
 											<td style="font-family:'serif'">{view_recipes.recipe.RECIPE_LEVEL}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Description:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_Description}</td>
 											<td style="font-family:'serif'">{view_recipes.recipe.RECIPE_DESC}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Price:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_PRICE}</td>
 											<td style="font-family:'serif'">{view_recipes.recipe.RECIPE_PRICE}</td>
 										</tr>
 										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Weight:</td>
+											<td style="font-family:'serif'" width="180" valign="top">{L_WEIGHT}</td>
 											<td style="font-family:'serif'">{view_recipes.recipe.RECIPE_WEIGHT}</td>
 										</tr>
 									</table>
@@ -106,23 +106,23 @@
 						<br />
 						<table border="0" width="340" cellspacing="0" cellpadding="0">
 							<tr>
-								<td style="font-family:'serif'" width="180">Level:</td>
+								<td style="font-family:'serif'" width="180">{L_LEVEL}</td>
 								<td style="font-family:'serif'">{view_recipes.recipe.RESULT_LEVEL}</td>
 							</tr>
 							<tr>
-								<td style="font-family:'serif'" width="180">Description:</td>
+								<td style="font-family:'serif'" width="180">{L_Description}</td>
 								<td style="font-family:'serif'">{view_recipes.recipe.RESULT_DESC}</td>
 							</tr>
 							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Price:</td>
+								<td style="font-family:'serif'" width="180" valign="top">{L_PRICE}</td>
 								<td style="font-family:'serif'">{view_recipes.recipe.RESULT_PRICE}</td>
 							</tr>
 							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Weight:</td>
+								<td style="font-family:'serif'" width="180" valign="top">{L_WEIGHT}</td>
 								<td style="font-family:'serif'">{view_recipes.recipe.RESULT_WEIGHT}</td>
 							</tr>
 							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Duration:</td>
+								<td style="font-family:'serif'" width="180" valign="top">{L_DURATION}</td>
 								<td style="font-family:'serif'">{view_recipes.recipe.RESULT_DURATION} / {view_recipes.recipe.RESULT_DURATION_MAX}</td>
 							</tr>
 						</table>
@@ -137,9 +137,4 @@
 </form>
 <!-- END view_recipes -->
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center"><span class="gen"><a href="http://www.nightcrawlers.be">ADR Recipebook written by: Himmelweiss</a></span></td>
-	</tr>
-</table>
 <br clear="all" />

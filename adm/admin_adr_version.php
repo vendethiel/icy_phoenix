@@ -19,7 +19,7 @@ if( !empty($setmodules) )
 }
 
 define('IP_ROOT_PATH', "./../");
-
+if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 require("pagestart.$phpEx");
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 adr_template_file('admin/config_adr_version_body.tpl');

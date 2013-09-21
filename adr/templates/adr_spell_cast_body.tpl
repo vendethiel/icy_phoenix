@@ -16,9 +16,4 @@
 </form>
 <br />
 
-<table width="100%">
-	<tr>
-		<td align="center"><span class="gen"><a href="{U_COPYRIGHT}">{L_COPYRIGHT}</a></span></td>
-	</tr>
-</table>
 <br clear="all" />

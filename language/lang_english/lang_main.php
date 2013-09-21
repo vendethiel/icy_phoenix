@@ -31,6 +31,8 @@ if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
 }
+$lang['RABBITOSHI_TOPIC']='Voir le familier de l\'utilisateur'; 
+
 
 $lang['BBC_IP_CREDITS_STATIC'] = '
 <a href="http://www.icyphoenix.com" title="Icy Phoenix"><img src="http://www.icyphoenix.com/images/logo_ip.png" alt="Icy Phoenix" title="Icy Phoenix" /></a><br />

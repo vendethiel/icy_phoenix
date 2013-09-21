@@ -1,4 +1,4 @@
-<!-- INCLUDE ../../adr/templates/adr_header_body -->
+<!-- INCLUDE ../../adr/templates/adr_header_body.tpl -->
 
 <table align="center" border="0" cellpadding="3" cellspacing="1" width="100%">
 	<tr>

@@ -66,6 +66,7 @@
 			</b>
 			</div>
 		</div>
+		<br/>
 
 		<!-- IF postrow.S_CARD_SWITCH_Y_R_A -->
 			<!-- IF postrow.S_CARD_SWITCH_R_A -->
@@ -96,6 +97,7 @@
 			<!-- IF not S_BOT -->
 			<!-- BEGIN switch_poster_info -->
 			{postrow.CASH}<br />
+			{postrow.ADR_TOPIC_BOX}<a href="{postrow.RABBITOSHI_LINK}" >{L_RABBITOSHI_TOPIC}</a><br/><br/>
 			{postrow.POSTER_NO}<br />
 			{postrow.POSTER_LANG}
 			{postrow.POSTER_STYLE}

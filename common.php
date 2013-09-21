@@ -297,6 +297,9 @@ if ((isset($_GET['lofi']) && (intval($_GET['lofi']) == 1)) || (isset($_COOKIE[$c
 // ADR COMPAT
 $board_config = &$config;
 $userdata = &$user->data;
+##=== ADR START: includes ADR function file for general phpBB pages ===#
+include_once(IP_ROOT_PATH . 'adr/includes/adr_functions_alone.'.PHP_EXT);
+##=== ADR END ===#
 
 /*
 foreach ($cache->obtain_hooks() as $hook)

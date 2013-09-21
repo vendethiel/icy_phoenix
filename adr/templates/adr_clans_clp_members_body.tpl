@@ -30,11 +30,6 @@
 			<a href="{FILE}?action=clp&t=news&clan={CLAN}" class="gensmall">{L_NEWS}</a>
 			</td></tr></table>
 		</td>
-		<td nowrap="nowrap" align="right" width="48%" style="border-bottom : 1px solid Black;"><span class="gensmall">
-			<!-- BEGIN nuladion -->
-				{nuladion.NULADION}
-			<!-- END nuladion -->
-		</span></td>
 
 		</tr>
 

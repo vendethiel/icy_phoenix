@@ -29,8 +29,6 @@ define('IN_ADR_TOWN', true);
 define('IP_ROOT_PATH', './');
 if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include_once(IP_ROOT_PATH . 'common.'.$phpEx);
-include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
-include_once(IP_ROOT_PATH . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
 $loc = 'town';
 $sub_loc = 'adr_TownMap';
 
@@ -42,6 +40,7 @@ $user->setup();
 // End session management
 //
 
+include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 $user_id = $userdata['user_id'];
 
 // Sorry , only logged users ...
@@ -218,15 +217,7 @@ if ( $destination_zone_required_level && $destination_zone_required_item && $des
 			// Delete broken items from users inventory
 		if ( $new_scroll_item_duration < 1 )
 		{
-			$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-				WHERE item_duration < 1
-   				AND item_in_shop = '0'
-				AND item_in_warehouse = '0'
-				AND item_owner_id = $user_id ";
-			if( !($result = $db->sql_query($sql)) )
-			{
-				message_die(GENERAL_ERROR, $lang['Adr_zone_maps_error_message_7'], '', __LINE__, __FILE__, $sql);
-			}
+			remove_items_broken($user_id);
 		}
 		$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
        		WHERE zone_id = '$destination_zone_id' ";

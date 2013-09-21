@@ -276,6 +276,14 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 		$news_id = 0;
 	}
 	// END cmx_slash_news_mod
+	
+	##=== ADR START: add experience points to poster ===##
+	if ($mode == 'newtopic' || $mode == 'reply' || $mode == 'editpost') 
+	{
+	    adr_add_experience_points($user->data['user_id'], $mode);
+	}
+	##=== ADR END ===##
+
 
 	include(IP_ROOT_PATH . 'includes/functions_search.' . PHP_EXT);
 

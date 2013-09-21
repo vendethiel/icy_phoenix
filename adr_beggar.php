@@ -31,7 +31,6 @@ define('IN_ADR_SHOPS', true);
 define('IP_ROOT_PATH', './'); 
 if (!defined('PHP_EXT')) define('PHP_EXT', $phpEx = substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . $phpEx);
-include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 $loc = 'town';
 $sub_loc = 'adr_beggar';
@@ -43,6 +42,7 @@ $auth->acl($user->data);
 $user->setup();
 // End session management
 //
+include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 $user_id = $userdata['user_id'];
 
@@ -56,7 +56,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_beggar_body.tpl');
-page_header();
 
 // Deny access if the user is into a battle
 $sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 

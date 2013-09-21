@@ -332,9 +332,9 @@ else if ( !empty($_POST['goto3']) && !$in_battle )
 {
 	zone_goto($goto3_name, $cost_goto3);
 }
-else if ( !empty($_POST['goto3']) && !$in_battle )
+else if ( !empty($_POST['goto4']) && !$in_battle )
 {
-	zone_goto($goto3_name, $cost_goto3);
+	zone_goto($goto4_name, $cost_goto4);
 }
 else if ( !empty($_POST['return']) && !$in_battle )
 {
@@ -531,91 +531,14 @@ if($a!=0)
 
 //
 // BEGIN of zones seasons and weather and time
-//
+// Informpro's refactor
 
-//Begin seasons
-$actual_season = $board_config['adr_seasons'];
+list($season_image, $season_name) = get_season_infos($config['adr_seasons']);
+list($weather_image, $weather_name) = get_weather_infos($adr_user['character_weather']);
+list($time_image, $time_name) = get_time_infos($config['adr_time']);
 
-if ( $actual_season == '1' ) 
-{
-	$season_image = 'spring';
-	$season_name = $lang['Adr_Zone_Season_1'];
-}
-
-if ( $actual_season == '2' ) 
-{
-	$season_image = 'summer';
-	$season_name = $lang['Adr_Zone_Season_2'];
-}
-
-if ( $actual_season == '3' ) 
-{
-	$season_image = 'automn';
-	$season_name = $lang['Adr_Zone_Season_3'];
-}
-
-if ( $actual_season == '4' ) 
-{
-	$season_image = 'winter';
-	$season_name = $lang['Adr_Zone_Season_4'];
-}
-
-//Begin weather
-// V: better that way
-$weather = $adr_user['character_weather'];
-$weathers = array('sun', 'night', 'cloud', 'rain', 'cloudsun', 'snow');
-$weather_image = $weathers[$weather-1];
-$weather_name = $lang['Adr_Zone_Weather_'.$weather];
-
-//Begin time
-$actual_time = $board_config['adr_time'];
-if ( $actual_time == '1' )
-{
-	$time_image = 'dawn';
-	$time_name = $lang['Adr_Zone_Time_1'];
-}
-if ( $actual_time == '2' )
-{
-	$time_image = 'day';
-	$time_name = $lang['Adr_Zone_Time_2'];
-}
-if ( $actual_time == '3' )
-{
-	$time_image = 'dusk';
-	$time_name = $lang['Adr_Zone_Time_3'];
-}
-if ( $actual_time == '4' )
-{
-	$time_image = 'night';
-	$time_name = $lang['Adr_Zone_Time_4'];
-}
-
-
-//
-// END of zones seasons and weather and time
-//
-
-//
 // BEGIN of characters in zone
-//
-
-$sql = " SELECT * FROM  " . ADR_CHARACTERS_TABLE . "
-      WHERE character_area = '$area_id'
-	ORDER BY character_name ASC";
-if( !($result = $db->sql_query($sql)) )
-        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-$users_connected_list = '';
-while( $row = $db->sql_fetchrow($result)) 
-	$users_connected_list.=' <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a> . ';
-
-if ( !$users_connected_list) $users_connected_list = $lang['None'];
-
-$users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $users_connected_list;
-
-//
-// END of characters in zone
-//
+$users_connected_list = zone_get_characters($area_id);
 
 // Dynamic Zone Maps
 $sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id=$area_id";

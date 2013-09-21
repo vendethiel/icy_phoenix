@@ -25,6 +25,7 @@ $ct_ignoregvar = array('');
 // Added to optimize memory for attachments
 define('ATTACH_DISPLAY', true);
 define('IN_ICYPHOENIX', true);
+define('ADR_NO_HEADER', true);
 if (!defined('IP_ROOT_PATH')) define('IP_ROOT_PATH', './');
 if (!defined('PHP_EXT')) define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1));
 include(IP_ROOT_PATH . 'common.' . PHP_EXT);
@@ -50,6 +51,12 @@ $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 // End session management
+
+##=== ADR START: check user if in cell or not ===#
+if(($userdata['user_cell_time'] > '0') && (!defined('CELL')) && ($userdata['session_logged_in']) && ($userdata['user_level'] != ADMIN) && (($userdata['user_cell_punishment'] == '2') || ($userdata['user_cell_punishment'] == '3'))){
+	redirect(append_sid("adr_cell.$phpEx", true));
+}
+##=== ADR END ===#
 
 setup_extra_lang(array('lang_rate'));
 
@@ -651,7 +658,7 @@ $self_sql_tables = (intval($is_auth['auth_read']) == AUTH_SELF) ? ', ' . USERS_T
 $self_sql = (intval($is_auth['auth_read']) == AUTH_SELF) ? " AND t.topic_poster = u2.user_id AND (u2.user_id = '" . $user->data['user_id'] . "' OR t.topic_type = '" . POST_GLOBAL_ANNOUNCE . "' OR t.topic_type = '" . POST_ANNOUNCE . "' OR t.topic_type = '" . POST_STICKY . "')" : '';
 // Self AUTH - END
 
-$sql = "SELECT u.username, u.user_id, u.user_active, u.user_mask, u.user_color, u.user_first_name, u.user_last_name, u.user_posts, u.user_from, u.user_from_flag, u.user_website, u.user_email, u.user_aim, u.user_facebook, u.user_flickr, u.user_googleplus, u.user_icq, u.user_jabber, u.user_linkedin, u.user_msnm, u.user_skype, u.user_twitter, u.user_yim, u.user_youtube, u.user_regdate, u.user_allow_viewemail, u.user_rank, u.user_rank2, u.user_rank3, u.user_rank4, u.user_rank5, u.user_sig, u.user_avatar, u.user_avatar_type, u.user_allowavatar, u.user_allowsmile, u.user_allow_viewonline, u.user_session_time, u.user_warnings, u.user_level, u.user_birthday, u.user_next_birthday_greeting, u.user_gender, u.user_personal_pics_count, u.user_style, u.user_lang" . $activity_sql . $profile_data_sql . ", u.ct_miserable_user, p.*, t.topic_poster, t.title_compl_infos
+$sql = "SELECT u.username, u.user_id, u.user_cell_time, u.user_active, u.user_mask, u.user_color, u.user_first_name, u.user_last_name, u.user_posts, u.user_from, u.user_from_flag, u.user_website, u.user_email, u.user_aim, u.user_facebook, u.user_flickr, u.user_googleplus, u.user_icq, u.user_jabber, u.user_linkedin, u.user_msnm, u.user_skype, u.user_twitter, u.user_yim, u.user_youtube, u.user_regdate, u.user_allow_viewemail, u.user_rank, u.user_rank2, u.user_rank3, u.user_rank4, u.user_rank5, u.user_sig, u.user_avatar, u.user_avatar_type, u.user_allowavatar, u.user_allowsmile, u.user_allow_viewonline, u.user_session_time, u.user_warnings, u.user_level, u.user_birthday, u.user_next_birthday_greeting, u.user_gender, u.user_personal_pics_count, u.user_style, u.user_lang" . $activity_sql . $profile_data_sql . ", u.ct_miserable_user, p.*, t.topic_poster, t.title_compl_infos
 	FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . TOPICS_TABLE . " t" . $self_sql_tables . "
 	WHERE p.topic_id = $topic_id
 		AND t.topic_id = p.topic_id
@@ -1437,6 +1444,17 @@ if (!empty($config['plugins']['feedback']['enabled']) && !empty($config['plugins
 }
 // Mighty Gorgon - Feedback - END
 
+#==== Get all adr info OUTSIDE the looping array, so it doesn't keep adding up SQL's. We can use the
+#==== info from the array later in the loop below. I'm gonna add my name for faster finding later.
+$adr_topic_info_char 	= adr_get_posters_char_info();
+$adr_topic_info_race 	= adr_get_posters_races_info();
+$adr_topic_info_elem 	= adr_get_posters_elements_info();
+$adr_topic_info_clas 	= adr_get_posters_class_info();
+$adr_topic_info_alig 	= adr_get_posters_alignment_info();
+$adr_topic_info_pvp	= adr_get_posters_pvp_info();
+$adr_topic_info_adr	= adr_get_posters_adr_info();
+#==== Added By aUsTiN
+
 // Okay, let's do the loop, yeah come on baby let's do the loop and it goes like this ...
 $ip_display_auth = ip_display_auth($user->data, true);
 for($i = 0; $i < $total_posts; $i++)
@@ -2059,6 +2077,13 @@ for($i = 0; $i < $total_posts; $i++)
 
 	$user_sig = ($postrow[$i]['enable_sig'] && (trim($postrow[$i]['user_sig']) != '') && $config['allow_sig']) ? $postrow[$i]['user_sig'] : '';
 
+	#==== Removed By aUsTiN
+	#$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $userdata['user_id']);
+	if(($postrow[$i]['user_id'] != ANONYMOUS) && ($postrow[$i]['user_adr_ban'] != '1'))
+		$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $adr_topic_info_char, $adr_topic_info_race, $adr_topic_info_elem, $adr_topic_info_clas, $adr_topic_info_alig, $adr_topic_info_pvp, $adr_topic_info_adr, $adr_topic_info_jobs, $postrow[$i]['user_cell_time']);
+	#==== Added By aUsTiN
+	$rabbitoshi_link = append_sid("rabbitoshi.".PHP_EXT."?" . POST_USERS_URL . "=" . $postrow[$i]['user_id']);
+	
 	// Replace Naughty Words - BEGIN
 	$post_subject = censor_text($post_subject);
 	$user_sig = censor_text($user_sig);
@@ -2360,6 +2385,8 @@ for($i = 0; $i < $total_posts; $i++)
 	$row_class = (!($i % 2)) ? $theme['td_class1'] : $theme['td_class2'];
 
 	$template->assign_block_vars('postrow', array(
+		'ADR_TOPIC_BOX' => $adr_topic_box, 
+		'RABBITOSHI_LINK' => $rabbitoshi_link,
 		// Mighty Gorgon - Feedback - BEGIN
 		'FEEDBACK' => $feedback_received . $feedback_add,
 		// Mighty Gorgon - Feedback - END

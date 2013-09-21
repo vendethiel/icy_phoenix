@@ -50,7 +50,7 @@ $adr_user = adr_get_user_infos($user_id);
 
 // Load the headers
 $gen_simple_header = TRUE;
-//include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
+//page_header();
 adr_template_file('adr_global_chat_body.tpl');
 
 	$mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];
@@ -223,7 +223,7 @@ adr_template_file('adr_global_chat_body.tpl');
 	}
 
 	// Include page header now to prevent redirect errors
-	// include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
+	// page_header();
 	if(!$mode){
 		if(!$todays_chat)
 			$todays_chat = '%S%*'.$lang['Adr_global_shout_error_no_log'].'*%E%';

@@ -238,6 +238,10 @@ if (($mode == 'edit') || (($mode == 'save') && (isset($_POST['acp_username']) ||
 		$user_allowavatar = request_post_var('user_allowavatar', 0);
 		$user_posts = request_post_var('user_posts', 0);
 
+		##=== ADR START ===#
+		$user_adr_ban = request_post_var('user_adr_ban', 0);
+		##=== ADR END ===#
+		
 		$user_group_id = request_post_var('group_id', '0');
 		$user_color = check_valid_color(request_post_var('user_color', ''));
 		$user_color = (!empty($user_color) ? $user_color : '');
@@ -990,6 +994,9 @@ if (($mode == 'edit') || (($mode == 'save') && (isset($_POST['acp_username']) ||
 		$user_allowpm = $this_userdata['user_allow_pm'];
 		$user_posts = $this_userdata['user_posts'];
 
+		##=== ADR START ===##
+		$user_adr_check = $this_userdata['user_adr_ban'];
+		##=== ADR END ===##
 		$coppa = false;
 
 		$html_status = ($this_userdata['user_allowhtml']) ? $lang['HTML_is_ON'] : $lang['HTML_is_OFF'];
@@ -1114,6 +1121,9 @@ if (($mode == 'edit') || (($mode == 'save') && (isset($_POST['acp_username']) ||
 		//Start Quick Administrator User Options and Information MOD
 		$s_hidden_fields .= '<input type="hidden" name="redirect" value="' . $redirect .'" />';
 		//End Quick Administrator User Options and Information MOD
+		##=== ADR START ===##
+		$s_hidden_fields .= '<input type="hidden" name="user_adr_ban" value="' . $user_adr_check. '" />';
+		##=== ADR END ===##
 
 		if(!empty($user_avatar_local))
 		{
@@ -1632,6 +1642,10 @@ if (($mode == 'edit') || (($mode == 'save') && (isset($_POST['acp_username']) ||
 			'ALLOW_PM_NO' => (!$user_allowpm) ? 'checked="checked"' : '',
 			'ALLOW_AVATAR_YES' => ($user_allowavatar) ? 'checked="checked"' : '',
 			'ALLOW_AVATAR_NO' => (!$user_allowavatar) ? 'checked="checked"' : '',
+			##=== ADR START ===##
+			'ADR_BAN_YES' => ($user_adr_check) ? 'checked="checked"' : '',
+			'ADR_BAN_NO' => (!$user_adr_check) ? 'checked="checked"' : '',
+			##=== ADR END ===##
 // UPI2DB - BEGIN
 			'DISABLE_UPI2DB_YES' => ($user_upi2db_disable) ? 'checked="checked"' : '',
 			'DISABLE_UPI2DB_NO' => (!$user_upi2db_disable) ? 'checked="checked"' : '',
@@ -1816,6 +1830,11 @@ else
 		'L_USER_EXPLAIN' => $lang['User_admin_explain'],
 		'L_USER_SELECT' => $lang['Select_a_User'],
 		'L_LOOK_UP' => $lang['Look_up_user'],
+
+		##=== ADR START ===##
+		'L_USER_ADR_BAN' => $lang['User_adr_ban'],
+		'L_USER_ADR_BAN_EXPLAIN' => $lang['User_adr_ban_explain'], 
+		##=== ADR END ===##
 
 		'U_SEARCH_USER' => append_sid('../' . CMS_PAGE_SEARCH . '?mode=searchuser'),
 

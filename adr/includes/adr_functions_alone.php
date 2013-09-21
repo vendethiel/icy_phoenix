@@ -26,7 +26,7 @@ if ( !defined('IN_ICYPHOENIX') )
 
 function adr_delete_character($user_id)
 {
-	global $db , $phpEx , $table_prefix ;
+	global $db , $table_prefix ;
 
 	define('IN_ADR_ADMIN', 1);
 	define('IN_ADR_SHOPS', 1);
@@ -36,8 +36,8 @@ function adr_delete_character($user_id)
 	define('IN_ADR_TEMPLE', 1);
 	define('IN_ADR_CHARACTER', 1);
 
-	include_once(IP_ROOT_PATH . 'includes/constants.'.$phpEx);
-	include_once(IP_ROOT_PATH . 'adr/includes/adr_constants.'.$phpEx);
+	include_once(IP_ROOT_PATH . 'includes/constants.'.PHP_EXT);
+	include_once(IP_ROOT_PATH . 'adr/includes/adr_constants.'.PHP_EXT);
 
 	$user_id = intval($user_id);
 
@@ -100,10 +100,10 @@ function adr_delete_character($user_id)
 
 function adr_add_experience_points($user_id,$mode)
 {
-	global $lang , $phpEx , $userdata , $db , $board_config,$table_prefix ;
+	global $lang , $userdata , $db , $board_config,$table_prefix ;
 
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH . 'adr/includes/adr_constants.'.$phpEx);
+	include_once(IP_ROOT_PATH . 'adr/includes/adr_constants.'.PHP_EXT);
 
 	$user_id = intval($user_id);
 
@@ -152,8 +152,8 @@ function adr_add_experience_points($user_id,$mode)
 #==== all nice & cached, but yea, 4 queries PER POST was not working So lets use 5 Queries TOTAL.
 function adr_get_posters_adr_info()
 {
-	global $db, $phpEx, $table_prefix;
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	global $db, $table_prefix;
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT * FROM ". ADR_GENERAL_TABLE;
 	$r = $db->sql_query($q, false, 'adr_config');
@@ -178,9 +178,9 @@ function adr_get_posters_pvp_info()
 
 function adr_get_posters_char_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db, $table_prefix;
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT * FROM ". ADR_CHARACTERS_TABLE;
 	$r = $db->sql_query($q, false, 'adr_chars');
@@ -192,9 +192,9 @@ function adr_get_posters_char_info()
 
 function adr_get_posters_alignment_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db, $table_prefix;
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT * FROM ". ADR_ALIGNMENTS_TABLE;
 	$r = $db->sql_query($q, false, 'adr_infos');
@@ -205,9 +205,9 @@ function adr_get_posters_alignment_info()
 
 function adr_get_posters_class_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db,  $table_prefix;
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT * FROM ". ADR_CLASSES_TABLE;
 	$r = $db->sql_query($q, false, 'adr_infos');
@@ -218,9 +218,9 @@ function adr_get_posters_class_info()
 
 function adr_get_posters_races_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db,  $table_prefix;
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT * FROM ". ADR_RACES_TABLE;
 	$r = $db->sql_query($q, false, 'adr_infos');
@@ -231,9 +231,9 @@ function adr_get_posters_races_info()
 
 function adr_get_posters_elements_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db,  $table_prefix;
 	define('IN_ADR_CHARACTER', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 
 	$q = "SELECT *
 		  FROM ". ADR_ELEMENTS_TABLE;
@@ -246,9 +246,9 @@ function adr_get_posters_elements_info()
 
 function character_rank_info()
 {
-	global $db, $phpEx, $table_prefix;
+	global $db, $table_prefix;
 
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
 	define('IN_ADR_CHARACTER', 1);
 
 	static $r;
@@ -269,12 +269,12 @@ function character_rank_info()
 
 function adr_display_poster_infos($poster_id, $character_info, $race_info, $element_info, $class_info, $alignment_info, $pvp_info, $adr_con_info, $job_info, $user_cell_time)
 {
-	global $db, $lang, $board_config, $phpEx, $table_prefix, $userdata;
+	global $db, $lang, $board_config, $table_prefix, $userdata;
 	define('IN_ADR_CHARACTER', 1);
 	define('IN_ADR_BATTLE', 1);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. $phpEx);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_global.'. $phpEx);
-	include_once(IP_ROOT_PATH .'adr/includes/adr_functions_battle.'. $phpEx);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_constants.'. PHP_EXT);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_global.'. PHP_EXT);
+	include_once(IP_ROOT_PATH .'adr/includes/adr_functions_battle.'. PHP_EXT);
 
 	$adr_general 			= $adr_con_info;
 	$topic_config 			= explode('-', $board_config['Adr_topics_display']);
@@ -302,16 +302,16 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 
 			#==== Show INACTIVE or JAILED status, if necessary
 //				if($character_info[$adr]['character_prefs_active'] == '0'){
-//					$adr_topic_box .= ($poster_id == $userdata['user_id']) ? sprintf($lang['Adr_character_inactive_topic'], '<a href="'. append_sid('adr_character_prefs.'. $phpEx .').'">', '</a>').'<br><br>' : sprintf($lang['Adr_character_inactive_topic'], '<b>', '</b>').'<br><br>';
+//					$adr_topic_box .= ($poster_id == $userdata['user_id']) ? sprintf($lang['Adr_character_inactive_topic'], '<a href="'. append_sid('adr_character_prefs.'. PHP_EXT .').'">', '</a>').'<br><br>' : sprintf($lang['Adr_character_inactive_topic'], '<b>', '</b>').'<br><br>';
 //				}
 //				elseif(($character_info[$adr]['character_prefs_active'] != '0') && ($user_cell_time > '0')){
 			if($user_cell_time > '0'){
-				$adr_topic_box .= ($poster_id != $userdata['user_id']) ? sprintf($lang['Adr_character_status_jail_topic'], '<a target="_blank" href="'. append_sid('adr_courthouse.'. $phpEx .'?celled_user_id='.$poster_id).'">', '</a>').'<br><br>' : sprintf($lang['Adr_character_status_jail_topic'], '<b>', '</b>').'<br><br>';
+				$adr_topic_box .= ($poster_id != $userdata['user_id']) ? sprintf($lang['Adr_character_status_jail_topic'], '<a target="_blank" href="'. append_sid('adr_courthouse.'. PHP_EXT .'?celled_user_id='.$poster_id).'">', '</a>').'<br><br>' : sprintf($lang['Adr_character_status_jail_topic'], '<b>', '</b>').'<br><br>';
 			}
 
 			#==== Show character_name
 			if ($topic_config[5])
-				$adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. $phpEx .'?u='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
+				$adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. PHP_EXT .'?u='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
 
 			#==== Show current rank
 			if ($topic_config[7])
@@ -355,17 +355,17 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 						#==== Check if is current chars turn
 						if($this_battle_turn == $userdata['user_id'])
 						{
-							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_battle_pvp.$phpEx?battle_id=". $this_battle_id) .'" target="_parent">'. $lang['Adr_pvp_post_your_turn'] .'</a><br />';
+							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_battle_pvp.".PHP_EXT."?battle_id=". $this_battle_id) .'" target="_parent">'. $lang['Adr_pvp_post_your_turn'] .'</a><br />';
 						}
 						elseif(($this_battle_turn == 0) && ($this_battle_result == 0))
 						{
 							$opponent_turn = sprintf($lang['Adr_pvp_post_opponent_turn'], $character_info[$adr]['character_name']);
-							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_character_pvp.$phpEx?mode=waiting") .'" target="_parent"><i>'. $lang['Adr_pvp_opponent_awaiting'] .'</i></a><br />';
+							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_character_pvp.".PHP_EXT."?mode=waiting") .'" target="_parent"><i>'. $lang['Adr_pvp_opponent_awaiting'] .'</i></a><br />';
 						}
 						else
 						{
 							$opponent_turn = sprintf($lang['Adr_pvp_post_opponent_turn'], $character_info[$adr]['character_name']);
-							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_battle_pvp.$phpEx?mode=see&amp;battle_id=". $this_battle_id) .'" target="_parent">'. $opponent_turn .'</a><br />';
+							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_battle_pvp.".PHP_EXT."?mode=see&amp;battle_id=". $this_battle_id) .'" target="_parent">'. $opponent_turn .'</a><br />';
 						}
 					}
 					else
@@ -383,7 +383,7 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 						$total = $total_battles;
 
 						if ( ($adr_general['battle_pvp_defies_max'] >= $total) && ($adr_general['battle_pvp_defies_max']) && ($poster_id != $userdata['user_id']))
-							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_character_pvp.$phpEx?mode=defy_action&amp;defied=". $poster_id).'" target="_parent">'. $lang['Adr_pvp_post_attack'] .'</a><br />';
+							$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_pvp_post_text'] . ':&nbsp;<a href="'. append_sid("adr_character_pvp.".PHP_EXT."?mode=defy_action&amp;defied=". $poster_id).'" target="_parent">'. $lang['Adr_pvp_post_attack'] .'</a><br />';
 						}
 					} #==== Close 2nd if statement
 				} #==== End of pvp check
@@ -499,7 +499,7 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 #======================================================================= |
 function adr_character_created_check($user_id)
 {
-	global $db , $lang , $phpEx  , $board_config, $table_prefix ;
+	global $db , $lang , $board_config, $table_prefix ;
 
 	$user_id = intval($user_id);
 

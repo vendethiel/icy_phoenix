@@ -1,0 +1,682 @@
+##############################################################
+## MOD Title: Icy Dungeons & Rabbits ("Informpro's Dungeons & Dragons" : premodded ADR)
+## MOD Author: Informpro (http://icyphoenix.com)
+## MOD Author Origin (v0.3.x): Seteo-Bloke (www.adr-support.com)
+## MOD Author Original (v0.2.1): Dr. DLP
+##
+## MOD Description: A fully featured RPG system for your Icy Phoenix forum
+##
+## MOD Version: 1.0.0
+##
+## Installation Level: Easy
+## Installation Time: 20 minutes
+##
+############################################################## 
+## For Security Purposes, Please Check: http://www.phpbb.com/mods/ for the 
+## latest version of this MOD. Downloading this MOD from other sites could cause malicious code 
+## to enter into your phpBB Forum. As such, phpBB will not offer support for MOD's not offered 
+## in our MOD-Database, located at: http://www.phpbb.com/mods/ 
+############################################################## 
+##
+## Releases notes :
+##  1.0.0 :
+##   First version, based of ShadowTek's premod
+##   Currently has 41 mods + ADR (upgraded to ADR 0.4.5 from ShadowTek's 0.3.4)
+##
+############################################################## 
+## Before Adding This MOD To Your Forum, You Should Back Up All Files Related To This MOD 
+############################################################
+
+#
+#--------------[ INFORMATION: PLEASE READ THIS FIRST! ]-------------
+#
+You need to have the "cash" plugin installed and running on your board !
+You also need a currency using the column "user_points"
+
+#
+#-----[ COPY ]------------------------------------------
+#
+includes/page_tail.php
+adr_*.php
+adr/*
+rabbitoshi.php
+rabbitoshi_.php
+rabbitoshi/*
+
+#
+#-----[ CHMOD ]-----------------------------------------
+#
+CHMOD all the files directly under adr/cache/
+
+#
+#-----[ SQL ]-------------------------------------------
+#
+Execute first adr_schema.sql then adr_basic.sql
+
+# 
+#-----[ OPEN ]------------------------------------------
+#
+common.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+?>
+
+#
+#-----[ BEFORE, ADD ]-----------------------------------
+#
+
+// ADR COMPAT
+$board_config = &$config;
+$userdata = &$user->data;
+
+##=== ADR START: includes ADR function file for general phpBB pages ===#
+include_once(IP_ROOT_PATH . 'adr/includes/adr_functions_alone.'.PHP_EXT);
+##=== ADR END ===#
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+posting.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+// End session management
+
+#
+#-----[ AFTER, ADD ]------------------------------------
+#
+
+##=== ADR START: check user if in cell or not ===#
+if(($userdata['user_cell_time'] > '0') && (!defined('CELL')) && ($userdata['session_logged_in']) && ($userdata['user_level'] != ADMIN) && (($userdata['user_cell_punishment'] == '2') || ($userdata['user_cell_punishment'] == '3'))){
+	redirect(append_sid("adr_cell.".PHP_EXT, true));
+}
+##=== ADR END ===#
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+viewtopic.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+define('IN_ICYPHOENIX', true);
+
+#
+#-----[ AFTER, ADD ]------------------------------------
+#
+
+define('ADR_NO_HEADER', true);
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+// Self AUTH - END
+
+$sql = "SELECT u.username, u.user_id
+
+#
+#--------------[ INLINE FIND ]--------------------------
+#
+
+$sql = "SELECT u.username, u.user_id
+
+
+#
+#--------------[ INLINE AFTER, ADD ]--------------------
+#
+
+, u.user_cell_time
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+// Okay, let's do the loop, yeah come on baby let's do the loop
+
+
+#
+#--------------[ BEFORE, ADD ]--------------------------
+#
+
+#==== Get all adr info OUTSIDE the looping array, so it doesn't keep adding up SQL's. We can use the
+#==== info from the array later in the loop below. I'm gonna add my name for faster finding later.
+$adr_topic_info_char 	= adr_get_posters_char_info();
+$adr_topic_info_race 	= adr_get_posters_races_info();
+$adr_topic_info_elem 	= adr_get_posters_elements_info();
+$adr_topic_info_clas 	= adr_get_posters_class_info();
+$adr_topic_info_alig 	= adr_get_posters_alignment_info();
+$adr_topic_info_pvp	= adr_get_posters_pvp_info();
+$adr_topic_info_adr	= adr_get_posters_adr_info();
+#==== Added By aUsTiN
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+// End session management
+
+#
+#-----[ AFTER, ADD ]------------------------------------
+#
+
+##=== ADR START: check user if in cell or not ===#
+if(($userdata['user_cell_time'] > '0') && (!defined('CELL')) && ($userdata['session_logged_in']) && ($userdata['user_level'] != ADMIN) && (($userdata['user_cell_punishment'] == '2') || ($userdata['user_cell_punishment'] == '3'))){
+	redirect(append_sid("adr_cell.".PHP_EXT, true));
+}
+##=== ADR END ===#
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+	$user_sig = ($postrow[$i]['enable_sig'] && (trim($postrow[$i]['user_sig']) != '') && $config['allow_sig']) ? $postrow[$i]['user_sig'] : '';
+
+# 
+#-----[ AFTER, ADD ]------------------------------------------ 
+#
+
+	#==== ADR - IDR
+	if(($postrow[$i]['user_id'] != ANONYMOUS) && ($postrow[$i]['user_adr_ban'] != '1'))
+		$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $adr_topic_info_char, $adr_topic_info_race, $adr_topic_info_elem, $adr_topic_info_clas, $adr_topic_info_alig, $adr_topic_info_pvp, $adr_topic_info_adr, $adr_topic_info_jobs, $postrow[$i]['user_cell_time']);
+	$adr_topic_box = ($postrow[$i]['user_id'] != '-1') ? $adr_topic_box : '';
+	$rabbitoshi_link = append_sid("rabbitoshi.".PHP_EXT."?" . POST_USERS_URL . "=" . $postrow[$i]['user_id']);
+	#==== ADR - End
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+	$template->assign_block_vars('postrow', array(
+
+# 
+#-----[ AFTER, ADD ]------------------------------------------ 
+#
+
+		'ADR_TOPIC_BOX' => $adr_topic_box, 
+		'RABBITOSHI_LINK' => $rabbitoshi_link,
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/functions_users_delete.php
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+		$sql = "DELETE FROM " . USER_GROUP_TABLE . " WHERE user_id = " . $user_id;
+		$db->sql_query($sql);
+
+# 
+#-----[ AFTER, ADD ]------------------------------------------ 
+#
+
+		##=== ADR START: include ADR character deletion function ===##
+		adr_delete_character($user_id);
+		##=== ADR END ===#
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+adm/admin_users.php
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+		$user_posts = request_post_var('user_posts', 0);
+
+# 
+#-----[ AFTER, ADD ]------------------------------------------ 
+#
+
+		##=== ADR START ===#
+		$user_adr_ban = request_post_var('user_adr_ban', 0);
+		##=== ADR END ===#
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+			$sql = "UPDATE " . USERS_TABLE . "
+				SET " . $username_sql . $passwd_sql . "user_email = '" . $db->sql_escape($email) . "', user_email_hash = '" . $db->sql_escape(phpbb_email_hash($email)) . "', user_website = '" . $db->sql_escape($website) . "', user_occ = '" . $db->sql_escape($occupation) . "', user_from = '" . $db->sql_escape($location) . "', user_from_flag = '$user_flag', user_first_name = '" . $db->sql_escape($user_first_name) . "', user_last_name = '" . $db->
+
+
+
+#
+#--------------[ INLINE FIND ]-------------
+#
+
+user_email = '" . $db->sql_escape($email) . "',
+
+#
+#--------------[ INLINE AFTER, ADD ]-------------
+#
+
+, user_adr_ban = $user_adr_ban
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+		$user_posts = $this_userdata['user_posts'];
+
+# 
+#-----[ AFTER, ADD ]------------------------------------------ 
+#
+
+		##=== ADR START ===##
+		$user_adr_check = $this_userdata['user_adr_ban'];
+		##=== ADR END ===##
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+         $s_hidden_fields .= '<input type="hidden" name="allowsmilies" value="' . $allowsmilies . '" />';
+
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+		##=== ADR START ===##
+		$s_hidden_fields .= '<input type="hidden" name="user_adr_ban" value="' . $user_adr_check. '" />';
+		##=== ADR END ===##
+
+
+#
+#--------------[ FIND ]-------------
+#
+
+         'ALLOW_AVATAR_NO' => (!$user_allowavatar) ? 'checked="checked"' : '',
+
+
+#
+#--------------[ AFTER, ADD ]-------------
+#
+
+			##=== ADR START ===##
+			'ADR_BAN_YES' => ($user_adr_check) ? 'checked="checked"' : '',
+			'ADR_BAN_NO' => (!$user_adr_check) ? 'checked="checked"' : '',
+			##=== ADR END ===##
+
+#
+#--------------[ FIND ]-------------
+#
+
+		'L_LOOK_UP' => $lang['Look_up_user'],
+
+#
+#--------------[ AFTER, ADD ]-------------
+#
+
+		##=== ADR START ===##
+		'L_USER_ADR_BAN' => $lang['User_adr_ban'],
+		'L_USER_ADR_BAN_EXPLAIN' => $lang['User_adr_ban_explain'], 
+		##=== ADR END ===##
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+includes/functions.php
+
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+		$lang_files = array(
+
+
+# 
+#----[ BEFORE, ADD ]------------------------------------------ 
+#
+
+		include(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_common_main.' . PHP_EXT); 
+		include(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_TownMap_main.' . PHP_EXT); 
+
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+		if (defined('IN_ADMIN'))
+		{
+
+#
+#--------------[ AFTER, ADD ]-------------
+#
+
+			##=== ADR START: include ADR general lang file ===##
+			include_once(IP_ROOT_PATH . 'adr/language/lang_' . $config['default_lang'] . '/lang_adr_common_admin.' . PHP_EXT);
+			##=== ADR END ===##
+
+# 
+#-----[ FIND ]------------------------------------------ 
+# Inside the function page_header
+
+		// The following assigns all _common_ variables that may be used at any point in a template.
+		$template->assign_vars(array(
+			'TOTAL_USERS_ONLINE' => $l_online_users,
+			'LOGGED_IN_USER_LIST' => $online_userlist,
+
+#
+#--------------[ AFTER, ADD ]-------------
+#
+
+			##=== ADR START ===##
+			'U_ADR' => append_sid('adr_zones.'.PHP_EXT),
+			'L_ADR' => $lang['Adr_character_page_name'],
+			'HEADER_INCLUDED' => true, // used for adr_previous including twice the header
+			##=== ADR END ===##
+
+# 
+#-----[ FIND ]------------------------------------------ 
+# Inside the function page_header
+
+
+	if ($parse_template)
+	{
+
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+
+	##=== ADR START ===##
+	if(($user->data['user_cell_time'] > '0') && (!defined('CELL')) && ($user->data['session_logged_in']) && ($user->data['user_level'] != ADMIN) && ($user->data['user_cell_punishment'] == '1')){
+		redirect(append_sid("adr_cell.".PHP_EXT, true));
+	}
+	##=== ADR END ===##
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+includes/functions_post.php
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+	else
+	{
+		$news_id = 0;
+	}
+	// END cmx_slash_news_mod
+
+
+# 
+#----[ AFTER, ADD ]------------------------------------------ 
+#
+
+	##=== ADR START: add experience points to poster ===##
+	if ($mode == 'newtopic' || $mode == 'reply' || $mode == 'editpost') 
+	{
+	    adr_add_experience_points($user->data['user_id'], $mode);
+	}
+	##=== ADR END ===##
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+includes/functions_post.php
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+$hostname = ($profiledata['user_registered_hostname'] == '') ? $lang['Not_recorded'] : htmlspecialchars($profiledata['user_registered_hostname']);
+// End Advanced IP Tools Pack MOD
+
+# 
+#----[ AFTER, ADD ]------------------------------------------ 
+#
+
+$template->assign_var('ADR_PROFILE_DISPLAY', $config['Adr_profile_display']);
+if ( $config['Adr_profile_display'] ) 
+{ 
+   define ( 'IN_ADR_CHARACTER' , true ); 
+   define ( 'IN_ADR_SHOPS' , true ); 
+   define ( 'IN_ADR_SKILLS' , true ); 
+   define ( 'IN_ADR_BATTLE' , true ); 
+   define('ADR_NO_HEADER', true);
+   include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.PHP_EXT); 
+
+	// Get the general config 
+	$adr_general = adr_get_general_config(); 
+	$searchid = $profiledata['user_id']; 
+
+	$sql = "SELECT c.* , r.race_name , r.race_img , r.race_weight , r.race_weight_per_level , e.element_name , e.element_img , a.alignment_name , a.alignment_img , cl.class_name , cl.class_img , cl.class_update_xp_req 
+		FROM  " . ADR_CHARACTERS_TABLE . " c , " . ADR_RACES_TABLE . " r , " . ADR_ELEMENTS_TABLE . " e , " . ADR_ALIGNMENTS_TABLE . " a , " . ADR_CLASSES_TABLE . " cl 
+		WHERE c.character_id= $searchid 
+		AND cl.class_id = c.character_class 
+		AND r.race_id = c.character_race 
+		AND e.element_id = c.character_element 
+		AND a.alignment_id = c.character_alignment "; 
+	if ( !($result = $db->sql_query($sql)) ) 
+	{ 
+		message_die(CRITICAL_ERROR, 'Error Getting Adr Users!'); 
+	}    
+	$row = $db->sql_fetchrow($result); 
+	$rabbitoshi_link = append_sid("rabbitoshi.".PHP_EXT."?" . POST_USERS_URL . "=" . $profiledata['user_id']); 
+
+	if ( !(is_numeric($row['character_class']))) 
+	{ 
+		$template->assign_block_vars('adr_profile_none', array()); 
+	} 
+	else 
+	{ 
+		$template->assign_block_vars('adr_profile' , array(
+    		'NAME' => $row['character_name'], 
+			'U_NAME' => append_sid("adr_character.".PHP_EXT."?" . POST_USERS_URL . "=" . $profiledata['user_id']),
+			'RABBITOSHI_LINK' => $rabbitoshi_link,
+		)); 
+	}
+}
+
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/default/profile_view_body.tpl
+
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+					<!-- END custom_contact -->
+
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+					<!-- IF ADR_PROFILE_DISPLAY -->
+					<tr><th colspan="2"><span class="genmed"><b>RPG</b></span></th></tr>
+					<tr>
+						<td class="row2" valign="top"><b><span class="genmed">{L_Adr_character_see}</span></b></td>
+					<!-- BEGIN adr_profile_none -->
+						<td class="row1 post-buttons"><span class="genmed">{L_Adr_character_lack}</span></td>
+					<!-- END adr_profile_none -->
+					<!-- BEGIN adr_profile -->
+						<td class="row1 post-buttons"><span class="genmed"><a href="{adr_profile.U_NAME}">{adr_profile.NAME}</a></span></td>
+					</tr>
+					<tr>
+						<td class="row2" valign="top"><b><span class="genmed">{L_Rabbitoshi}</span></b></td>
+						<td class="row1 post-buttons"><span class="genmed"><a href="{adr_profile.RABBITOSHI_LINK}">Rabbitoshi</a></span></td>
+					<!-- END adr_profile -->
+					</tr>
+					<!-- ENDIF -->
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/default/overall_header.tpl
+
+
+#
+#-----[ FIND ]------------------------------------------
+#
+
+<a href="{FULL_SITE_PATH}{U_PROFILE}">{L_PROFILE}</a>&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;
+
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+<a href="{U_ADR}" class="mainmenu">RPG</a>&nbsp;
+		&nbsp;&nbsp;<img src="{FULL_SITE_PATH}{IMG_MENU_SEP}" alt="" />&nbsp;
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+templates/default/message_body.tpl
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+<!-- IF not HAS_DIED -->
+
+
+# 
+#----[ REPLACE WITH ]------------------------------------------ 
+#
+
+<!-- IF not HAS_DIED && not HEADER_INCLUDED -->
+
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+templates/default/viewtopic_body.tpl
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+			{postrow.CASH}<br />
+
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+			{postrow.ADR_TOPIC_BOX}<br /><a href="{postrow.RABBITOSHI_LINK}" >{L_RABBITOSHI_TOPIC}</a><br/>
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+templates/common/acp/user_edit_body.tpl
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+<tr>
+	<td class="row1"><span class="gen"><strong><i>{L_DELETE_USER}</i></strong></span></td>
+	<td class="row2"><input type="checkbox" name="deleteuser" />&nbsp;{L_DELETE_USER_EXPLAIN}</td>
+</tr>
+
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+
+   <tr>
+     <td class="row1"><span class="gen">{L_USER_ADR_BAN}</span></td>
+     <td class="row2">
+      <input type="radio" name="user_adr_ban" value="1" {ADR_BAN_YES} />
+      <span class="gen">{L_YES}</span>&nbsp;&nbsp;
+      <input type="radio" name="user_adr_ban" value="0" {ADR_BAN_NO} />
+      <span class="gen">{L_NO}</span></td>
+   </tr>
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+templates/default/overall_header.tpl
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+<script type="text/javascript" src="{FULL_SITE_PATH}{T_COMMON_TPL_PATH}js/ddmenu.js"></script>
+
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+<script src="adr/includes/functions_adr_buildings_popup.js"></SCRIPT>
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+language/lang_english/lang_admin.php
+
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+?>
+
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+
+// English:
+
+$lang['Rabbitoshi_Pets_Management']='Pets Management'; 
+$lang['Rabbitoshi_Shop']='Pets Shop'; 
+$lang['Rabbitoshi_settings']='General settings'; 
+$lang['Rabbitoshi_owners']='Owners'; 
+##=== START ADR: admin keys ===##
+$lang['User_adr_ban']='ADR Ban?';
+$lang['User_adr_ban_explain']='Ban this user from using any of the Advanced Dungeons & Rabbits (ADR) features';
+##=== END ADR ===##
+
+
+//French :
+
+$lang['Rabbitoshi_Pets_Management']='Gestions créatures'; 
+$lang['Rabbitoshi_Shop']='Animalerie'; 
+$lang['Rabbitoshi_settings']='Configurations générales'; 
+$lang['Rabbitoshi_owners']='Propriétaires'; 
+
+##=== START ADR: admin keys ===##
+$lang['User_adr_ban']='Bannissement du RPG ?';
+$lang['User_adr_ban_explain']='Bannir l\'utilisateur du RPG du forum ?';
+##=== END ADR ===##
+
+# 
+#-----[ OPEN ]------------------------------------------ 
+#
+language/lang_english/lang_main.php
+
+
+# 
+#-----[ FIND ]------------------------------------------ 
+#
+
+?>
+
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+
+// English:
+
+$lang['RABBITOSHI_TOPIC']='See this user\'s pet'; 
+
+
+// French :
+
+$lang['RABBITOSHI_TOPIC']='Voir son familier'; 
+
+
+# TODO : profile crap

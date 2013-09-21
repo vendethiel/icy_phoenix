@@ -1,10 +1,10 @@
 <?php
 
-// eXtreme Styles mod cache. Generated on Fri, 20 Sep 2013 22:32:26 +0000 (time = 1379716346)
+// eXtreme Styles mod cache. Generated on Sat, 21 Sep 2013 16:20:16 +0000 (time = 1379780416)
 
 if (!defined('IN_ICYPHOENIX')) exit;
 
-?><?php  $this->set_filename('xs_include_5ee1638dd7265e62c9cdabd54a779d25', 'overall_header.tpl', true);  $this->pparse('xs_include_5ee1638dd7265e62c9cdabd54a779d25');  ?>
+?><?php  $this->set_filename('xs_include_8084ab50b716b6eae04435c5d62f6b4f', 'overall_header.tpl', true);  $this->pparse('xs_include_8084ab50b716b6eae04435c5d62f6b4f');  ?>
 
 <form action="<?php echo isset($this->vars['S_LOGIN_ACTION']) ? $this->vars['S_LOGIN_ACTION'] : $this->lang('S_LOGIN_ACTION'); ?>" method="post">
 
@@ -82,4 +82,4 @@ if(isset($switch_allow_autologin_item)) { unset($switch_allow_autologin_item); }
 
 </form>
 
-<?php  $this->set_filename('xs_include_68a1c2ac9ea150086df8b660be46fc0e', 'overall_footer.tpl', true);  $this->pparse('xs_include_68a1c2ac9ea150086df8b660be46fc0e');  ?>
+<?php  $this->set_filename('xs_include_b5efdb6f747c7e5c5fc58e5eaaf6b09f', 'overall_footer.tpl', true);  $this->pparse('xs_include_b5efdb6f747c7e5c5fc58e5eaaf6b09f');  ?>

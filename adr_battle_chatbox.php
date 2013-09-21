@@ -44,7 +44,7 @@ $adr_general = adr_get_general_config();
 
 // Load the headers
 $gen_simple_header = TRUE;
-include_once(IP_ROOT_PATH .'includes/page_header.'. $phpEx);
+page_header();
 
 // Grab info
 adr_template_file('adr_battle_chatbox_body.tpl');

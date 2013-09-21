@@ -1,0 +1,5 @@
+<?php exit; ?>
+1411326761
+SELECT * FROM ip_adr_classes
+794
+a:1:{i:0;a:23:{s:8:"class_id";s:1:"1";s:10:"class_name";s:12:"Anti Paladin";s:10:"class_desc";s:16:"Defeats Paladins";s:11:"class_level";s:1:"0";s:9:"class_img";s:16:"Anti Paladin.gif";s:15:"class_might_req";s:1:"0";s:19:"class_dexterity_req";s:1:"0";s:22:"class_constitution_req";s:1:"0";s:22:"class_intelligence_req";s:1:"0";s:16:"class_wisdom_req";s:1:"0";s:18:"class_charisma_req";s:1:"0";s:13:"class_base_hp";s:2:"12";s:13:"class_base_mp";s:1:"1";s:13:"class_base_ac";s:2:"10";s:15:"class_update_hp";s:2:"12";s:15:"class_update_mp";s:1:"2";s:15:"class_update_ac";s:1:"1";s:19:"class_update_xp_req";s:4:"2000";s:15:"class_update_of";s:1:"0";s:19:"class_update_of_req";s:1:"0";s:16:"class_selectable";s:1:"1";s:22:"class_magic_attack_req";s:1:"0";s:26:"class_magic_resistance_req";s:1:"0";}}
