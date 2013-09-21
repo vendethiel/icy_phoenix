@@ -353,7 +353,7 @@ if($_GET['action'] ==  "clanpage") {
 			'FILE' => $file,
 			'NAME' => $row2['name'],
 			'LOGO' => $row2['logo'],
-			'DESCRIPTION' => smilies_pass($description),
+			'DESCRIPTION' => $description, //smilies_pass($description),
 			'LEADER' => $leader,
 			'ID' => $row2['id'],
 			'MEMBERS' => $members,

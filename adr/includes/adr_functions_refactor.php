@@ -779,7 +779,7 @@ function zone_npc_item_quest_check($npc_row)
 //!!! Battle functions
 function battle_regen_rabbitoshi($rabbit_user, &$battle_message)
 {
-	global $rabbit_general;
+	global $rabbit_general, $lang;
 
 	// Check if pet have regeneration ability
 	$mp_consumned = '0';
@@ -807,7 +807,7 @@ function battle_regen_rabbitoshi($rabbit_user, &$battle_message)
 
 function battle_regen_amulet($bat, $challenger, &$battle_message)
 {
-	global $user_id;
+	global $user_id, $lang;
 
 	// Check if user a Amulet for HP regen this turn		
 	if ($bat['battle_challenger_hp'] != 0)
@@ -822,7 +822,7 @@ function battle_regen_amulet($bat, $challenger, &$battle_message)
 
 function battle_regen_ring($bat, $challenger, &$battle_message)
 {
-	global $user_id;
+	global $user_id, $lang;
 
 	// Check if user a Ring for MP regen this turn	
 	if ($bat['battle_challenger_mp'] != 0)
@@ -838,6 +838,8 @@ function battle_regen_ring($bat, $challenger, &$battle_message)
 //!!! ITEMS FUNCTIONS
 function items_remove_broken($user_id = null)
 {
+	global $db;
+
 	if ($user_id == null)
 	{
 		$comp = '>';
