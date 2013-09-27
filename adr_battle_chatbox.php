@@ -44,7 +44,6 @@ $adr_general = adr_get_general_config();
 
 // Load the headers
 $gen_simple_header = TRUE;
-page_header();
 
 // Grab info
 adr_template_file('adr_battle_chatbox_body.tpl');
@@ -115,4 +114,5 @@ $template->assign_vars(array(
 ));
 
 $template->pparse('body');
+
 ?>

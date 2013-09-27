@@ -101,12 +101,9 @@ if ( $InfoMaison )
 {
 	adr_previous( Adr_TownMap_Maison_Infos , adr_TownMap_Maison , '' );
 }
-
 else
-
 {
 	$template->assign_vars(array(
-
 		'SAISON' => $saison,
 		'L_TOWNMAP_MAISON' => $lang['TownMap_Maison'],
 		'L_TOWNBOUTONINFO' => $lang['Adr_TownMap_Bouton_Infos'],

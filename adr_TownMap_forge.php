@@ -99,7 +99,6 @@ else
 	$mode = "";
 }
 
-
 if ( $mode != "" )
 {
 	switch($mode)
@@ -197,7 +196,6 @@ if ( $mode != "" )
 
 			break;
 
-
 		case 'stone' :
 
 			$template->assign_block_vars('stone',array());
@@ -291,7 +289,6 @@ if ( $mode != "" )
 
 			break;
 
-
 		case 'create' :
 			break;
 	}
@@ -310,11 +307,8 @@ if ( $InfoForge )
 {
 	adr_previous( Adr_TownMap_Forge_Infos , adr_TownMap_forge , '' );
 }
-
 else
-
 $template->assign_vars(array(
-
 	'SAISON' => $saison,
 	'L_TOWNMAP_FORGE' => $lang['TownMap_Forge'],
 	'L_TOWNBOUTONINFO' => $lang['Adr_TownMap_Bouton_Infos'],

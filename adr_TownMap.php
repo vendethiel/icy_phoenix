@@ -121,28 +121,24 @@ $adr_char = adr_get_user_infos($user_id);
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 
 $InfoPrison = $_POST['InfoPrison'];
-
 if ( $InfoPrison )
 {
 	adr_previous( "Adr_TownMap_Prison_Infos" , "adr_zones" , '' );
 }
 
 $InfoBanque = $_POST['InfoBanque'];
-
 if ( $InfoBanque )
 {
 	adr_previous( "Adr_TownMap_Banque_Infos" , "adr_zones" , '' );
 }
 
 $InfoMaison = $_POST['InfoMaison'];
-
 if ( $InfoMaison )
 {
 	adr_previous( "Adr_TownMap_Maison_Infos" , "adr_zones" , '' );
 }
 
 $InfoForge = $_POST['InfoForge'];
-
 if ( $InfoForge )
 {
 	adr_previous( "Adr_TownMap_Forge_Infos" , "adr_zones" , '' );
@@ -156,49 +152,42 @@ if ( $InfoTemple )
 }
 
 $InfoBoutique = $_POST['InfoBoutique'];
-
 if ( $InfoBoutique )
 {
 	adr_previous( "Adr_TownMap_Boutique_Infos" , "adr_zones" , '' );
 }
 
 $InfoEntrainement = $_POST['InfoEntrainement'];
-
 if ( $InfoEntrainement )
 {
 	adr_previous( "Adr_TownMap_Entrainement_Infos" , "adr_zones" , '' );
 }
 
 $InfoEntrepot = $_POST['InfoEntrepot'];
-
 if ( $InfoEntrepot )
 {
 	adr_previous( "Adr_TownMap_Entrepot_Infos" , "adr_zones" , '' );
 }
 
 $InfoCombat = $_POST['InfoCombat'];
-
 if ( $InfoCombat )
 {
 	adr_previous( "Adr_TownMap_Combat_Infos" , "adr_zones" , '' );
 }
 
 $InfoMine = $_POST['InfoMine'];
-
 if ( $InfoMine )
 {
 	adr_previous( "Adr_TownMap_Mine_Infos" , "adr_zones" , '' );
 }
 
 $InfoEnchantement = $_POST['InfoEnchantement'];
-
 if ( $InfoEnchantement )
 {
 	adr_previous( "Adr_TownMap_Enchantement_Infos" , "adr_zones" , '' );
 }
 
 $InfoClan = $_POST['InfoClan'];
-
 if ( $InfoClan )
 {
 	adr_previous( "Adr_TownMap_Clan_Infos" , "adr_zones" , '' );

@@ -41,7 +41,6 @@ $user->setup();
 // End session management
 //
 
-
 $user_id = $userdata['user_id'];
 $points = $userdata['user_points'];
 
@@ -57,7 +56,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_fish_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();

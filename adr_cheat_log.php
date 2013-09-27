@@ -222,8 +222,6 @@ $template->assign_vars(array(
 	'PAGE_NUMBER'		=> $page_number,
 ));
 
-page_header();
-
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 
 $template->pparse('body');

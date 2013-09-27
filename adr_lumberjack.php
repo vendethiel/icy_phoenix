@@ -58,7 +58,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_lumberjack_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -168,14 +167,17 @@ if ( $mode != "" )
 		break;
 	}
 }
-else {
-	$template->assign_block_vars('main',array()); }
+else
+{
+	$template->assign_block_vars('main',array());
+}
 
 // Fix the values
 $InfoLumber = $_POST['InfoLumber'];
-
-if ( $InfoLumber ){
-	adr_previous( Adr_Lumber_Infos , adr_lumberjack , '' );}
+if ( $InfoLumber )
+{
+	adr_previous( Adr_Lumber_Infos , adr_lumberjack , '' );
+}
 
 $template->assign_vars(array(
 	'L_CREATE_ITEM' => $lang['Adr_lumberjack_create'],

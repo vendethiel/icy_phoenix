@@ -59,6 +59,9 @@
 	<tr>
 		<td class="row2"><span class="genmed">Dynamic TownMaps MOD written by: Ozzie</span></td>
 	</tr>
+	<tr>
+		<td class="row1" colspan=3><span class="gen"><a href="http://spikez.exocrew.com">MOD Party Written By: Spikez</a></span></td>
+	</tr>
 </table>
 
 <br clear="all" />

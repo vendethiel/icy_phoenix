@@ -53,28 +53,28 @@ $gen_simple_header = TRUE;
 //page_header();
 adr_template_file('adr_global_chat_body.tpl');
 
-	$mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];
+$mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];
 
-	if(!$mode)
-		$mode = ($_GET['mode']) ? $_GET['mode'] : $_GET['mode'];
+if(!$mode)
+	$mode = ($_GET['mode']) ? $_GET['mode'] : $_GET['mode'];
 
-	$todays_chat_info 	= GC_GetTodaysChat();
-	$todays_chat 		= $todays_chat_info['chat_text'];
+$todays_chat_info 	= GC_GetTodaysChat();
+$todays_chat 		= $todays_chat_info['chat_text'];
 
-	// Basic error checks before postings
-	$error_['1']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_1'].'</font></i><br><br>';
-	$error_['2']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_2'].'</font></i><br><br>';
-	$error_['3']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_3'].'</font></i><br><br>';
-	$error_['4']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_incorrect_user'].'</font></i><br><br>';
+// Basic error checks before postings
+$error_['1']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_1'].'</font></i><br><br>';
+$error_['2']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_2'].'</font></i><br><br>';
+$error_['3']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_error_3'].'</font></i><br><br>';
+$error_['4']		='<i><font color="#FF0000">'.$lang['Adr_global_shout_incorrect_user'].'</font></i><br><br>';
 
-	if($mode == 'archives'){
-		$template->assign_block_vars('archives', array(
-			'MSG'	=> 'Setup the archives here, with the header & footer included!'
-		));
-	}
+if($mode == 'archives'){
+	$template->assign_block_vars('archives', array(
+		'MSG'	=> 'Setup the archives here, with the header & footer included!'
+	));
+}
 
-	if($mode == 'add')
-	{
+if($mode == 'add')
+{
 	$msg = ($_POST['msg']) ? $_POST['msg'] : $_POST['msg'];
 
 	#==== Check: did they post all spaces? ======================== |		
@@ -220,23 +220,23 @@ adr_template_file('adr_global_chat_body.tpl');
 
 	redirect('adr_global_chat.'. $phpEx.'?err='.$error_messages, TRUE);
 	exit;
-	}
+}
 
 	// Include page header now to prevent redirect errors
 	// page_header();
-	if(!$mode){
-		if(!$todays_chat)
-			$todays_chat = '%S%*'.$lang['Adr_global_shout_error_no_log'].'*%E%';
+if(!$mode){
+	if(!$todays_chat)
+		$todays_chat = '%S%*'.$lang['Adr_global_shout_error_no_log'].'*%E%';
 
 	#==== Word Censor Pass ======================================== |
 	$q = "SELECT * FROM ". WORDS_TABLE;
-		if(!$r = $db->sql_query($q))
-    	   	message_die(GENERAL_ERROR, "Error Selecting Censored Word List.", "", __LINE__, __FILE__, $q);
-			
-		while($row = $db->sql_fetchrow($r)){
-			if(eregi(quotemeta($row['word']), $todays_chat))
-			$todays_chat = str_replace($row['word'], $row['replacement'], $todays_chat);
-		}
+	if(!$r = $db->sql_query($q))
+	   	message_die(GENERAL_ERROR, "Error Selecting Censored Word List.", "", __LINE__, __FILE__, $q);
+		
+	while($row = $db->sql_fetchrow($r)){
+		if(eregi(quotemeta($row['word']), $todays_chat))
+		$todays_chat = str_replace($row['word'], $row['replacement'], $todays_chat);
+	}
 					
 	#==== Generic BBCode Pass ===================================== |
 		# Did it this way so i wouldn't have to use bbcode_uid for each post		

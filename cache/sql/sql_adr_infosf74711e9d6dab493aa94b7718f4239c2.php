@@ -1,5 +1,0 @@
-<?php exit; ?>
-1411326602
-SELECT * FROM ADR_CLASSES_TABLE
-2
-N;

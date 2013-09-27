@@ -55,7 +55,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_lake_body.tpl');
-page_header();
 
 // Deny access if the user is into a battle
 $sql = "SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
@@ -72,7 +71,6 @@ if ( is_numeric($bat['battle_id']) )
 {
 	adr_previous( Adr_battle_progress , adr_battle , '' );
 }
-
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -106,7 +104,6 @@ if ( $InfoLake )
 {
 	adr_previous( Adr_TownMap_Lake_Infos , adr_lake , '' );
 }
-
 
 $donation_amount = $_POST['donation_amount'];
 $donate = $_POST['donation'];
@@ -192,9 +189,7 @@ if ($donate)
 
 	$message .= '<br /><br />'.sprintf($lang['Adr_return'],"<a href=\"" . $direction . "\">", "</a>");
 	message_die( GENERAL_MESSAGE,$message);
-
 }
-
 else
 {
 	$template->assign_vars(array(
@@ -230,4 +225,4 @@ include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 $template->pparse('body');
 include(IP_ROOT_PATH . 'includes/page_tail.'.$phpEx);
  
-?> 
+?>

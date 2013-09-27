@@ -136,7 +136,6 @@ if ( $mode != "" )
 {
 	switch( $mode )
 	{
-
 		case "combine":
 
 			include(IP_ROOT_PATH . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
@@ -151,23 +150,23 @@ if ( $mode != "" )
 			//Verify if user have enough item if he use same items
 			if ( $second_item == $first_item && $third_item == $second_item )
 			{
-					$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
-					message_die(GENERAL_ERROR, $message , Message , '' );
+				$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
+				message_die(GENERAL_ERROR, $message , Message , '' );
 			}
 			if ( $second_item == $first_item )
 			{
-					$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
-					message_die(GENERAL_ERROR, $message , Message , '' );
+				$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
+				message_die(GENERAL_ERROR, $message , Message , '' );
 			}
 			if ( $third_item == $first_item )
 			{
-					$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
-					message_die(GENERAL_ERROR, $message , Message , '' );
+				$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
+				message_die(GENERAL_ERROR, $message , Message , '' );
 			}
 			if ( $third_item == $second_item )
 			{
-					$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
-					message_die(GENERAL_ERROR, $message , Message , '' );
+				$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
+				message_die(GENERAL_ERROR, $message , Message , '' );
 			}
 			
 			//Search the name of each item
@@ -204,19 +203,7 @@ if ( $mode != "" )
 			//Update user inventory
 			$asql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
-					AND item_id = '$first_item'";
-			if( !($aresult = $db->sql_query($asql)) )
-				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
-
-			$bsql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '$user_id'
-					AND item_id = '$second_item'";
-			if( !($bresult = $db->sql_query($bsql)) )
-				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $bsql);
-
-			$csql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '$user_id'
-					AND item_id = '$third_item'";
+					AND " . $db->sql_in_set('item_id', array($first_item, $second_item, $third_item));
 			if( !($cresult = $db->sql_query($csql)) )
 				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $csql);
 
@@ -304,7 +291,6 @@ if ( $mode != "" )
 include(IP_ROOT_PATH . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
 
 adr_template_file('adr_cauldron_body.tpl');
-page_header();
 
 $s_hidden_fields = '<input type="hidden" name="mode" value="combine" />';
 

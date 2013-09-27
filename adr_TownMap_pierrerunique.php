@@ -98,15 +98,11 @@ else
 	$mode = "";
 }
 
-
-
 if ( $mode != "" )
 {
 	switch($mode)
 	{
-
 		case 'recharge' :
-
 			$template->assign_block_vars('recharge',array());
 			$sql = " SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
 				WHERE item_owner_id = $user_id
@@ -341,9 +337,7 @@ if ( $InfoEnchantement )
 {
 	adr_previous( Adr_TownMap_Enchantement_Infos , adr_TownMap_pierrerunique , '' );
 }
-
 else
-
 $template->assign_vars(array(
 	'SAISON' => $saison,
 	'L_TOWNMAP_ENCHANTEMENT' => $lang['TownMap_Enchantement'],

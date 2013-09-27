@@ -36,7 +36,6 @@ else
 switch($mode)
 {
 	case 'race' :
-
 		$template->assign_block_vars('race', array());
 
 		$sql = "SELECT * FROM " . ADR_RACES_TABLE ."
@@ -91,12 +90,10 @@ switch($mode)
 			"NAME" => adr_get_lang($infos['race_name']),
 			"DESC" => adr_get_lang($infos['race_desc']),
 			"IMG" => $pic ,
-			
 		));
-	
 	break;
-	case 'element' :
 
+	case 'element' :
 		$template->assign_block_vars('element', array());
 
 		$sql = "SELECT * FROM " . ADR_ELEMENTS_TABLE ."
@@ -132,7 +129,6 @@ switch($mode)
 	break;
 
 	case 'alignment' :
-
 		$template->assign_block_vars('alignment', array());
 
 		$sql = "SELECT * FROM " . ADR_ALIGNMENTS_TABLE ."
@@ -149,11 +145,8 @@ switch($mode)
 			"NAME" => adr_get_lang($infos['alignment_name']),
 			"DESC" => adr_get_lang($infos['alignment_desc']),
 			"IMG" => $pic ,
-			
 		));
-	
 	break;
-
 }
 
 $template->assign_vars(array(
@@ -173,7 +166,6 @@ $template->assign_vars(array(
 	"L_IMG" => $lang['Adr_races_image'],
 	"L_DESC" => $lang['Adr_races_desc'],
 ));
-
 
 $template->pparse('body');
 

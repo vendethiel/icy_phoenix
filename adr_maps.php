@@ -170,13 +170,12 @@ else
 	$map_name = $board_config['Adr_zone_townmap_name'] . ' ' . $lang['Adr_zone_maps_map'];
 }
 
-	$template->assign_vars(array(
-		'STATINFO' => "$showmap",
-		'STATTABLETITLE' => $map_name,
-		'ZONES_LINK' => $lang['Adr_zone_header_return'],
-		'CITY' => $city
-		)
-	);
+$template->assign_vars(array(
+	'STATINFO' => "$showmap",
+	'STATTABLETITLE' => $map_name,
+	'ZONES_LINK' => $lang['Adr_zone_header_return'],
+	'CITY' => $city
+));
 $template->pparse('body');
 
 include(IP_ROOT_PATH . 'includes/page_tail.'.$phpEx);

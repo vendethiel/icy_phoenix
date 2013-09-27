@@ -109,7 +109,6 @@ if ( $quest_log = $db->sql_fetchrow($result) )
 			}
 			
 			$template->assign_block_vars('quest', array(
-				
 				"QUEST_KILLED_MONSTER" => $quest_log['quest_killed_monster'],
 				"QUEST_KILLED_MONSTERS_AMOUNT" => $quest_log['quest_killed_monsters_amount'],
 				"QUEST_ITEM_GAVE" => $quest_log['quest_item_gave'],

@@ -171,6 +171,8 @@ $template->assign_vars(array(
 ));
 
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
+
 $template->pparse('body');
 include(IP_ROOT_PATH . 'includes/page_tail.'.$phpEx); 
+
 ?>

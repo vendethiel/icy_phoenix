@@ -17,6 +17,7 @@
  *
  ***************************************************************************/
 
+function smilies_pass($str) { return $str; }
 // phpBB stuff
 define('IN_ICYPHOENIX', true);
 define('IN_ADR_CHARACTER', true);
@@ -353,7 +354,7 @@ if($_GET['action'] ==  "clanpage") {
 			'FILE' => $file,
 			'NAME' => $row2['name'],
 			'LOGO' => $row2['logo'],
-			'DESCRIPTION' => $description, //smilies_pass($description),
+			'DESCRIPTION' => smilies_pass($description),
 			'LEADER' => $leader,
 			'ID' => $row2['id'],
 			'MEMBERS' => $members,

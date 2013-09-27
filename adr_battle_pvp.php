@@ -69,7 +69,6 @@ if($userdata['user_cell_time']){
     adr_previous(Adr_shops_no_thief, adr_cell, '');
 }
 
-
 // Get the battle id
 $battle_id = intval($_GET['battle_id']);
 
@@ -112,6 +111,7 @@ if(($battle_pvp['battle_challenger_id'] === $user_id) && ($battle_pvp['battle_op
 
     adr_previous(Adr_pvp_exploit_error, adr_character, '');
 }
+
 // have the mail sender infos , it will be of use later
 $script_name = preg_replace('/^\/?(.*?)\/?$/', "\\1", trim($board_config['script_path']));
 $script_name = ( $script_name != '' ) ? $script_name . '/adr_battle_pvp.'.$phpEx : 'adr_battle_pvp.'.$phpEx;
@@ -121,7 +121,6 @@ $server_port = ( $board_config['server_port'] <> 80 ) ? ':' . trim($board_config
 
 // Includes the tpl and the header
 adr_template_file('adr_battle_pvp_body.tpl');
-page_header();
 // Grab both user infos
 $current_infos = ($user_id === $battle_pvp['battle_challenger_id']) ? adr_get_user_infos($battle_pvp['battle_challenger_id']) : adr_get_user_infos($battle_pvp['battle_opponent_id']);
 $opponent_infos = ($user_id === $battle_pvp['battle_challenger_id']) ? adr_get_user_infos($battle_pvp['battle_opponent_id']) : adr_get_user_infos($battle_pvp['battle_challenger_id']);
@@ -132,79 +131,79 @@ $item_sql = adr_make_restrict_sql($current_infos);
 // Get the current user and the opponent infos
 if ( $user_id == $battle_pvp['battle_challenger_id'] )
 {
-        $current_hp  = $battle_pvp['battle_challenger_hp'];
-        $current_mp  = $battle_pvp['battle_challenger_mp'];
-        $current_hp_max  = $battle_pvp['battle_challenger_hp_max'];
-        $current_mp_max  = $battle_pvp['battle_challenger_mp_max'];
-        $current_hp_regen  = $battle_pvp['battle_challenger_hp_regen'];
-        $current_mp_regen  = $battle_pvp['battle_challenger_mp_regen'];
-        $current_att  = $battle_pvp['battle_challenger_att'];
-        $current_def  = $battle_pvp['battle_challenger_def'];
-        $current_element  = $battle_pvp['battle_challenger_element'];
-        $current_alignment  = $current_infos['character_alignment'];
-        $current_class  = $current_infos['character_class'];
-        $current_str  = $current_infos['character_might'];
-        $current_dex  = $current_infos['character_dexterity'];
-        $current_ma  = $battle_pvp['battle_challenger_magic_attack'];
-        $current_md  = $battle_pvp['battle_challenger_magic_resistance'];
-        $current_dmg  = $battle_pvp['battle_challenger_dmg'];
-        $opponent_hp  = $battle_pvp['battle_opponent_hp'];
-        $opponent_mp  = $battle_pvp['battle_opponent_mp'];
-        $opponent_hp_max  = $battle_pvp['battle_opponent_hp_max'];
-        $opponent_mp_max  = $battle_pvp['battle_opponent_mp_max'];
-        $opponent_hp_regen  = $battle_pvp['battle_opponent_hp_regen'];
-        $opponent_mp_regen  = $battle_pvp['battle_opponent_mp_regen'];
-        $opponent_att  = $battle_pvp['battle_opponent_att'];
-        $opponent_def  = $battle_pvp['battle_opponent_def'];
-        $opponent_element  = $battle_pvp['battle_opponent_element'];
-        $opponent_alignment  = $opponent_infos['character_alignment'];
-        $opponent_class  = $opponent_infos['character_class'];
-        $opponent_str  = $opponent_infos['character_might'];
-        $opponent_dex  = $opponent_infos['character_dexterity'];
-        $opponent_ma  = $battle_pvp['battle_opponent_magic_attack'];
-        $opponent_md  = $battle_pvp['battle_opponent_magic_resistance'];
-        $opponent_dmg  = $battle_pvp['battle_opponent_dmg'];
-        $dest = $battle_pvp['battle_opponent_id'];
+    $current_hp  = $battle_pvp['battle_challenger_hp'];
+    $current_mp  = $battle_pvp['battle_challenger_mp'];
+    $current_hp_max  = $battle_pvp['battle_challenger_hp_max'];
+    $current_mp_max  = $battle_pvp['battle_challenger_mp_max'];
+    $current_hp_regen  = $battle_pvp['battle_challenger_hp_regen'];
+    $current_mp_regen  = $battle_pvp['battle_challenger_mp_regen'];
+    $current_att  = $battle_pvp['battle_challenger_att'];
+    $current_def  = $battle_pvp['battle_challenger_def'];
+    $current_element  = $battle_pvp['battle_challenger_element'];
+    $current_alignment  = $current_infos['character_alignment'];
+    $current_class  = $current_infos['character_class'];
+    $current_str  = $current_infos['character_might'];
+    $current_dex  = $current_infos['character_dexterity'];
+    $current_ma  = $battle_pvp['battle_challenger_magic_attack'];
+    $current_md  = $battle_pvp['battle_challenger_magic_resistance'];
+    $current_dmg  = $battle_pvp['battle_challenger_dmg'];
+    $opponent_hp  = $battle_pvp['battle_opponent_hp'];
+    $opponent_mp  = $battle_pvp['battle_opponent_mp'];
+    $opponent_hp_max  = $battle_pvp['battle_opponent_hp_max'];
+    $opponent_mp_max  = $battle_pvp['battle_opponent_mp_max'];
+    $opponent_hp_regen  = $battle_pvp['battle_opponent_hp_regen'];
+    $opponent_mp_regen  = $battle_pvp['battle_opponent_mp_regen'];
+    $opponent_att  = $battle_pvp['battle_opponent_att'];
+    $opponent_def  = $battle_pvp['battle_opponent_def'];
+    $opponent_element  = $battle_pvp['battle_opponent_element'];
+    $opponent_alignment  = $opponent_infos['character_alignment'];
+    $opponent_class  = $opponent_infos['character_class'];
+    $opponent_str  = $opponent_infos['character_might'];
+    $opponent_dex  = $opponent_infos['character_dexterity'];
+    $opponent_ma  = $battle_pvp['battle_opponent_magic_attack'];
+    $opponent_md  = $battle_pvp['battle_opponent_magic_resistance'];
+    $opponent_dmg  = $battle_pvp['battle_opponent_dmg'];
+    $dest = $battle_pvp['battle_opponent_id'];
 }
 else if ( $user_id == $battle_pvp['battle_opponent_id'] )
 {
-        $current_hp  = $battle_pvp['battle_opponent_hp'];
-        $current_mp  = $battle_pvp['battle_opponent_mp'];
-        $current_hp_max  = $battle_pvp['battle_opponent_hp_max'];
-        $current_mp_max  = $battle_pvp['battle_opponent_mp_max'];
-        $current_hp_regen  = $battle_pvp['battle_opponent_hp_regen'];
-        $current_mp_regen  = $battle_pvp['battle_opponent_mp_regen'];
-        $current_att  = $battle_pvp['battle_opponent_att'];
-        $current_def  = $battle_pvp['battle_opponent_def'];
-	    $current_element  = $battle_pvp['battle_opponent_element'];
-        $current_alignment  = $current_infos['character_alignment'];
-        $current_class  = $current_infos['character_class'];
-        $current_str  = $current_infos['character_might'];
-        $current_dex  = $current_infos['character_dexterity'];
-        $current_ma  = $battle_pvp['battle_opponent_magic_attack'];
-        $current_md  = $battle_pvp['battle_opponent_magic_resistance'];
-        $current_dmg  = $battle_pvp['battle_opponent_dmg'];
-        $opponent_hp  = $battle_pvp['battle_challenger_hp'];
-        $opponent_mp  = $battle_pvp['battle_challenger_mp'];
-        $opponent_hp_max  = $battle_pvp['battle_challenger_hp_max'];
-        $opponent_mp_max  = $battle_pvp['battle_challenger_mp_max'];
-        $opponent_hp_regen  = $battle_pvp['battle_challenger_hp_regen'];
-        $opponent_mp_regen  = $battle_pvp['battle_challenger_mp_regen'];
-        $opponent_att  = $battle_pvp['battle_challenger_att'];
-        $opponent_def  = $battle_pvp['battle_challenger_def'];
-        $opponent_element  = $battle_pvp['battle_challenger_element'];
-        $opponent_alignment  = $opponent_infos['character_alignment'];
-        $opponent_class  = $opponent_infos['character_class'];
-        $opponent_str  = $opponent_infos['character_might'];
-        $opponent_dex  = $opponent_infos['character_dexterity'];
-        $opponent_ma  = $battle_pvp['battle_challenger_magic_attack'];
-        $opponent_md  = $battle_pvp['battle_challenger_magic_resistance'];
-        $opponent_dmg  = $battle_pvp['battle_challenger_dmg'];
-        $dest = $battle_pvp['battle_challenger_id'];
+    $current_hp  = $battle_pvp['battle_opponent_hp'];
+    $current_mp  = $battle_pvp['battle_opponent_mp'];
+    $current_hp_max  = $battle_pvp['battle_opponent_hp_max'];
+    $current_mp_max  = $battle_pvp['battle_opponent_mp_max'];
+    $current_hp_regen  = $battle_pvp['battle_opponent_hp_regen'];
+    $current_mp_regen  = $battle_pvp['battle_opponent_mp_regen'];
+    $current_att  = $battle_pvp['battle_opponent_att'];
+    $current_def  = $battle_pvp['battle_opponent_def'];
+    $current_element  = $battle_pvp['battle_opponent_element'];
+    $current_alignment  = $current_infos['character_alignment'];
+    $current_class  = $current_infos['character_class'];
+    $current_str  = $current_infos['character_might'];
+    $current_dex  = $current_infos['character_dexterity'];
+    $current_ma  = $battle_pvp['battle_opponent_magic_attack'];
+    $current_md  = $battle_pvp['battle_opponent_magic_resistance'];
+    $current_dmg  = $battle_pvp['battle_opponent_dmg'];
+    $opponent_hp  = $battle_pvp['battle_challenger_hp'];
+    $opponent_mp  = $battle_pvp['battle_challenger_mp'];
+    $opponent_hp_max  = $battle_pvp['battle_challenger_hp_max'];
+    $opponent_mp_max  = $battle_pvp['battle_challenger_mp_max'];
+    $opponent_hp_regen  = $battle_pvp['battle_challenger_hp_regen'];
+    $opponent_mp_regen  = $battle_pvp['battle_challenger_mp_regen'];
+    $opponent_att  = $battle_pvp['battle_challenger_att'];
+    $opponent_def  = $battle_pvp['battle_challenger_def'];
+    $opponent_element  = $battle_pvp['battle_challenger_element'];
+    $opponent_alignment  = $opponent_infos['character_alignment'];
+    $opponent_class  = $opponent_infos['character_class'];
+    $opponent_str  = $opponent_infos['character_might'];
+    $opponent_dex  = $opponent_infos['character_dexterity'];
+    $opponent_ma  = $battle_pvp['battle_challenger_magic_attack'];
+    $opponent_md  = $battle_pvp['battle_challenger_magic_resistance'];
+    $opponent_dmg  = $battle_pvp['battle_challenger_dmg'];
+    $dest = $battle_pvp['battle_challenger_id'];
 }
 else
 {
-        adr_previous ( Adr_pvp_wrong_turn , adr_character_pvp , '' );
+    adr_previous ( Adr_pvp_wrong_turn , adr_character_pvp , '' );
 }
 $battle_challenger_id = $battle_pvp['battle_challenger_id'];
 $battle_opponent_id = $battle_pvp['battle_opponent_id'];
@@ -221,7 +220,7 @@ $sql = " SELECT username FROM " . USERS_TABLE . "
                 WHERE user_id = $dest ";
 if( !($result = $db->sql_query($sql)) )
 {
-        message_die(GENERAL_ERROR, 'Could not query opponent name', '', __LINE__, __FILE__, $sql);
+    message_die(GENERAL_ERROR, 'Could not query opponent name', '', __LINE__, __FILE__, $sql);
 }
 $opponent_inf = $db->sql_fetchrow($result);
 $opponent_name = htmlspecialchars($opponent_inf['username']);
@@ -496,7 +495,6 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
 
         if ( $item_spell2 )
         {
-
             $sql = " SELECT spell_name , spell_power , item_type_use , spell_add_power , spell_mp_use , spell_element , spell_element_str_dmg, spell_element_weak_dmg , spell_element_same_dmg, spell_items_req, spell_xtreme_pvp FROM " . ADR_SHOPS_SPELLS_TABLE . "
                 WHERE spell_owner_id = $user_id 
                 AND spell_id = $item_spell2 
@@ -521,7 +519,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
             $mp_usage = ($item['spell_mp_use'] + $item['spell_power']);
             if ( $mp_usage == '' )
             {
-                    adr_previous ( Adr_battle_check , 'adr_battle' , '' );              
+                adr_previous( Adr_battle_check , 'adr_battle' , '' );              
             }
 
             adr_use_item($item_spell2 , $user_id);
@@ -579,14 +577,12 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
 
             if((($diff === TRUE) && ($dice != '1')) || ($dice == '20'))
             {
-
                 if($code = $item['spell_xtreme_pvp'])
                 {
                     eval($code);
                 }
                 else
                 {
-
                     $damage = 1;
 
                     // Work out attack type
@@ -606,7 +602,6 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
                     {
                         $damage = ceil($power * $attbonus);
                     }
-
 
                     // Fix dmg value
                     $damage = ($damage < '1') ? rand(1,3) : $damage;
@@ -648,8 +643,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
             {
                 message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
             }
-            
-        }   
+        }  
 
         if ( $item['item_type_use'] == 108 )
         {
@@ -659,9 +653,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
 
             if($code = $item['spell_xtreme_pvp'])
             {
-
                 eval($code);
-
             }
             else
             {
@@ -705,9 +697,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
 
             if($code = $item['spell_xtreme_pvp'])
             {
-
                 eval($code);
-
             }
             else
             {
@@ -731,7 +721,6 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
                 if(!($result = $db->sql_query($sql))){
                     message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
             }
-
         }
     } // end if spell2
     else if ( $potion )
@@ -907,59 +896,59 @@ if ( $turn_check && ( $attack || ($spell2 && intval($_POST['item_spell2'])) || (
     			$battle_message .= sprintf($lang['Adr_pvp_attack_bare_fail'], $current_name, $opponent_name).'<br />';
     		}
         } // end if empty item name
-			else{
-				if((($diff == TRUE) && ($dice != '1')) || ($dice >= $threat_range)){
-					// Prefix msg if crit hit
-					$battle_message .= ($crit_result === TRUE) ? '<br>'.$lang['Adr_battle_critical_hit'].'</b><br />' : '';
-					$damage = 0;
+		else{
+			if((($diff == TRUE) && ($dice != '1')) || ($dice >= $threat_range)){
+				// Prefix msg if crit hit
+				$battle_message .= ($crit_result === TRUE) ? '<br>'.$lang['Adr_battle_critical_hit'].'</b><br />' : '';
+				$damage = 0;
 
-					// Work out attack type
-					if(($item['item_element']) && ($item['item_element'] == $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name']))){
-						$damage = ceil(($power *($item['item_element_weak_dmg'] /100)));
-					}
-           			elseif(($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] == $opponent_element) && ($item['item_duration'] > '1')){
-						$damage = ceil(($power *($item['item_element_same_dmg'] /100)));
-					}
-					elseif(($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] == $elemental['element_oppose_weak']) && ($item['item_duration'] > '1')){
-						$damage = ceil(($power *($item['item_element_str_dmg'] /100)));
-					}
-					else{
-						$damage = $power;
-					}
-
-					// Fix dmg value
-					$damage = ($damage < '1') ? rand(1,3) : $damage;
-					$damage = ($damage > $opponent_hp) ? $opponent_hp : $damage;
-
-					// Fix attack msg type
-					if($item['item_element'] > '0'){
-						$battle_message .= sprintf($lang['Adr_pvp_attack_success'], $current_name, $opponent_name, $item['item_name'], $element_name['element_name'], $damage).'<br />';}
-					else{
-						$battle_message .= sprintf($lang['Adr_pvp_attack_success_norm'], $current_name, $opponent_name, $item['item_name'], $damage).'<br />';}
+				// Work out attack type
+				if(($item['item_element']) && ($item['item_element'] == $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name']))){
+					$damage = ceil(($power *($item['item_element_weak_dmg'] /100)));
+				}
+       			elseif(($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] == $opponent_element) && ($item['item_duration'] > '1')){
+					$damage = ceil(($power *($item['item_element_same_dmg'] /100)));
+				}
+				elseif(($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] == $elemental['element_oppose_weak']) && ($item['item_duration'] > '1')){
+					$damage = ceil(($power *($item['item_element_str_dmg'] /100)));
 				}
 				else{
-					$damage = 0;
-					$battle_message .= sprintf($lang['Adr_pvp_attack_failure'], $current_name, $opponent_name, $item['item_name']).'<br />';
+					$damage = $power;
 				}
 
-				// Check for low dura
-				if(($item['item_duration'] < '2') && ($item['item_name'] != '')){
-					$battle_message .= '<span class="gensmall">'; // set new span class
-					$battle_message .= '&nbsp;&nbsp;>&nbsp;'.sprintf($lang['Adr_pvp_attack_dura'], $current_name, $item['item_name']).'<br />';
-					$battle_message .= '</span>'; // reset span class to default
-				}
+				// Fix dmg value
+				$damage = ($damage < '1') ? rand(1,3) : $damage;
+				$damage = ($damage > $opponent_hp) ? $opponent_hp : $damage;
+
+				// Fix attack msg type
+				if($item['item_element'] > '0'){
+					$battle_message .= sprintf($lang['Adr_pvp_attack_success'], $current_name, $opponent_name, $item['item_name'], $element_name['element_name'], $damage).'<br />';}
+				else{
+					$battle_message .= sprintf($lang['Adr_pvp_attack_success_norm'], $current_name, $opponent_name, $item['item_name'], $damage).'<br />';}
+			}
+			else{
+				$damage = 0;
+				$battle_message .= sprintf($lang['Adr_pvp_attack_failure'], $current_name, $opponent_name, $item['item_name']).'<br />';
 			}
 
-			// Update the database
-			$check_user = ($user_id === $battle_challenger_id) ? 'battle_opponent_hp' : 'battle_challenger_hp';
-			$check_user_dmg = ($user_id === $battle_challenger_id) ? 'battle_opponent_dmg' : 'battle_challenger_dmg';
+			// Check for low dura
+			if(($item['item_duration'] < '2') && ($item['item_name'] != '')){
+				$battle_message .= '<span class="gensmall">'; // set new span class
+				$battle_message .= '&nbsp;&nbsp;>&nbsp;'.sprintf($lang['Adr_pvp_attack_dura'], $current_name, $item['item_name']).'<br />';
+				$battle_message .= '</span>'; // reset span class to default
+			}
+		}
 
-			$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
-					SET $check_user = ($check_user - $damage),
-						$check_user_dmg = $damage
-					WHERE battle_id = '$battle_id'";
-			if(!($result = $db->sql_query($sql))){
-				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
+		// Update the database
+		$check_user = ($user_id === $battle_challenger_id) ? 'battle_opponent_hp' : 'battle_challenger_hp';
+		$check_user_dmg = ($user_id === $battle_challenger_id) ? 'battle_opponent_dmg' : 'battle_challenger_dmg';
+
+		$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+				SET $check_user = ($check_user - $damage),
+					$check_user_dmg = $damage
+				WHERE battle_id = '$battle_id'";
+		if(!($result = $db->sql_query($sql))){
+			message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
     } // end if attack
 
 

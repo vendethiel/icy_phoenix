@@ -48,8 +48,6 @@ if ( !$userdata['session_logged_in'] )
 	header('Location: ' . append_sid("login_ip.$phpEx?redirect=$redirect", true));
 }
 
-page_header();
-
 // Get the general config
 $adr_general = adr_get_general_config();
 

@@ -57,7 +57,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_herbal_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -100,6 +99,7 @@ else
 {
 	$mode = "";
 }
+
 if ( $mode != "" )
 {
 	switch($mode)
@@ -167,17 +167,16 @@ if ( $mode != "" )
 		break;
 	}
 }
-
 else
 {
 	$template->assign_block_vars('main',array());
 }
-// Fix the values
 
 $InfoHerb = $_POST['InfoHerb'];
-
-if ( $InfoHerb ){
-	adr_previous( Adr_Herb_Infos , adr_herbal , '' );}
+if ( $InfoHerb )
+{
+	adr_previous( Adr_Herb_Infos , adr_herbal , '' );
+}
 
 $template->assign_vars(array(
 	'L_CREATE_ITEM' => $lang['Adr_herbalism_create'],

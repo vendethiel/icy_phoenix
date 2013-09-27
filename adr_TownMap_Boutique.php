@@ -95,12 +95,9 @@ if ( $InfoBoutique )
 {
 	adr_previous( Adr_TownMap_Boutique_Infos , adr_TownMap_Boutique , '' );
 }
-
 else
-
 {
 	$template->assign_vars(array(
-
 		'SAISON' => $saison,
 		'L_TOWNMAP_BOUTIQUE' => $lang['TownMap_Boutique'],
 		'L_BOUTIQUE' => $lang['TownMap_Boutique_Lien'],
@@ -124,7 +121,6 @@ else
 		'S_CHARACTER_ACTION' => append_sid("adr_TownMap_Boutique.$phpEx"),
 	));
 }
-
 
 $template->pparse('body');
 include(IP_ROOT_PATH . 'includes/page_tail.'.$phpEx);

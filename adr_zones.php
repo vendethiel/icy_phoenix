@@ -181,41 +181,10 @@ $template->assign_vars(array(
 // End check for neighborhood level
 
 //prevent blank destination
-if ( $goto2_name == '' )
-{
-	$goto2_name = $lang['Adr_zone_destination_none'];
-}
-else
-{
-	$template->assign_var('HAS_GOTO_2', true);
-}
-
-if ( $goto3_name == '' )
-{
-	$goto3_name = $lang['Adr_zone_destination_none'];
-}
-else
-{
-	$template->assign_var('HAS_GOTO_3', true);
-}
-
-if ( $goto4_name == '' )
-{
-	$goto4_name = $lang['Adr_zone_destination_none'];
-}
-else
-{
-	$template->assign_var('HAS_GOTO_4', true);
-}
-
-if ( $return_name == '' )
-{
-	$return_name = $lang['Adr_zone_destination_none'];
-}
-else
-{
-	$template->assign_var('HAS_GOTO_RETURN', true);
-}
+$goto2_name == '' ? $goto2_name = $lang['Adr_zone_destination_none'] : $template->assign_var('HAS_GOTO_2', true);
+$goto3_name == '' ? $goto3_name = $lang['Adr_zone_destination_none'] : $template->assign_var('HAS_GOTO_3', true);
+$goto4_name == '' ? $goto4_name = $lang['Adr_zone_destination_none'] : $template->assign_var('HAS_GOTO_4', true);
+$return_name == '' ? $return_name = $lang['Adr_zone_destination_none'] : $template->assign_var('HAS_GOTO_RETURN', true);
 
 /** V:
  * Let's check for fighting a bit.
@@ -244,9 +213,7 @@ $in_battle = $db->sql_fetchrow($result);
 //$template->assign_var('CAN_BATTLE', $has_duels || $has_monsters);
 // - End fighting stuff check.
 
-/** V:
- * Let's integrate Town Env and Zones Mod together.
- */
+// Let's integrate Town Env and Zones Mod together.
 $template->assign_vars(array(
 	'IN_BATTLE' => $in_battle,
 	'CAN_TRAVEL' => !$in_battle && ( $board_config['zone_dead_travel'] == '0' || $adr_user['character_hp'] > 0 ),

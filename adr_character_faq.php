@@ -53,7 +53,6 @@ $adr_general = adr_get_general_config();
 
 // Includes the tpl and the header
 adr_template_file('adr_character_faq_body.tpl');
-page_header();
 
 $lang_file = 'lang_adr_faq';
 $l_title = $lang['rpg_faq'];
