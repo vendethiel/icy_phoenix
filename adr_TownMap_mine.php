@@ -100,13 +100,10 @@ else
 	$mode = "";
 }
 
-
-
 if ( $mode != "" )
 {
 	switch($mode)
 	{
-
 		case 'mining' :
 
 			$template->assign_block_vars('mining',array());

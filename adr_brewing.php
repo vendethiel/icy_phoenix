@@ -50,7 +50,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_brewing_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -169,7 +168,6 @@ if ( $mode != "" )
 						adr_previous ( brewing_missing_item , adr_brewing , "mode=view&amp;known_recipes=".$recipe_id."&amp;item_tool=".$tool."" ); 
 				}
 			}
-			
 			
 			// No tool
 			if ( !$tool )

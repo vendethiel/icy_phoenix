@@ -29,7 +29,6 @@ $user->setup();
 include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 adr_template_file('adr_jobs_body.tpl');
-page_header();
 
 // Sorry , only logged users ...
 if ( !$userdata['session_logged_in'] )

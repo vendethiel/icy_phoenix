@@ -40,7 +40,6 @@ $user->setup();
 include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 adr_template_file('adr_character_armour_sets_body.tpl');
-page_header();
 
 // Sorry , only logged users ...
 if ( !$userdata['session_logged_in'] )
@@ -213,7 +212,6 @@ $template->assign_vars(array(
 	"S_LIST_ACTION" 		=> append_sid("adr_character_armour_sets.$phpEx?".POST_USERS_URL."=$searchid&amp;mode2=$mode2&amp;order=$sort_order"),
 	"S_HIDDEN_FIELDS" 		=> $s_hidden_fields, 
 ));
-
 
 include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 

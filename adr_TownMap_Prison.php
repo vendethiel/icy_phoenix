@@ -97,9 +97,7 @@ if ( $InfoPrison )
 {
 	adr_previous( Adr_TownMap_Prison_Infos , adr_TownMap_Prison , '' );
 }
-
 else
-
 {
 	$template->assign_vars(array(
 		'SAISON' => $saison,

@@ -27,7 +27,6 @@ $user->setup();
 include_once(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 adr_template_file('adr_cell_body.tpl');
-page_header();
 
 $user_id = $userdata['user_id'];
 $caution = $userdata['user_cell_caution'];
@@ -63,7 +62,7 @@ if( $pay )
 		WHERE user_id = $user_id ";
 	if ( !($result = $db->sql_query($sql)) )
 	{
-			message_die(GENERAL_ERROR,"", __LINE__, __FILE__, $sql);
+		message_die(GENERAL_ERROR,"", __LINE__, __FILE__, $sql);
 	}
 
 	message_die(GENERAL_MESSAGE, $lang['Adr_cell_free']);

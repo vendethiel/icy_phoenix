@@ -100,12 +100,9 @@ if ( $InfoClan )
 {
 	adr_previous( Adr_TownMap_Clan_Infos , adr_TownMap_Clan , '' );
 }
-
 else
-
 {
 	$template->assign_vars(array(
-
 		'SAISON' => $saison,
 		'L_TOWNMAP_CLAN' => $lang['TownMap_Clan'],
 		'L_CLAN' => $lang['TownMap_Clan_Lien'],

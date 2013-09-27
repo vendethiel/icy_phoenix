@@ -73,7 +73,6 @@ if ( is_numeric($bat['battle_id']) )
 	adr_previous( Adr_battle_progress , adr_battle , '' );
 }
 
-
 // Get the general config
 $adr_general = adr_get_general_config();
 
@@ -101,16 +100,11 @@ $access = $info['zone_beggar'];
 if ( $access == '0' )
 	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
-// Fix the values
-
-
 $InfoBeggar = $_POST['InfoBeggar'];
-
 if ( $InfoBeggar )
 {
 	adr_previous( Adr_TownMap_Beggar_Infos , adr_beggar , '' );
 }
-
 
 $donation_amount = $_POST['donation_amount'];
 $donate = $_POST['donation'];
@@ -199,9 +193,7 @@ if ($donate)
 
 	$message .= '<br /><br />'.sprintf($lang['Adr_return'],"<a href=\"" . $direction . "\">", "</a>");
 	message_die( GENERAL_MESSAGE,$message);
-
 }
-
 else
 {
 	$template->assign_vars(array(
@@ -237,4 +229,4 @@ include(IP_ROOT_PATH . 'adr/includes/adr_header.'.$phpEx);
 $template->pparse('body');
 include(IP_ROOT_PATH . 'includes/page_tail.'.$phpEx);
  
-?> 
+?>

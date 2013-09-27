@@ -100,12 +100,9 @@ if ( $InfoEntrepot )
 {
 	adr_previous( Adr_TownMap_Entrepot_Infos , adr_TownMap_Entrepot , '' );
 }
-
 else
-
 {
 	$template->assign_vars(array(
-
 		'SAISON' => $saison,
 		'L_TOWNMAP_ENTREPOT' => $lang['TownMap_Entrepot'],
 		'L_TOWNBOUTONINFO' => $lang['Adr_TownMap_Bouton_Infos'],

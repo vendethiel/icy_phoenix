@@ -100,12 +100,12 @@ if($action == 'leave')
 	{
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_party = 0, character_leader = 0 WHERE character_id = '.$user_id;
 		$re = $db->sql_query($sql) or die('Error on SQL Syntax');
-		$message = 'Vous avez quitté votre groupe avec succès';
+		$message = $lang['ADR_PARTY_LEFT'];
 		$char['character_party'] = 0;
 	}
 	else
 	{
-		$message = 'Vous devez choisir un nouveau chef de groupe avant de partir !';
+		$message = $lang['ADR_PARTY_NEED_LEADER'];
 	}
 
 }
@@ -121,12 +121,12 @@ if($action == 'disband')
 	{
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_party = 0, character_leader = 0 WHERE character_party = '.$char['character_party'];
 		$re = $db->sql_query($sql) or die('Error on SQL Syntax');
-		$message = 'Groupe dissout avec succès !';
+		$message = $lang['ADR_PARTY_DISBANDED'];
 		$char['character_party'] = 0;
 	}
 	else
 	{
-		$message = 'Vous devez être le chef du groupe pour dissoudre votre groupe.';
+		$message = $lang['ADR_PARTY_LEAD_DISBAND'];
 	}
 }
 if($action == 'create')
@@ -135,7 +135,7 @@ if($action == 'create')
 	// User is in a party?
 	if($char['character_party'] != 0)
 	{
-		$message = 'Vous devez d\'abord quitter votre groupe';
+		$message = $lang['ADR_PARTY_ALREADY'];
 		$can = 0;
 	}
 	// Lets Create.
@@ -146,7 +146,7 @@ if($action == 'create')
 
 	$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_party = '.$party_id.', character_leader = 2 WHERE character_id = '.$user_id;
 	$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
-	$message = 'Votre groupe a été créé avec succès.';
+	$message = $lang['ADR_PARTY_CREATED'];
 	$char['character_party'] = $party_id;
 	$char['character_leader'] = 2;
 }
@@ -164,7 +164,7 @@ if($action == 'invite')
 	$newstring = $row['character_invites'].'#'.$char['character_party'];
 	$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_invites = "'.$newstring.'" WHERE character_id = '.$id;
 	$re = $db->sql_query($sql) or die('SQL Query Error on line '.__LINE__);
-	$message = 'Vous avez invité '.$row['character_name'].' à rejoindre votre équipe. '.$row['character_name'].' recevra une notification en arrivant sur cette page.';
+	$message = sprintf($lang['ADR_PARTY_INVITED'], $row['character_name']);
 }
 if($action == 'join')
 {
@@ -175,7 +175,7 @@ if($action == 'join')
 	}
 	$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_party = '.$id.', character_invites = "", character_leader = 0 WHERE character_id = '.$user_id;
 	$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
-	$message = 'Bienvenue dans le groupe !';
+	$message = $lang['ADR_PARTY_WELCOME'];
 	$char['character_party'] = $id;
 	$char['character_leader'] = 0;
 	$char['character_invites'] = "";
@@ -192,7 +192,7 @@ if($action == 'refuse')
 	$newstring = substr($newstring,0,(strlen($newstring)-1));
 	$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_invites = "'.$newstring.'" WHERE character_id = '.$user_id;
 	$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
-	$message = 'Invitation refusée.';
+	$message = $lang['ADR_PARTY_DECLINED'];
 	$char['character_party'] = $id;
 	$char['character_leader'] = 0;
 	$char['character_invites'] = $newstring;
@@ -209,11 +209,11 @@ if($action == 'promote')
 		if($row['character_leader'] > 1){$plus = 2;}else{$plus = $row['character_leader'] + 1;}
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_leader = '.$plus.' WHERE character_id = '.$id;
 		$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
-		$message = $row['character_name'].' a été promu.';
+		$message = sprintf($lang['ADR_PARTY_PROMOTED'], $row['character_name']);
 	}
 	else
 	{
-		$message = 'Impossible de promulguer cet utilisateur.';
+		$message = $lang['ADR_PARTY_CANT_PROMOTE'];
 	}
 }
 if($action == 'kick')
@@ -226,17 +226,17 @@ if($action == 'kick')
 	{
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_leader = 0, character_party = 0 WHERE character_id = '.$id.' AND character_party = '.$char['character_party'];
 		$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
-		$message = $row['character_name'].' a été renvoyé avec succès.';
+		$message = sprintf($lang['ADR_PARTY_KICKED'], $row['character_name']);
 	}
 	else
 	{
-		$message = 'Impossible de renvoyer cet utilisateur.';
+		$message = $lang['ADR_PARTY_CANT_KICK'];
 	}
 }
 // Message Table
 ?>
 <table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0">
-<tr><td class=row2><a name=party></a><span class=gen><center><b><?=$message?></td></tr>
+<tr><td class=row2><a name=party></a><span class=gen><center><b><?php echo $message?></td></tr>
 </table>
 <?php
 // User is in a party?
@@ -244,7 +244,7 @@ if($char['character_party'] == 0)
 {
 ?>
 <table width=100% bordercolor=black border=0 cellpadding="0" cellspacing="0">
-<th colspan=3>Vous n'êtes pas dans un groupe.</th>
+<th colspan=3><?php echo $lang['ADR_PARTY_NOTIN'] ?></th>
 <tr><td class="row1" colspan=3><center><input type=button class=liteoption value="Créer un groupe" onClick="window.location.href='./adr_party.php?action=create#party'"></td></tr>
 <?php
 
@@ -255,9 +255,9 @@ if($char['character_party'] == 0)
 if($char['character_party'] != 0)
 {
 ?><table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0">
-<th colspan=3>Vous êtes dans un groupe.</th>
-<tr><td class="row1" colspan=3><center><input type=button class=liteoption value="Quitter" onClick="window.location.href='./adr_party.php?action=leave#party'"><?if($char['character_leader'] == 2){?><input type=button class=liteoption value="Dissoudre" onClick="window.location.href='./adr_party.php?action=disband#party'"><?}?></td></tr>
-<th colspan=3>Membres :</th>
+<th colspan=3><?php echo $lang['ADR_PARTY_IN'] ?></th>
+<tr><td class="row1" colspan=3><center><input type=button class=liteoption value="Quitter" onClick="window.location.href='./adr_party.php?action=leave#party'"><?if($char['character_leader'] == 2){?><input type=button class=liteoption value="<?php echo $lang['ADR_PARTY_DISBAND'] ?>" onClick="window.location.href='./adr_party.php?action=disband#party'"><?}?></td></tr>
+<th colspan=3><?php echo $lang['ADR_PARTY_MEMBERS'] ?></th>
 <?php
 $sql = 'SELECT character_name, character_id, character_leader, character_level FROM '.ADR_CHARACTERS_TABLE.' WHERE character_party = '.$char['character_party'].' ORDER BY character_leader DESC';
 $re = $db->sql_query($sql);
@@ -283,14 +283,14 @@ else if($char['character_leader'] > 0)
 	$promote = '<td class="row1"><center><span class=gen>&nbsp;</td>';
 }
 
-if($rowset[$i]['character_leader'] == 0){$rank = '<span class=gen> (Membre)';}
-if($rowset[$i]['character_leader'] == 1){$rank = '<span class=gen><i> (Officier)';}
-if($rowset[$i]['character_leader'] == 2){$rank = '<span class=gen><b> (Chef)';}
+if($rowset[$i]['character_leader'] == 0){$rank = '<span class=gen> ('.$lang['MEMBER'].')';}
+if($rowset[$i]['character_leader'] == 1){$rank = '<span class=gen><i> ('.$lang['OFFICER'].')';}
+if($rowset[$i]['character_leader'] == 2){$rank = '<span class=gen><b> ('.$lang['LEADER'].')';}
 ?>
-<tr><td class="row1"><span class=gen><center><?=$rowset[$i]['character_name']?> - Niveau: <?=$rowset[$i]['character_level']?>  <?=$rank?></td><?=$kick?><?=$promote?></tr>
+<tr><td class="row1"><span class=gen><center><?php echo $rowset[$i]['character_name']?> - <?php echo $lang['LEVEL'] ?> <?php echo $rowset[$i]['character_level']?>  <?php echo $rank?></td><?php echo $kick?><?php echo $promote?></tr>
 <?php
 }
-?><tr><td class="row1" colspan=3><span class=gen><center>Niveau total : <?=$party_level?> | Nombre de membres : <?=$party_count?> | Niveau moyen : <?=round($party_level/$party_count)?></td></tr></table><?php
+?><tr><td class="row1" colspan=3><span class=gen><center><?php echo $lang['TOTAL_LEVEL'] ?> <?php echo $party_level?> | <?php echo $lang['ADR_PARTY_MEMBER_COUNT'] ?> <?php echo $party_count?> | <?php echo $lang['ADR_PARTY_AVG'] ?> <?php echo round($party_level/$party_count)?></td></tr></table><?php
 if($char['character_leader'] > 0)
 {
 $user_list = '<select name=members>';
@@ -308,8 +308,8 @@ for($i=0;$i<count($rowset2);$i++)
 $user_list .= '</select>';
 ?>
 <table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0">
-<th colspan=3>Inviter un compagnon de votre clan.</th><th>Actions</th>
-<tr><td class="row1" colspan=3><span class=gen><center><form name=form><?=$user_list?></td><td class="row1" colspan=3><input type=button class=liteoption value="Inviter !" onClick="window.location.href='./adr_party.php?action=invite&amp;id='+form.members.value+'#party'"></form></td></tr>
+<th colspan=3><?php echo $lang['ADR_PARTY_INVITE'] ?></th><th><?php echo $lang['ACTIONS'] ?></th>
+<tr><td class="row1" colspan=3><span class=gen><center><form name=form><?php echo $user_list?></td><td class="row1" colspan=3><input type=button class=liteoption value="<?php echo $lang['ADR_PARTY_GOINVITE'] ?>" onClick="window.location.href='./adr_party.php?action=invite&amp;id='+form.members.value+'#party'"></form></td></tr>
 </table>
 <?php
 }
@@ -326,10 +326,10 @@ $re = $db->sql_query($sql);
 $row = $db->sql_fetchrow($re);
 $party_leader = $row['character_name'];
 ?>
-<script>alert('You have invitation(s) to join your party!');</script>
-<table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0"><th colspan=3>Invitations</th>
+<script>alert('<?php echo $lang["ADR_PARTY_GOT_INVITES"] ?>');</script>
+<table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0"><th colspan=3><?php $lang['ADR_PARTY_INVITES'] ?></th>
 
-<tr><td class="row1" width="100%">Groupe de <?=$party_leader?></td><td class="row1"><input type=button class=liteoption value=Accept onClick="window.location.href='./adr_party.php?action=join&party=<?=$invites[$i]?>#party'"></td><td class="row1"><input type=button class=liteoption value=Refuse onClick="window.location.href='./adr_party.php?action=refuse&party=<?=$invites[$i]?>#party'"></td></tr>
+<tr><td class="row1" width="100%"><?php printf($lang['ADR_PARTY_OF'], $party_leader) ?></td><td class="row1"><input type=button class=liteoption value="<?php echo $lang['ACCEPT'] ?>" onClick="window.location.href='./adr_party.php?action=join&party=<?php echo $invites[$i]?>#party'"></td><td class="row1"><input type=button class=liteoption value=<?php echo $lang['REFUSE'] ?> onClick="window.location.href='./adr_party.php?action=refuse&party=<?php echo $invites[$i]?>#party'"></td></tr>
 </table>
 <?php
 }
@@ -337,5 +337,4 @@ $party_leader = $row['character_name'];
 }
 ?>
 </td></tr>
-<tr><td class="row1" colspan=3><span class="gen"><a href="http://spikez.exocrew.com">MOD Written By: Spikez</a></span></td></tr>
 </table>

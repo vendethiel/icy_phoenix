@@ -91,16 +91,11 @@ if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN )
 // Get the user infos
 $adr_char = adr_get_user_infos($user_id);
 
-// Fix the values
-
-
 $InfoTemple = $_POST['InfoTemple'];
-
 if ( $InfoTemple )
 {
 	adr_previous( Adr_TownMap_Temple_Infos , adr_temple , '' );
 }
-
 
 $heal_price = ceil( $adr_general['temple_heal_cost'] * ( $adr_char['character_hp_max'] - $adr_char['character_hp'] ) );
 $resurrect_price = ceil( $adr_general['temple_resurrect_cost'] * ( $adr_char['character_hp_max'] ) );

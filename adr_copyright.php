@@ -38,7 +38,6 @@ include(IP_ROOT_PATH . 'adr/includes/adr_global.'.$phpEx);
 
 // Includes the tpl and the header
 adr_template_file('adr_copyright_body.tpl');
-page_header();
 
 // Get the general settings
 $adr_general = adr_get_general_config();

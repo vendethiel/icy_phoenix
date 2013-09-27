@@ -58,7 +58,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_hunting_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -101,6 +100,7 @@ else
 {
    $mode = "";
 }
+
 if ( $mode != "" )
 {
    switch($mode)
@@ -176,9 +176,10 @@ else
 // Fix the values
 
 $InfoHunt = $_POST['InfoHunt'];
-
 if ( $InfoHunt ){
-	adr_previous( Adr_Hunt_Infos , adr_hunting , '' );}
+	adr_previous( Adr_Hunt_Infos , adr_hunting , '' );
+}
+
 $template->assign_vars(array(
    'L_CREATE_ITEM' => $lang['Adr_hunting_create'],
    'L_HUNTING' => $lang['Adr_forge_hunting'],

@@ -46,7 +46,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_library_body.tpl');
-page_header();
 
 // Get the general config and character infos
 $adr_general = adr_get_general_config();

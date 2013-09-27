@@ -50,7 +50,6 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 adr_template_file('adr_blacksmithing_body.tpl');
-page_header();
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -93,7 +92,6 @@ $color_easy = '#FFFFFF'; //Easy
 $color_very_easy = '#8f8f8f'; // Very Easy
 $color_enough = '#00FF00'; //enough items
 $color_not_enough = '#FF0000'; //not enough items
-
 
 if( isset($_POST['mode']) || isset($_GET['mode']) )
 {

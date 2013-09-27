@@ -45,7 +45,6 @@ if ( !$userdata['session_logged_in'] )
 // Get the general config
 $adr_general = adr_get_general_config();
 
-
 // Grab info
 adr_template_file('adr_battle_chatbox_body.tpl');
 
@@ -138,4 +137,5 @@ $template->assign_vars(array(
 ));
 
 $template->pparse('body');
+
 ?>
