@@ -852,6 +852,68 @@ function get_founder_id($clear_cache = false)
 }
 
 /*
+* Get groups data
+*/
+function get_groups_data($full_data = false, $sort_by_name = false, $sql_groups = array())
+{
+	global $db, $cache, $config;
+
+	$groups_data = array();
+	$sql_select = !empty($full_data) ? '*' : 'g.group_id, g.group_name, g.group_color, g.group_legend, g.group_legend_order';
+	$sql_where = '';
+	if (!empty($sql_groups))
+	{
+		if (!is_array($sql_groups))
+		{
+			$sql_groups = array($sql_groups);
+		}
+		$sql_where = !empty($sql_groups) ? (' AND ' . $db->sql_in_set('g.group_id', $sql_groups)) : '';
+	}
+	$sql_sort = !empty($sort_by_name) ? ' ORDER BY g.group_name ASC' : ' ORDER BY g.group_legend DESC, g.group_legend_order ASC, g.group_name ASC';
+	$sql = "SELECT " . $sql_select . "
+		FROM " . GROUPS_TABLE . " g
+		WHERE g.group_single_user = 0" .
+		$sql_where .
+		$sql_sort;
+	$result = $db->sql_query($sql, 0, 'groups_', USERS_CACHE_FOLDER);
+	$groups_data = $db->sql_fetchrowset($result);
+	$db->sql_freeresult($result);
+
+	return $groups_data;
+}
+
+/*
+* Get groups data for a specific user
+*/
+function get_groups_data_user($user_id, $full_data = false, $sort_by_name = false, $sql_groups = array())
+{
+	global $db, $cache, $config;
+
+	$groups_data = array();
+	$sql_select = !empty($full_data) ? 'g.*, ug.*' : 'g.group_id, g.group_name, g.group_color, g.group_legend, g.group_legend_order, ug.user_pending';
+	$sql_where = '';
+	if (!empty($sql_groups))
+	{
+		if (!is_array($sql_groups))
+		{
+			$sql_groups = array($sql_groups);
+		}
+		$sql_where = !empty($sql_groups) ? (' AND ' . $db->sql_in_set('g.group_id', $sql_groups)) : '';
+	}
+	$sql = "SELECT " . $sql_select . "
+		FROM " . GROUPS_TABLE . " g, " . USER_GROUP_TABLE . " ug " . "
+		WHERE g.group_single_user = 0" .
+		$sql_where . "
+		AND g.group_id = ug.group_id
+		AND ug.user_id = " . (int) $user_id;
+	$result = $db->sql_query($sql, 0, 'groups_', USERS_CACHE_FOLDER);
+	$groups_data = $db->sql_fetchrowset($result);
+	$db->sql_freeresult($result);
+
+	return $groups_data;
+}
+
+/*
 * Founder protection
 */
 function founder_protect($founder_id)
@@ -4301,7 +4363,7 @@ function page_header($title = '', $parse_template = false)
 		$meta_content['topic_id'] = request_var(POST_TOPIC_URL, 0);
 		$meta_content['post_id'] = request_var(POST_POST_URL, 0);
 
-		$no_meta_pages_array = array(CMS_PAGE_LOGIN, CMS_PAGE_PRIVMSG, CMS_PAGE_POSTING, 'sudoku.' . PHP_EXT, 'kb.' . PHP_EXT);
+		$no_meta_pages_array = array(CMS_PAGE_LOGIN, CMS_PAGE_PRIVMSG, CMS_PAGE_POSTING, 'kb.' . PHP_EXT);
 		if (!in_array($page_url['basename'], $no_meta_pages_array) && (!empty($meta_content['post_id']) || !empty($meta_content['topic_id']) || !empty($meta_content['forum_id']) || !empty($meta_content['cat_id'])))
 		{
 			@include_once(IP_ROOT_PATH . 'includes/functions_meta.' . PHP_EXT);
@@ -4899,6 +4961,20 @@ function page_header($title = '', $parse_template = false)
 		$nav_menu_ads_top = get_ad('nmt');
 		$nav_menu_ads_bottom = get_ad('nmb');
 
+		$social_connect_buttons = '';
+		if (!empty($config['enable_social_connect']))
+		{
+			include_once(IP_ROOT_PATH . 'includes/class_social_connect.' . PHP_EXT);
+			$available_networks = SocialConnect::get_available_networks();
+
+			foreach ($available_networks as $social_network)
+			{
+				$social_connect_url = append_sid(CMS_PAGE_LOGIN . '?social_network=' . $social_network->get_name_clean());
+				$social_connect_img = '<img src="' . IP_ROOT_PATH . 'images/social_connect/' . $social_network->get_name_clean() . '_button_connect.png" alt="" title="' . $social_network->get_name() . '" />';
+				$social_connect_buttons .= '<a href="' . $social_connect_url . '">' . $social_connect_img . '</a>';
+			}
+		}
+
 		// The following assigns all _common_ variables that may be used at any point in a template.
 		$template->assign_vars(array(
 			'TOTAL_USERS_ONLINE' => $l_online_users,
@@ -5014,6 +5090,8 @@ function page_header($title = '', $parse_template = false)
 			'U_CPL_ZEBRA' => append_sid(CMS_PAGE_PROFILE . '?mode=zebra&amp;zmode=friends'),
 			// Mighty Gorgon - CPL - END
 
+			'SOCIAL_CONNECT_BUTTONS' => $social_connect_buttons,
+
 			// Activity - BEGIN
 			/*
 			'L_WHOSONLINE_GAMES' => '<a href="'. append_sid('activity.' . PHP_EXT) .'"><span style="color:#'. str_replace('#', '', $config['ina_online_list_color']) . ';">' . $config['ina_online_list_text'] . '</span></a>',
@@ -5103,7 +5181,6 @@ function page_header($title = '', $parse_template = false)
 		'L_DOWNLOADS' => $lang['Downloads'],
 		'L_DOWNLOADS_ADV' => $lang['Downloads_ADV'],
 		'L_HACKS_LIST' => $lang['Hacks_List'],
-		'L_SUDOKU' => $lang['Sudoku'],
 		'L_AVATAR_GEN' => $lang['AvatarGenerator'],
 		'L_LINKS' => $lang['Links'],
 		'L_WORDGRAPH' => $lang['Wordgraph'],
