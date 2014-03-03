@@ -20,11 +20,7 @@
 
 function zone_goto($goto_name, $cost_goto)
 {
-<<<<<<< HEAD
-	global $board_config, $adr_user, $db, $adr_user, $user_id;
-=======
 	global $board_config, $adr_user, $db, $adr_user, $phpEx, $user_id, $lang;
->>>>>>> ca85e9b... Fix changing zone bug
 
 	if ( ( $board_config['zone_dead_travel'] == '1' ) && ( $adr_user['character_hp'] < '1' ) )
 		adr_previous( Adr_zone_change_dead , adr_zones , '' );
@@ -51,6 +47,7 @@ function zone_goto($goto_name, $cost_goto)
 
 	if( $adr_user['character_level'] < $required_level )
 	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
+
 
 
  	// Check if user has the required item
