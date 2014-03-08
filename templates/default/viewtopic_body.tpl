@@ -169,6 +169,16 @@
 		</div>
 		<!-- END notes -->
 		</div>
+		<div class="post-notes">
+		<!-- BEGIN notes_mod -->
+		<div class="post-note">
+			<!-- IF notes_mod.U_DELETE -->
+			<div class="post-note-delete">[<a href="{notes_mod.U_DELETE}">{L_DELETE_NOTE}</a>]</div>
+			<!-- ENDIF -->
+			{L_NOTES_MOD} &bull; {postrow.notes_mod.POSTER_NAME}, {postrow.notes_mod.TIME}: {postrow.notes_mod.TEXT}
+		</div>
+		<!-- END notes_mod -->
+		</div>
 		<!-- ENDIF -->
 		<!-- ENDIF -->
 	</td>
@@ -341,6 +351,7 @@ if(GetCookie(tmp) == '2')
 		<!-- IF not S_BOT and S_TMOD_BUTTONS -->
 		<!-- INCLUDE viewtopic_admin.tpl -->
 		<!-- ENDIF -->
+		{S_TMOD_TOPIC_PREFIX_SELECT}<br /><br />
 		{JUMPBOX}
 	</td>
 </tr>
