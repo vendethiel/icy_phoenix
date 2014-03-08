@@ -41,15 +41,15 @@ $user->setup();
 //
 $user_id     = $userdata['user_id'];
 $user_points = $userdata['user_points'];
-include(IP_ROOT_PATH . 'adr/includes/adr_global.' . $phpEx);
-include(IP_ROOT_PATH . 'rabbitoshi/language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.' . $phpEx);
+include($phpbb_root_path . 'adr/includes/adr_global.' . $phpEx);
+include($phpbb_root_path . 'rabbitoshi/language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.' . $phpEx);
 
 // Sorry , only logged users ...
 if (!$userdata['session_logged_in'])
 {
 	$redirect = "adr_battle.$phpEx";
 	$redirect .= (isset($user_id)) ? '&user_id=' . $user_id : '';
-	header('Location: ' . append_sid("login_ip.$phpEx?redirect=$redirect", true));
+	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 } //!$userdata['session_logged_in']
 
 // Get the general config
@@ -74,6 +74,7 @@ if ($userdata['user_cell_time'])
 
 // Includes the tpl and the header
 adr_template_file('adr_battle_body.tpl');
+include($phpbb_root_path . 'includes/page_header.' . $phpEx);
 
 // Select pet infos
 $pet_invoc = '1';
@@ -98,18 +99,18 @@ while ($row = $db->sql_fetchrow($result))
 	$rabbit_general[$row['config_name']] = $row['config_value'];
 } //$row = $db->sql_fetchrow($result)
 
-$equip             = isset($_POST['equip']);
-$attack            = isset($_POST['attack']);
-$spell             = isset($_POST['spell']);
-$spell2            = isset($_POST['spell2']);
-$potion            = isset($_POST['potion']);
-$defend            = isset($_POST['defend']);
-$flee              = isset($_POST['flee']);
-$scan              = isset($_POST['scan']);
-$invoc             = isset($_POST['invoc']);
-$pet_attack        = isset($_POST['pet_attack']);
-$pet_magicattack   = isset($_POST['pet_magicattack']);
-$pet_specialattack = isset($_POST['pet_specialattack']);
+$equip             = isset($HTTP_POST_VARS['equip']);
+$attack            = isset($HTTP_POST_VARS['attack']);
+$spell             = isset($HTTP_POST_VARS['spell']);
+$spell2            = isset($HTTP_POST_VARS['spell2']);
+$potion            = isset($HTTP_POST_VARS['potion']);
+$defend            = isset($HTTP_POST_VARS['defend']);
+$flee              = isset($HTTP_POST_VARS['flee']);
+$scan              = isset($HTTP_POST_VARS['scan']);
+$invoc             = isset($HTTP_POST_VARS['invoc']);
+$pet_attack        = isset($HTTP_POST_VARS['pet_attack']);
+$pet_magicattack   = isset($HTTP_POST_VARS['pet_magicattack']);
+$pet_specialattack = isset($HTTP_POST_VARS['pet_specialattack']);
 // V: doing that because :-°
 $petstuff          = $invoc || $pet_attack || $pet_magicattack || $pet_specialattack;
 
@@ -127,7 +128,7 @@ $bat = $db->sql_fetchrow($result);
 if (!(is_numeric($bat['battle_id'])) && !$equip)
 {
 	// Moved the equip screen infos into adr_funtions_battle_setup.php
-	include_once(IP_ROOT_PATH . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
+	include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
 	adr_battle_equip_screen($user_id);
 } //!(is_numeric($bat['battle_id'])) && !$equip
 else if (!(is_numeric($bat['battle_id'])) && $equip)
@@ -137,17 +138,17 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 		adr_battle_quota_check($user_id);
 	
 	// Fix the items ids
-	$armor   = intval($_POST['item_armor']);
-	$buckler = intval($_POST['item_buckler']);
-	$helm    = intval($_POST['item_helm']);
-	$greave  = intval($_POST['item_greave']);
-	$boot    = intval($_POST['item_boot']);
-	$gloves  = intval($_POST['item_gloves']);
-	$amulet  = intval($_POST['item_amulet']);
-	$ring    = intval($_POST['item_ring']);
+	$armor   = intval($HTTP_POST_VARS['item_armor']);
+	$buckler = intval($HTTP_POST_VARS['item_buckler']);
+	$helm    = intval($HTTP_POST_VARS['item_helm']);
+	$greave  = intval($HTTP_POST_VARS['item_greave']);
+	$boot    = intval($HTTP_POST_VARS['item_boot']);
+	$gloves  = intval($HTTP_POST_VARS['item_gloves']);
+	$amulet  = intval($HTTP_POST_VARS['item_amulet']);
+	$ring    = intval($HTTP_POST_VARS['item_ring']);
 	
 	// Battle start infos gone into adr_functions_battle_setup.php
-	include_once(IP_ROOT_PATH . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
+	include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
 	adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves, $amulet, $ring, $greave, $boot);
 	adr_battle_effects_initialise($user_id, 0, '', 0);
 	
@@ -234,9 +235,46 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	} //($bat['battle_round'] == '0') && ($bat['battle_turn'] == '2')
 	else if ($scan && $bat['battle_turn'] == 1)
 	{
-		battle_regen_rabbitoshi($rabbit_user, $battle_message);
-		battle_regen_amulet($bat, $challenger, $battle_message);
-		battle_regen_ring($bat, $challenger, $battle_message);
+		// Check if pet have regeneration ability
+		$mp_consumned = '0';
+		$pet_regen    = '0';
+		if ($rabbit_user['creature_ability'] == '1')
+		{
+			if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+			{
+				$mp_consumned = $rabbit_general['regeneration_mp_need'];
+				$pet_regen    = $rabbit_general['regeneration_hp_give'];
+				$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+			} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+			$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+				SET creature_health = creature_health + " . intval($pet_regen) . ",
+				    creature_mp = creature_mp - " . intval($mp_consumned) . "
+				WHERE owner_id = $user_id ";
+			if (!$result = $db->sql_query($sql))
+			{
+				message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+			} //!$result = $db->sql_query($sql)
+		} //$rabbit_user['creature_ability'] == '1'
+		
+		// Check if user a Amulet for HP regen this turn		
+		if ($bat['battle_challenger_hp'] != 0)
+		{
+			if ($challenger['character_hp'] < $challenger['character_hp_max'])
+			{
+				$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+				$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+			} //$challenger['character_hp'] < $challenger['character_hp_max']
+		} //$bat['battle_challenger_hp'] != 0
+		
+		// Check if user a Ring for MP regen this turn	
+		if ($bat['battle_challenger_mp'] != 0)
+		{
+			if ($challenger['character_mp'] < $challenger['character_mp_max'])
+			{
+				$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+				$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+			} //$challenger['character_mp'] < $challenger['character_mp_max']
+		} //$bat['battle_challenger_mp'] != 0
 		
 		// Check if the scan failed or not
 		$scan_dice    = rand(20, 60);
@@ -245,7 +283,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		{
 			($opponent_message_enable == '') ? $scan_message = '' . $lang['Adr_battle_scan_no_message'] . '' : $scan_message = '' . $lang['Adr_battle_scan_success'] . ' :<br />' . $opponent_message . '<br />';
 			$battle_message .= sprintf($scan_message) . '<br />';
-		}
+		} //$scan_success > 69
 		else
 		{
 			$battle_message .= sprintf($lang['Adr_battle_scan_fail']) . '<br />';
@@ -331,9 +369,29 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		} //(($dice > $monster_dice) && ($dice != '1')) || ($dice == '20')
 		else
 		{
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
-
-			// If flee attempt fails, create failure message
+			// Check if pet have regeneration ability
+			$mp_consumned = '0';
+			$pet_regen    = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
+			
+			// If flee attempt fails
+			// Create failure message
 			$battle_message .= sprintf($lang['Adr_battle_flee_fail'], $challenger['character_name']) . '<br>';
 			
 			// Update the database
@@ -349,7 +407,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	else if ($spell && $bat['battle_turn'] == 1)
 	{
 		// Define the weapon quality and power
-		$item_spell = intval($_POST['item_spell']);
+		$item_spell = intval($HTTP_POST_VARS['item_spell']);
 		$power      = 0;
 		$damage     = 0;
 		
@@ -421,7 +479,26 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			$crit_result  = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, $threat_range);
 			##=== END: Critical hit code
 			
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
+			// Check if pet have regeneration ability
+			$mp_consumned = '0';
+			$pet_regen    = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
 			
 			$attbonus = 0;
 			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
@@ -503,8 +580,25 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
 			$power = ceil($power * $attbonus);
 			// Check if pet have regeneration ability
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
-			
+			$mp_consumned = '0';
+			$pet_regen    = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
 			
 			// Create battle message
 			$battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $item['item_name'], $power) . '<br>';
@@ -540,7 +634,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	else if ( $spell2 && $bat['battle_turn'] == 1 )
 	{
 		// Define the weapon quality and power
-		$item_spell2 = intval($_POST['item_spell2']);
+		$item_spell2 = intval($HTTP_POST_VARS['item_spell2']);
 		$power = 0;
 		$damage = 0;
 
@@ -767,7 +861,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	else if ($potion && $bat['battle_turn'] == 1)
 	{
 		// Define the weapon quality and power
-		$item_potion = intval($_POST['item_potion']);
+		$item_potion = intval($HTTP_POST_VARS['item_potion']);
 		$power       = 1;
 		
 		if ($item_potion)
@@ -985,7 +1079,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				} //!$result = $db->sql_query($sql)
 			} //$rabbit_user['creature_ability'] == '1'
 			
-			include_once(IP_ROOT_PATH . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
+			include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
 			$e_message = adr_battle_effects_initialise($user_id, $item_potion, $monster['monster_name'], 0);
 			
 			// Use item
@@ -1061,6 +1155,17 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_pet_sacrifice'], intval($pet_damage)) . '<br />';
 			} //$rabbit_user['creature_ability'] == '4'
 			
+			// Check if pet have regeneration ability
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+			} //$rabbit_user['creature_ability'] == '1'
+			
 			// Check if pet is poisonned
 			if ($rabbit_user['creature_statut'] == '3')
 			{
@@ -1075,19 +1180,25 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				} //$rabbit_user['creature_health'] > 0
 			} //$rabbit_user['creature_statut'] == '3'
 			
-			// Check if pet have regeneration ability
-			if ($rabbit_user['creature_ability'] == '1')
+			// Check if user a Amulet for HP regen this turn
+			if ($bat['battle_challenger_hp'] != 0)
 			{
-				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				if ($challenger['character_hp'] < $challenger['character_hp_max'])
 				{
-					$mp_consumned = $rabbit_general['regeneration_mp_need'];
-					$pet_regen    = $rabbit_general['regeneration_hp_give'];
-					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
-				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
-			} //$rabbit_user['creature_ability'] == '1'
+					$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+				} //$challenger['character_hp'] < $challenger['character_hp_max']
+			} //$bat['battle_challenger_hp'] != 0
 			
-			battle_regen_amulet($bat, $challenger, $battle_message);
-			battle_regen_ring($bat, $challenger, $battle_message);
+			// Check if user a Ring for MP regen this turn
+			if ($bat['battle_challenger_mp'] != 0)
+			{
+				if ($challenger['character_mp'] < $challenger['character_mp_max'])
+				{
+					$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+				} //$challenger['character_mp'] < $challenger['character_mp_max']
+			} //$bat['battle_challenger_mp'] != 0
 			
 			$hp_changes = (($poison + $health_give) - $pet_regen);
 			$mp_changes = ($mp_consumned + $mana_give);
@@ -1186,7 +1297,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				}
 			} //$rabbit_user['creature_statut'] == '1'
 			
-			if ($rabbit_user['creature_statut'] == '2') //pet is ill
+			if ($rabbit_user['creature_statut'] == '2') //pet is hill
 			{
 				$pet_dice = rand(0, 20);
 				if ($pet_dice == '20') //define critical hit
@@ -1235,10 +1346,46 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				}
 			} //$rabbit_user['creature_statut'] == '4'
 			
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
-			battle_regen_amulet($bat, $challenger, $battle_message);
-			battle_regen_ring($bat, $challenger, $battle_message);
-						
+			// Check if pet have regeneration ability
+			$mp_consumned = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
+			
+			// Check if user a Amulet for HP regen this turn
+			if ($bat['battle_challenger_hp'] != 0)
+			{
+				if ($challenger['character_hp'] < $challenger['character_hp_max'])
+				{
+					$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+				} //$challenger['character_hp'] < $challenger['character_hp_max']
+			} //$bat['battle_challenger_hp'] != 0
+			
+			// Check if user a Ring for MP regen this turn
+			if ($bat['battle_challenger_mp'] != 0)
+			{
+				if ($challenger['character_mp'] < $challenger['character_mp_max'])
+				{
+					$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+				} //$challenger['character_mp'] < $challenger['character_mp_max']
+			} //$bat['battle_challenger_mp'] != 0
+			
 			$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
 				SET creature_health = creature_health - '$poison',
 				    creature_attack = (creature_attack - 1)
@@ -1392,10 +1539,46 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				}
 			} //$rabbit_user['creature_statut'] == '4'
 			
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
-			battle_regen_amulet($bat, $challenger, $battle_message);
-			battle_regen_ring($bat, $challenger, $battle_message);
-		
+			// Check if pet have regeneration ability
+			$mp_consumned = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
+			
+			// Check if user a Amulet for HP regen this turn
+			if ($bat['battle_challenger_hp'] != 0)
+			{
+				if ($challenger['character_hp'] < $challenger['character_hp_max'])
+				{
+					$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+				} //$challenger['character_hp'] < $challenger['character_hp_max']
+			} //$bat['battle_challenger_hp'] != 0
+			
+			// Check if user a Ring for MP regen this turn
+			if ($bat['battle_challenger_mp'] != 0)
+			{
+				if ($challenger['character_mp'] < $challenger['character_mp_max'])
+				{
+					$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+				} //$challenger['character_mp'] < $challenger['character_mp_max']
+			} //$bat['battle_challenger_mp'] != 0
+			
 			$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
 				SET creature_health = creature_health - '$poison',
 				    creature_mp = creature_mp - '$price_mp',
@@ -1427,7 +1610,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	else if ($attack && $bat['battle_turn'] == 1)
 	{
 		// Define the weapon quality and power
-		$weap    = intval($_POST['item_weapon']);
+		$weap    = intval($HTTP_POST_VARS['item_weapon']);
 		$power   = 1;
 		$quality = 0;
 		$dice    = rand(0, 5);
@@ -1467,9 +1650,46 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			$dice    = rand(0, 5);
 			$power   = ($item['item_type_use'] == 6) ? ($item['item_power'] * 3) + $dice + ($char['might'] * 0.2) + $item['item_add_power'] : ($item['item_power'] * 2) + $item['item_add_power'] + $dice + ($char['might'] * 0.2);
 			
-			battle_regen_rabbitoshi($rabbit_user, $battle_message);
-			battle_regen_amulet($bat, $challenger, $battle_message);
-			battle_regen_ring($bat, $challenger, $battle_message);
+			// Check if pet have regeneration ability
+			$mp_consumned = '0';
+			$pet_regen    = '0';
+			if ($rabbit_user['creature_ability'] == '1')
+			{
+				if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+				{
+					$mp_consumned = $rabbit_general['regeneration_mp_need'];
+					$pet_regen    = $rabbit_general['regeneration_hp_give'];
+					$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+				} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+					SET creature_health = creature_health + " . intval($pet_regen) . ",
+					    creature_mp = creature_mp - " . intval($mp_consumned) . "
+					WHERE owner_id = $user_id ";
+				if (!$result = $db->sql_query($sql))
+				{
+					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+				} //!$result = $db->sql_query($sql)
+			} //$rabbit_user['creature_ability'] == '1'
+			
+			// Check if user a Amulet for HP regen this turn		
+			if ($bat['battle_challenger_hp'] != 0)
+			{
+				if ($challenger['character_hp'] < $challenger['character_hp_max'])
+				{
+					$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br />';
+				} //$challenger['character_hp'] < $challenger['character_hp_max']
+			} //$bat['battle_challenger_hp'] != 0
+			
+			// Check if user a Ring for MP regen this turn	
+			if ($bat['battle_challenger_mp'] != 0)
+			{
+				if ($challenger['character_mp'] < $challenger['character_mp_max'])
+				{
+					$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+					$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br />';
+				} //$challenger['character_mp'] < $challenger['character_mp_max']
+			} //$bat['battle_challenger_mp'] != 0
 			
 			adr_use_item($weap, $user_id);
 		} // end if weapon
@@ -1490,21 +1710,53 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		if ($item['item_name'] == '')
 		{
 			$monster_def_dice = rand(1, 20);
-			$monster_modifier = rand(1, 10); // this is temp. until proper monster characteristics are added to ADR
-										     // V: temporary modified to 10 -- see below
+			$monster_modifier = rand(1, 20); // this is temp. until proper monster characteristics are added to ADR
 			// $crit_roll        = rand(1, 20);
-			// V: stupid mistake ... earlier the rand is 1, 5 -_-
+			// stupid mistake ... earlier the rand is 1, 5 -_-
 			$bare_dice = rand(1, 20);
-			// V: TODO this is not supposed to be rand, but I can't find where it's supposed to be defined
-			//    also, monster_def_dice+monster_modifier might be TOO much (upto 40)
-			//    (see $monster_modifier comment)
-			$bare_power = rand(1, 20);
 
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
-				battle_regen_rabbitoshi($rabbit_user, $battle_message);
-				battle_regen_amulet($bat, $challenger, $battle_message);
-				battle_regen_ring($bat, $challenger, $battle_message);
+				// Check if pet have regeneration ability
+				$mp_consumned = '0';
+				$pet_regen    = '0';
+				if ($rabbit_user['creature_ability'] == '1')
+				{
+					if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+					{
+						$mp_consumned = $rabbit_general['regeneration_mp_need'];
+						$pet_regen    = $rabbit_general['regeneration_hp_give'];
+						$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+					} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+					$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+						SET creature_health = creature_health + " . intval($pet_regen) . ",
+						    creature_mp = creature_mp - " . intval($mp_consumned) . "
+						WHERE owner_id = $user_id ";
+					if (!$result = $db->sql_query($sql))
+					{
+						message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+					} //!$result = $db->sql_query($sql)
+				} //$rabbit_user['creature_ability'] == '1'
+				
+				// Check if user a Amulet for HP regen this turn		
+				if ($bat['battle_challenger_hp'] > '0')
+				{
+					if ($challenger['character_hp'] < $challenger['character_hp_max'])
+					{
+						$hp_regen = intval(adr_hp_regen_check($user_id, $bat['battle_challenger_hp']));
+						$battle_message .= sprintf($lang['Adr_battle_regen_xp'], intval($hp_regen)) . '<br>';
+					} //$challenger['character_hp'] < $challenger['character_hp_max']
+				} //$bat['battle_challenger_hp'] > '0'
+				
+				// Check if user a Ring for MP regen this turn	
+				if ($bat['battle_challenger_mp'] > '0')
+				{
+					if ($challenger['character_mp'] < $challenger['character_mp_max'])
+					{
+						$mp_regen = intval(adr_mp_regen_check($user_id, $bat['battle_challenger_mp']));
+						$battle_message .= sprintf($lang['Adr_battle_regen_mp'], intval($mp_regen)) . '<br>';
+					} //$challenger['character_mp'] < $challenger['character_mp_max']
+				} //$bat['battle_challenger_mp'] > '0'
 				
 				// Attack success , calculate the damage . Critical dice roll is still success
 				$damage = (($bare_dice == '20') && ($crit_roll == '20')) ? ($bare_power * 2) : $bare_power;
@@ -1608,8 +1860,26 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	else if ($defend && $bat['battle_turn'] == 1)
 	{
 		$def          = TRUE;
-		$power        = floor(($monster['monster_level'] * rand(1, 3)) / 2);		
-		battle_regen_rabbitoshi($rabbit_user, $battle_message);
+		$power        = floor(($monster['monster_level'] * rand(1, 3)) / 2);
+		// Check if pet have regeneration ability	
+		$mp_consumned = '0';
+		if ($rabbit_user['creature_ability'] == '1')
+		{
+			if (($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need']))
+			{
+				$mp_consumned = $rabbit_general['regeneration_mp_need'];
+				$pet_regen    = $rabbit_general['regeneration_hp_give'];
+				$battle_message .= sprintf($lang['Rabbitoshi_Adr_battle_regen'], intval($pet_regen)) . '<br />';
+			} //($rabbit_user['creature_health'] < $rabbit_user['creature_health_max']) && ($rabbit_user['creature_health'] > 0) && ($rabbit_user['creature_mp'] > $rabbit_general['regeneration_mp_need'])
+			$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
+				Set creature_health = creature_health + $pet_regen,
+				    creature_mp = creature_mp - $mp_consumned
+			WHERE owner_id = $user_id ";
+			if (!$result = $db->sql_query($sql))
+			{
+				message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+			} //!$result = $db->sql_query($sql)
+		} //$rabbit_user['creature_ability'] == '1'
 		
 		$battle_message .= sprintf($lang['Adr_battle_defend'], $challenger['character_name'], $monster['monster_name']) . '<br>';
 		
@@ -2278,7 +2548,14 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				message_die(GENERAL_ERROR, 'Could not update stolen item status', '', __LINE__, __FILE__, $sql);
 			} //!($result = $db->sql_query($sql))
 			
-			items_remove_broken($user_id);
+			// Delete broken items from users inventory
+			$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+			WHERE item_duration < 1 
+			AND item_owner_id = $user_id ";
+			if (!($result = $db->sql_query($sql)))
+			{
+				message_die(GENERAL_ERROR, 'Could not delete broken items', '', __LINE__, __FILE__, $sql);
+			} //!($result = $db->sql_query($sql))
 			// Pet part
 			if ($rabbit_user['creature_invoc'] == '1')
 			{
@@ -2366,6 +2643,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		if ($challenger_hp < 1 && $opponent_hp > 0)
 		{
 			// The character is dead , update the database
+			
 			$sql = " UPDATE  " . ADR_BATTLE_LIST_TABLE . " 
 			SET battle_result = 2,
 				battle_finish = " . time() . ",
@@ -2396,14 +2674,21 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				message_die(GENERAL_ERROR, 'Could not delete stolen items', '', __LINE__, __FILE__, $sql);
 			} //!($result = $db->sql_query($sql))
 			
-			items_remove_broken($user_id);
+			// Delete broken items from users inventory
+			$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+			WHERE item_duration < 1 
+			AND item_owner_id = $user_id ";
+			if (!($result = $db->sql_query($sql)))
+			{
+				message_die(GENERAL_ERROR, 'Could not delete broken items', '', __LINE__, __FILE__, $sql);
+			} //!($result = $db->sql_query($sql))
 			// Pet part
 			if ($rabbit_user['creature_invoc'] == '1')
 			{
 				// Set invoc default stats
 				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
-					SET creature_invoc = '0'
-				WHERE owner_id = $user_id ";
+			Set creature_invoc = '0'
+		WHERE owner_id = $user_id ";
 				if (!$result = $db->sql_query($sql))
 				{
 					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
@@ -2499,17 +2784,17 @@ for ($i = 0, $count_items = count($items); $i < $count_items; $i++)
 		|| $items[$i]['item_type_use'] ==  44 || $items[$i]['item_type_use'] ==  45 || $items[$i]['item_type_use'] ==  46 )
 	 && ( $items[$i]['item_mp_use'] <= $challenger['character_mp'] ) )
 	{
-		$weapon_selected = ($_POST['item_weapon'] == $items[$i]['item_id']) ? 'selected' : '';
+		$weapon_selected = ($HTTP_POST_VARS['item_weapon'] == $items[$i]['item_id']) ? 'selected' : '';
 		$weapon_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $weapon_selected . '>' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
 	}
 	else if (($items[$i]['item_type_use'] == 11 || $items[$i]['item_type_use'] == 12) && (($items[$i]['item_power'] + $items[$i]['item_mp_use']) <= $challenger['character_mp']))
 	{
-		$spell_selected = ($_POST['item_spell'] == $items[$i]['item_id']) ? 'selected' : '';
+		$spell_selected = ($HTTP_POST_VARS['item_spell'] == $items[$i]['item_id']) ? 'selected' : '';
 		$spell_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $spell_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
 	}
 	else if ($items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 || $items[$i]['item_type_use'] == 19)
 	{
-		$potion_selected = ($_POST['item_potion'] == $items[$i]['item_id']) ? 'selected' : '';
+		$potion_selected = ($HTTP_POST_VARS['item_potion'] == $items[$i]['item_id']) ? 'selected' : '';
 		$potion_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $potion_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
 	}
 } //$i = 0, $count_items = count($items); $i < $count_items; $i++
@@ -2519,7 +2804,7 @@ for ($s = 0; $s < count($spells); $s++)
 	
 	if (($spells[$s]['item_type_use'] == 11 || $spells[$s]['item_type_use'] == 108 || $spells[$s]['item_type_use']) && ($spells[$s]['spell_mp_use'] <= $challenger['character_mp']))
 	{
-		$spell2_selected = ($_POST['item_spell2'] == $spells[$s]['spell_id']) ? 'selected' : '';
+		$spell2_selected = ($HTTP_POST_VARS['item_spell2'] == $spells[$s]['spell_id']) ? 'selected' : '';
 		$spell2_list .= '<option value = "' . $spells[$s]['spell_id'] . '" ' . $spell2_selected . '>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )' . '</option>';
 	} //($spells[$s]['item_type_use'] == 11 || $spells[$s]['item_type_use'] == 108 || $spells[$s]['item_type_use']) && ($spells[$s]['spell_mp_use'] <= $challenger['character_mp'])
 } //$s = 0; $s < count($spells); $s++
@@ -2747,7 +3032,6 @@ $template->assign_vars(array(
 	'L_CUSTOM_SENTANCE' => $lang['Adr_pvp_taunt'],
 	'S_CHATBOX' => append_sid("adr_battle_chatbox.$phpEx?battle_id=" . $bat['battle_id'])
 ));
-
 
 $template->pparse('body');
 
