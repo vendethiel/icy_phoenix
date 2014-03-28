@@ -1710,10 +1710,11 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		if ($item['item_name'] == '')
 		{
 			$monster_def_dice = rand(1, 20);
-			$monster_modifier = rand(1, 20); // this is temp. until proper monster characteristics are added to ADR
-			// $crit_roll        = rand(1, 20);
-			// stupid mistake ... earlier the rand is 1, 5 -_-
+			$monster_modifier = rand(1, 10); // this is temp. until proper monster characteristics are added to ADR
+										     // V: temporary modified to 10 -- see below
 			$bare_dice = rand(1, 20);
+	        // Grab modifers
+	        $bare_power = adr_modifier_calc($challenger['character_might']);
 
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
