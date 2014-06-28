@@ -32,7 +32,7 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
 		message_die(GENERAL_ERROR, "Could not access seasons table.", '', __LINE__, __FILE__, $sql);
 
 	//define the new period
-	$new_time = $board_config['adr_seasons_last_time'] +  $board_config['adr_seasons_time'];
+	$new_time = time();
 
 	$sql= "UPDATE ". CONFIG_TABLE . " 
 		SET config_value = '$new_time' 
