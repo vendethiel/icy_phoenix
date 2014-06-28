@@ -7,7 +7,7 @@
 $dbms = 'mysql';
 
 $dbhost = '127.0.0.1';
-$dbname = 'ipgit';
+$dbname = 'iptest';
 $dbuser = 'root';
 $dbpasswd = '';
 
