@@ -55,6 +55,18 @@ $forum_id = request_var(POST_FORUM_URL, 0);
 $topic_id = request_var(POST_TOPIC_URL, 0);
 $post_id = request_var(POST_POST_URL, 0);
 $post_id = empty($post_id) ? request_var('post_id', 0) : $post_id;
+if (!empty($post_id) && (empty($forum_id) || empty($topic_id)))
+{
+	$post_data = get_forum_topic_id_post($post_id);
+	if (empty($forum_id) && !empty($post_data['forum_id']))
+	{
+		$forum_id = $post_data['forum_id'];
+	}
+	if (empty($topic_id) && !empty($post_data['topic_id']))
+	{
+		$topic_id = $post_data['topic_id'];
+	}
+}
 
 $user_id = request_var(POST_USERS_URL, 0);
 $user_id = ($user_id < 2) ? ANONYMOUS : $user_id;
@@ -245,7 +257,8 @@ elseif ($mode == 'unban')
 }
 elseif ($mode == 'ban')
 {
-	if (($user->data['user_level'] != ADMIN) && !$is_auth['auth_ban'])
+	$founder_id = (defined('FOUNDER_ID') ? FOUNDER_ID : get_founder_id());
+	if ((($user->data['user_level'] != ADMIN) && !$is_auth['auth_ban']) || ($poster_id == $founder_id))
 	{
 		message_die(GENERAL_ERROR, $lang['Not_Authorized']);
 	}
@@ -300,7 +313,8 @@ elseif ($mode == 'ban')
 }
 elseif ($mode == 'warn')
 {
-	if (($user->data['user_level'] != ADMIN) && !$is_auth['auth_ban'])
+	$founder_id = (defined('FOUNDER_ID') ? FOUNDER_ID : get_founder_id());
+	if ((($user->data['user_level'] != ADMIN) && !$is_auth['auth_ban']) || ($poster_id == $founder_id))
 	{
 		message_die(GENERAL_ERROR, $lang['Not_Authorized']);
 	}

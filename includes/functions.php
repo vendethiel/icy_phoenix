@@ -852,6 +852,68 @@ function get_founder_id($clear_cache = false)
 }
 
 /*
+* Get groups data
+*/
+function get_groups_data($full_data = false, $sort_by_name = false, $sql_groups = array())
+{
+	global $db, $cache, $config;
+
+	$groups_data = array();
+	$sql_select = !empty($full_data) ? '*' : 'g.group_id, g.group_name, g.group_color, g.group_legend, g.group_legend_order';
+	$sql_where = '';
+	if (!empty($sql_groups))
+	{
+		if (!is_array($sql_groups))
+		{
+			$sql_groups = array($sql_groups);
+		}
+		$sql_where = !empty($sql_groups) ? (' AND ' . $db->sql_in_set('g.group_id', $sql_groups)) : '';
+	}
+	$sql_sort = !empty($sort_by_name) ? ' ORDER BY g.group_name ASC' : ' ORDER BY g.group_legend DESC, g.group_legend_order ASC, g.group_name ASC';
+	$sql = "SELECT " . $sql_select . "
+		FROM " . GROUPS_TABLE . " g
+		WHERE g.group_single_user = 0" .
+		$sql_where .
+		$sql_sort;
+	$result = $db->sql_query($sql, 0, 'groups_', USERS_CACHE_FOLDER);
+	$groups_data = $db->sql_fetchrowset($result);
+	$db->sql_freeresult($result);
+
+	return $groups_data;
+}
+
+/*
+* Get groups data for a specific user
+*/
+function get_groups_data_user($user_id, $full_data = false, $sort_by_name = false, $sql_groups = array())
+{
+	global $db, $cache, $config;
+
+	$groups_data = array();
+	$sql_select = !empty($full_data) ? 'g.*, ug.*' : 'g.group_id, g.group_name, g.group_color, g.group_legend, g.group_legend_order, ug.user_pending';
+	$sql_where = '';
+	if (!empty($sql_groups))
+	{
+		if (!is_array($sql_groups))
+		{
+			$sql_groups = array($sql_groups);
+		}
+		$sql_where = !empty($sql_groups) ? (' AND ' . $db->sql_in_set('g.group_id', $sql_groups)) : '';
+	}
+	$sql = "SELECT " . $sql_select . "
+		FROM " . GROUPS_TABLE . " g, " . USER_GROUP_TABLE . " ug " . "
+		WHERE g.group_single_user = 0" .
+		$sql_where . "
+		AND g.group_id = ug.group_id
+		AND ug.user_id = " . (int) $user_id;
+	$result = $db->sql_query($sql, 0, 'groups_', USERS_CACHE_FOLDER);
+	$groups_data = $db->sql_fetchrowset($result);
+	$db->sql_freeresult($result);
+
+	return $groups_data;
+}
+
+/*
 * Founder protection
 */
 function founder_protect($founder_id)
@@ -909,6 +971,7 @@ function unique_id($extra = 'c')
 	return substr($val, 4, 16);
 }
 
+// Modified by MG
 /**
 * Return formatted string for filesizes
 *
@@ -929,24 +992,28 @@ function get_formatted_filesize($value, $string_only = true, $allowed_units = fa
 			'index' => 3,
 			'si_unit' => 'GB',
 			'iec_unit' => 'GIB',
+			'precision' => 2
 		),
 		'mb' => array(
 			'min' => 1048576, // pow(2, 20)
 			'index' => 2,
 			'si_unit' => 'MB',
 			'iec_unit' => 'MIB',
+			'precision' => 2
 		),
 		'kb' => array(
 			'min' => 1024, // pow(2, 10)
 			'index' => 1,
 			'si_unit' => 'KB',
 			'iec_unit' => 'KIB',
+			'precision' => 0
 		),
 		'b' => array(
 			'min' => 0,
 			'index' => 0,
 			'si_unit' => 'BYTES', // Language index
 			'iec_unit' => 'BYTES', // Language index
+			'precision' => 0
 		),
 	);
 
@@ -970,14 +1037,14 @@ function get_formatted_filesize($value, $string_only = true, $allowed_units = fa
 	{
 		$value /= 1024;
 	}
-	$value = round($value, 2);
+	$value = round($value, $unit_info['precision']);
 
 	// Lookup units in language dictionary
 	$unit_info['si_unit'] = (isset($lang[$unit_info['si_unit']])) ? $lang[$unit_info['si_unit']] : $unit_info['si_unit'];
 	$unit_info['iec_unit'] = (isset($lang[$unit_info['iec_unit']])) ? $lang[$unit_info['iec_unit']] : $unit_info['iec_unit'];
 
-	// Default to IEC
-	$unit_info['unit'] = $unit_info['iec_unit'];
+	// Default to SI
+	$unit_info['unit'] = $unit_info['si_unit'];
 
 	if (!$string_only)
 	{
@@ -986,7 +1053,7 @@ function get_formatted_filesize($value, $string_only = true, $allowed_units = fa
 		return $unit_info;
 	}
 
-	return $value . ' ' . $unit_info['unit'];
+	return $value . $unit_info['unit'];
 }
 
 /**
@@ -2635,6 +2702,20 @@ function check_style_exists($style_id)
 }
 
 /*
+* Get forum id for a post
+*/
+function get_forum_topic_id_post($post_id)
+{
+	global $db, $cache, $config;
+	$post_data = array();
+	$sql = "SELECT forum_id, topic_id FROM " . POSTS_TABLE . " WHERE post_id = '" . (int) $post_id . "' LIMIT 1";
+	$result = $db->sql_query($sql);
+	$post_data = $db->sql_fetchrow($result);
+	$db->sql_freeresult($result);
+	return $post_data;
+}
+
+/*
 * Check if a user is allowed to view IP addresses
 */
 function ip_display_auth($user_data, $is_forum = false)
@@ -3792,11 +3873,80 @@ function colorize_username($user_id, $username = '', $user_color = '', $user_act
 	return $user_link;
 }
 
+function user_get_avatar($user_id, $user_level, $user_avatar, $user_avatar_type, $user_allow_avatar, $path_prefix = '', $max_width = 0)
+{
+	global $config;
+
+	$user_avatar_path = '';
+	$user_avatar_link = '';
+	$user_avatar_dim = '';
+
+	if ($user_avatar_type && ($user_id != ANONYMOUS) && $user_allow_avatar)
+	{
+		switch($user_avatar_type)
+		{
+			case USER_AVATAR_UPLOAD:
+				$user_avatar_path = ($config['allow_avatar_upload']) ? ($path_prefix . $config['avatar_path'] . '/' . $user_avatar) : '';
+				break;
+			case USER_AVATAR_REMOTE:
+				$user_avatar_path = $user_avatar;
+				if ($user_level != ADMIN)
+				{
+					// Set this to false if you want to force height as well
+					$force_width_only = true;
+
+					$avatar_width = $config['avatar_max_width'];
+					$avatar_height = $config['avatar_max_height'];
+
+					if (!empty($config['allow_avatar_remote']))
+					{
+						$user_avatar_dim = ' width="' . $avatar_width . '"' . (($force_width_only) ? '' : (' height="' . $avatar_height . '"'));
+						$user_avatar_path = $user_avatar;
+					}
+					else
+					{
+						$user_avatar_path = '';
+					}
+				}
+				break;
+			case USER_AVATAR_GALLERY:
+				$user_avatar_path = ($config['allow_avatar_local']) ? ($path_prefix . $config['avatar_gallery_path'] . '/' . $user_avatar) : '';
+				break;
+			case USER_GRAVATAR:
+				$user_avatar_path = ($config['enable_gravatars']) ? get_gravatar($user_avatar) : '';
+				break;
+			case USER_AVATAR_GENERATOR:
+				$user_avatar_path = ($config['allow_avatar_generator']) ? $user_avatar : '';
+				break;
+			default:
+				$user_avatar_path = '';
+		}
+	}
+
+	if (empty($user_avatar_path))
+	{
+		$user_avatar_path = get_default_avatar($user_id, $path_prefix);
+	}
+
+	if (!empty($max_width))
+	{
+		$max_width = (int) $max_width;
+		if (($max_width > 10) && ($max_width < 240))
+		{
+			$user_avatar_dim = ' style="width: ' . $max_width . 'px; max-width: ' . $max_width . 'px;"';
+		}
+	}
+	$avatar_class = (($max_width > 10) && ($max_width < 40)) ? '' : ' class="avatar"';
+	$user_avatar_link = (!empty($user_avatar_path)) ? '<img src="' . $user_avatar_path . '" alt="avatar"' . $avatar_class . $user_avatar_dim . ' />' : '&nbsp;';
+
+	return $user_avatar_link;
+}
+
 function get_default_avatar($user_id, $path_prefix = '')
 {
 	global $config;
 
-	$avatar_img = '&nbsp;';
+	$avatar_img = '';
 	if ($config['default_avatar_set'] != 3)
 	{
 		if (($config['default_avatar_set'] == 0) && ($user_id == ANONYMOUS) && ($config['default_avatar_guests_url'] != ''))
@@ -3820,86 +3970,7 @@ function get_default_avatar($user_id, $path_prefix = '')
 		}
 	}
 
-	$avatar_img = ($avatar_img == '&nbsp;') ? '&nbsp;' : '<img src="' . $path_prefix . $avatar_img . '" alt="avatar" />';
-
-	return $avatar_img;
-}
-
-function user_get_avatar($user_id, $user_level, $user_avatar, $user_avatar_type, $user_allow_avatar, $path_prefix = '')
-{
-	global $config;
-	$user_avatar_link = '';
-	if ($user_avatar_type && ($user_id != ANONYMOUS) && $user_allow_avatar)
-	{
-		switch($user_avatar_type)
-		{
-			case USER_AVATAR_UPLOAD:
-				$user_avatar_link = ($config['allow_avatar_upload']) ? '<img src="' . $path_prefix . $config['avatar_path'] . '/' . $user_avatar . '" alt="avatar" style="margin-bottom: 3px;" />' : '';
-				break;
-			case USER_AVATAR_REMOTE:
-				$user_avatar_link = resize_avatar($user_id, $user_level, $user_avatar);
-				break;
-			case USER_AVATAR_GALLERY:
-				$user_avatar_link = ($config['allow_avatar_local']) ? '<img src="' . $path_prefix . $config['avatar_gallery_path'] . '/' . $user_avatar . '" alt="avatar" style="margin-bottom: 3px;" />' : '';
-				break;
-			case USER_GRAVATAR:
-				$user_avatar_link = ($config['enable_gravatars']) ? '<img src="' . get_gravatar($user_avatar) . '" alt="avatar" style="margin-bottom: 3px;" />' : '';
-				break;
-			default:
-				$user_avatar_link = '';
-		}
-	}
-
-	if ($user_avatar_link == '')
-	{
-		$user_avatar_link = get_default_avatar($user_id, $path_prefix);
-	}
-
-	return $user_avatar_link;
-}
-
-function resize_avatar($user_id, $user_level, $avatar_url)
-{
-	global $config;
-
-	if ($user_level == ADMIN)
-	{
-		return '<img src="' . $avatar_url . '" alt="avatar" style="margin-bottom: 3px;" />';
-	}
-
-	// Set this to false if you want to force height as well
-	$force_width_only = true;
-
-	$avatar_width = $config['avatar_max_width'];
-	$avatar_height = $config['avatar_max_height'];
-
-	/*
-	if (function_exists('getimagesize'))
-	{
-		$pic_size = @getimagesize($avatar_url);
-		if ($pic_size != false)
-		{
-			$pic_width = $pic_size[0];
-			$pic_height = $pic_size[1];
-			if (($pic_width < $avatar_width) && ($pic_height < $avatar_height))
-			{
-				$avatar_width = $pic_width;
-				$avatar_height = $pic_height;
-			}
-			elseif ($pic_width > $pic_height)
-			{
-				$avatar_height = $avatar_width * ($pic_height / $pic_width);
-			}
-			else
-			{
-				$avatar_width = $avatar_height * ($pic_width / $pic_height);
-			}
-		}
-	}
-	*/
-
-	$avatar_img_dim = ($force_width_only) ? (' width="' . $avatar_width . '"') : (' width="' . $avatar_width . '" height="' . $avatar_height . '"');
-	$avatar_img = ($config['allow_avatar_remote']) ? '<img src="' . $avatar_url . '"' . $avatar_img_dim . ' alt="avatar" style="margin-bottom: 3px;" />' : '';
+	$avatar_img = $path_prefix . $avatar_img;
 
 	return $avatar_img;
 }
@@ -4307,7 +4378,7 @@ function page_header($title = '', $parse_template = false)
 		$meta_content['topic_id'] = request_var(POST_TOPIC_URL, 0);
 		$meta_content['post_id'] = request_var(POST_POST_URL, 0);
 
-		$no_meta_pages_array = array(CMS_PAGE_LOGIN, CMS_PAGE_PRIVMSG, CMS_PAGE_POSTING, 'sudoku.' . PHP_EXT, 'kb.' . PHP_EXT);
+		$no_meta_pages_array = array(CMS_PAGE_LOGIN, CMS_PAGE_PRIVMSG, CMS_PAGE_POSTING, 'kb.' . PHP_EXT);
 		if (!in_array($page_url['basename'], $no_meta_pages_array) && (!empty($meta_content['post_id']) || !empty($meta_content['topic_id']) || !empty($meta_content['forum_id']) || !empty($meta_content['cat_id'])))
 		{
 			@include_once(IP_ROOT_PATH . 'includes/functions_meta.' . PHP_EXT);
@@ -4328,13 +4399,17 @@ function page_header($title = '', $parse_template = false)
 	$meta_content['keywords'] = strip_tags($meta_content['keywords']);
 	$meta_content['keywords'] = (substr($meta_content['keywords'], -2) == ', ') ? substr($meta_content['keywords'], 0, -2) : $meta_content['keywords'];
 
-	$phpbb_meta = '<meta name="title" content="' . $meta_content['page_title'] . '" />' . "\n";
+	$phpbb_meta = '';
 	$phpbb_meta .= '<meta name="author" content="' . $lang['Default_META_Author'] . '" />' . "\n";
-	$phpbb_meta .= '<meta name="copyright" content="' . $lang['Default_META_Copyright'] . '" />' . "\n";
 	$phpbb_meta .= '<meta name="description" content="' . str_replace('"', '', $meta_content['description']) . '" />' . "\n";
 	$phpbb_meta .= '<meta name="keywords" content="' . str_replace('"', '', $meta_content['keywords']) . '" />' . "\n";
+	// These META are not valid and needed anymore by SEO and HTML 5
+	/*
+	$phpbb_meta .= '<meta name="title" content="' . $meta_content['page_title'] . '" />' . "\n";
+	$phpbb_meta .= '<meta name="copyright" content="' . $lang['Default_META_Copyright'] . '" />' . "\n";
 	$phpbb_meta .= '<meta name="category" content="general" />' . "\n";
 	$phpbb_meta .= '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" />' . "\n";
+	*/
 
 	if (defined('IN_ADMIN') || defined('IN_CMS') || defined('IN_SEARCH') || defined('IN_POSTING'))
 	{
@@ -4510,15 +4585,17 @@ function page_header($title = '', $parse_template = false)
 		if(isset($_GET) && !empty($smart_redirect))
 		{
 			$smart_get_keys = array_keys($_GET);
-
 			for ($i = 0; $i < sizeof($_GET); $i++)
 			{
+				//Better sanitize each key...
+				$smart_get_keys[$i] = htmlspecialchars($smart_get_keys[$i]);
 				if ($smart_get_keys[$i] != 'sid')
 				{
 					$smart_redirect .= '&amp;' . $smart_get_keys[$i] . '=' . urlencode(ip_utf8_decode($_GET[$smart_get_keys[$i]]));
 				}
 			}
 		}
+
 		$u_login_logout = CMS_PAGE_LOGIN;
 		$u_login_logout .= (!empty($smart_redirect)) ? '?redirect=' . $smart_redirect : '';
 		$l_login_logout = $lang['Login'];
@@ -4905,6 +4982,20 @@ function page_header($title = '', $parse_template = false)
 		$nav_menu_ads_top = get_ad('nmt');
 		$nav_menu_ads_bottom = get_ad('nmb');
 
+		$social_connect_buttons = '';
+		if (!empty($config['enable_social_connect']))
+		{
+			include_once(IP_ROOT_PATH . 'includes/class_social_connect.' . PHP_EXT);
+			$available_networks = SocialConnect::get_available_networks();
+
+			foreach ($available_networks as $social_network)
+			{
+				$social_connect_url = append_sid(CMS_PAGE_LOGIN . '?social_network=' . $social_network->get_name_clean());
+				$social_connect_img = '<img src="' . IP_ROOT_PATH . 'images/social_connect/' . $social_network->get_name_clean() . '_button_connect.png" alt="" title="' . $social_network->get_name() . '" />';
+				$social_connect_buttons .= '<a href="' . $social_connect_url . '">' . $social_connect_img . '</a>';
+			}
+		}
+
 		// The following assigns all _common_ variables that may be used at any point in a template.
 		$template->assign_vars(array(
 			'TOTAL_USERS_ONLINE' => $l_online_users,
@@ -5025,6 +5116,8 @@ function page_header($title = '', $parse_template = false)
 			'U_CPL_ZEBRA' => append_sid(CMS_PAGE_PROFILE . '?mode=zebra&amp;zmode=friends'),
 			// Mighty Gorgon - CPL - END
 
+			'SOCIAL_CONNECT_BUTTONS' => $social_connect_buttons,
+
 			// Activity - BEGIN
 			/*
 			'L_WHOSONLINE_GAMES' => '<a href="'. append_sid('activity.' . PHP_EXT) .'"><span style="color:#'. str_replace('#', '', $config['ina_online_list_color']) . ';">' . $config['ina_online_list_text'] . '</span></a>',
@@ -5041,6 +5134,7 @@ function page_header($title = '', $parse_template = false)
 	$current_time = create_date($config['default_dateformat'], time(), $config['board_timezone']);
 	$template->assign_vars(array(
 		'DOCTYPE_HTML' => $doctype_html,
+		'HEADER_LANG' => $header_lang,
 		'NAV_LINKS' => $nav_links_html,
 
 		'S_HIGHSLIDE' => (!empty($config['thumbnail_highslide']) ? true : false),
@@ -5114,7 +5208,6 @@ function page_header($title = '', $parse_template = false)
 		'L_DOWNLOADS' => $lang['Downloads'],
 		'L_DOWNLOADS_ADV' => $lang['Downloads_ADV'],
 		'L_HACKS_LIST' => $lang['Hacks_List'],
-		'L_SUDOKU' => $lang['Sudoku'],
 		'L_AVATAR_GEN' => $lang['AvatarGenerator'],
 		'L_LINKS' => $lang['Links'],
 		'L_WORDGRAPH' => $lang['Wordgraph'],
@@ -5497,6 +5590,7 @@ function page_footer($exit = true, $template_to_parse = 'body', $parse_template 
 		'S_PRINT_SIZE' => (!empty($config['display_print_size']) ? true : false),
 		'S_JQUERY_UI' => (!empty($config['jquery_ui']) ? true : false),
 		'S_JQUERY_UI_TP' => (!empty($config['jquery_ui_tp']) ? true : false),
+		'S_JQUERY_UI_BA' => (!empty($config['jquery_ui_ba']) ? true : false),
 		'S_JQUERY_UI_STYLE' => (!empty($config['jquery_ui_style']) ? $config['jquery_ui_style'] : 'cupertino'),
 		'S_JQUERY_TAGS' => (!empty($config['jquery_tags']) ? true : false),
 		)

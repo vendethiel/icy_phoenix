@@ -282,7 +282,8 @@ else
 	{
 		include(IP_ROOT_PATH . 'includes/utf/utf_tools.' . PHP_EXT);
 	}
-	include('includes/db.' . PHP_EXT);
+	include(IP_ROOT_PATH . 'includes/db.' . PHP_EXT);
+
 	$dbms_schema = 'schemas/' . $available_dbms[$dbms]['SCHEMA'] . '_schema.sql';
 	$dbms_basic = 'schemas/' . $available_dbms[$dbms]['SCHEMA'] . '_basic.sql';
 
@@ -301,8 +302,8 @@ else
 		$sql_query = @fread(@fopen($dbms_schema, 'r'), @filesize($dbms_schema));
 		$sql_query = preg_replace('/phpbb_/', $table_prefix, $sql_query);
 
-		$sql_query = $ip_sql->remove_remarks($sql_query);
-		$sql_query = $ip_sql->split_sql_file($sql_query, $delimiter);
+		$db->remove_remarks($sql_query);
+		$sql_query = $db->split_sql_file($sql_query, $delimiter);
 
 		for ($i = 0; $i < sizeof($sql_query); $i++)
 		{
@@ -324,8 +325,8 @@ else
 		$sql_query = @fread(@fopen($dbms_basic, 'r'), @filesize($dbms_basic));
 		$sql_query = preg_replace('/phpbb_/', $table_prefix, $sql_query);
 
-		$sql_query = $ip_sql->remove_remarks($sql_query);
-		$sql_query = $ip_sql->split_sql_file($sql_query, $delimiter_basic);
+		$db->remove_remarks($sql_query);
+		$sql_query = $db->split_sql_file($sql_query, $delimiter_basic);
 
 		for($i = 0; $i < sizeof($sql_query); $i++)
 		{
@@ -353,25 +354,19 @@ else
 		$tables_ary = array(
 			'stats_config',
 			'config',
-			'config',
-			'link_config',
-			'link_config'
+			'config'
 		);
 
 		$cnames_ary = array(
 			'install_date',
 			'board_startdate',
-			'default_lang',
-			'site_logo',
-			'site_url'
+			'default_lang'
 		);
 
 		$cvalues_ary = array(
 			time(),
 			time(),
-			$db->sql_escape($language),
-			'http://' . $server_name . $script_path . 'images/links/banner_ip.gif',
-			'http://' . $server_name . $script_path
+			$db->sql_escape($language)
 		);
 
 		for ($i = 0; $i < sizeof($tables_ary); $i++)

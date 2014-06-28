@@ -12,7 +12,7 @@ if ( !$board_config['adr_seasons_last_time'] )
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql); 
 
 	$board_config['adr_seasons_last_time'] = time();
-	$db->clear_cache('config_');
+	$db->clear_cache('config');
 }
 
 if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_seasons_time'])
