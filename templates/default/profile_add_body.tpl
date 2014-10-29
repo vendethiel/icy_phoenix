@@ -8,7 +8,7 @@
 <!-- BEGIN switch_cpl_menu -->
 {CPL_MENU_OUTPUT}
 <!-- END switch_cpl_menu -->
-{IMG_THL}{IMG_THC}<span class="forumlink">{L_CPL_NAV}</span>{IMG_THR}<table class="forumlinenb" width="100%" cellspacing="0" cellpadding="0">
+{IMG_THL}{IMG_THC}<span class="forumlink">{L_CPL_NAV}</span>{IMG_THR}<table class="forumlinenb">
 <!-- BEGIN switch_cpl_reg_info -->
 <tr><td class="row-header" colspan="2"><span>{L_REGISTRATION_INFO}</span></td></tr>
 <tr><td class="row1" colspan="2"><span class="gensmall">{L_ITEMS_REQUIRED}</span></td></tr>
@@ -80,6 +80,10 @@
 	<td class="row2"><input type="text" name="phone" class="post" style="width: 100px;" size="10" maxlength="20" value="{PHONE}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_500PX}:</span></td>
+	<td class="row2"><input type="text" class="post" style="width: 150px;" name="500px" size="20" maxlength="255" value="{500PX}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_AIM}:</span></td>
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="aim" size="20" maxlength="255" value="{AIM}" /></td>
 </tr>
@@ -92,12 +96,20 @@
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="flickr" size="20" maxlength="255" value="{FLICKR}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_GITHUB}:</span></td>
+	<td class="row2"><input type="text" class="post" style="width: 150px;" name="github" size="20" maxlength="255" value="{GITHUB}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_GOOGLEPLUS}:</span></td>
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="googleplus" size="20" maxlength="255" value="{GOOGLEPLUS}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_ICQ_NUMBER}:</span></td>
 	<td class="row2"><input type="text" name="icq" class="post" style="width: 100px;" size="10" maxlength="15" value="{ICQ}" /></td>
+</tr>
+<tr>
+	<td class="row1"><span class="gen">{L_INSTAGRAM}:</span></td>
+	<td class="row2"><input type="text" class="post" style="width: 150px;" name="instagram" size="20" maxlength="255" value="{INSTAGRAM}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_JABBER}:</span></td>
@@ -112,12 +124,20 @@
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="msn" size="20" maxlength="255" value="{MSN}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_PINTEREST}:</span></td>
+	<td class="row2"><input type="text" class="post" style="width: 150px;" name="pinterest" size="20" maxlength="255" value="{PINTEREST}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_SKYPE}:</span></td>
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="skype" size="20" maxlength="255" value="{SKYPE}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_TWITTER}:</span></td>
 	<td class="row2"><input type="text" class="post" style="width: 150px;" name="twitter" size="20" maxlength="255" value="{TWITTER}" /></td>
+</tr>
+<tr>
+	<td class="row1"><span class="gen">{L_VIMEO}:</span></td>
+	<td class="row2"><input type="text" class="post" style="width: 150px;" name="vimeo" size="20" maxlength="255" value="{VIMEO}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_YAHOO}:</span></td>
@@ -138,7 +158,7 @@
 <tr>
 	<td class="row1"><span class="gen">{L_FLAG}:</span></td>
 	<td class="row2">
-		<table class="empty-table" width="100%" cellspacing="0" cellpadding="0" border="0">
+		<table>
 			<tr>
 				<td width="40%" nowrap="nowrap">{FLAG_SELECT}&nbsp;&nbsp;</td>
 				<td><img src="images/flags/{FLAG_START}" width="16" height="11" name="user_flag" alt="{L_FLAG}" /></td>
@@ -183,7 +203,7 @@
 <!-- END switch_custom_fields -->
 <!-- BEGIN custom_fields -->
 <tr>
-	<td class="row1" valign="top"><span class="gen">{custom_fields.NAME}:{custom_fields.REQUIRED}</span>
+	<td class="row1"><span class="gen">{custom_fields.NAME}:{custom_fields.REQUIRED}</span>
 		<!-- BEGIN switch_description -->
 		<br /><span class="gensmall">{custom_fields.switch_description.DESCRIPTION}</span>
 		<!-- END switch_description -->
@@ -204,14 +224,14 @@
 	</td>
 </tr>
 <tr>
-	<td class="row1" width="50%"><span class="gen">{L_PUBLIC_VIEW_EMAIL}:</span></td>
+	<td class="row1 tw50pct"><span class="gen">{L_PUBLIC_VIEW_EMAIL}:</span></td>
 	<td class="row2">
 		<label><input type="radio" name="viewemail" value="1" {VIEW_EMAIL_YES} /><span class="gen">&nbsp;{L_YES}</span></label>&nbsp;&nbsp;
 		<label><input type="radio" name="viewemail" value="0" {VIEW_EMAIL_NO} /><span class="gen">&nbsp;{L_NO}</span></label>
 	</td>
 </tr>
 <tr>
-	<td class="row1" width="50%"><span class="gen">{L_MASS_EMAIL}:</span></td>
+	<td class="row1 tw50pct"><span class="gen">{L_MASS_EMAIL}:</span></td>
 	<td class="row2">
 		<label><input type="radio" name="allowmassemail" value="1" {ALLOW_MASS_EMAIL_YES} /><span class="gen">&nbsp;{L_YES}</span></label>&nbsp;&nbsp;
 		<label><input type="radio" name="allowmassemail" value="0" {ALLOW_MASS_EMAIL_NO} /><span class="gen">&nbsp;{L_NO}</span></label>
@@ -226,7 +246,7 @@
 	</td>
 </tr>
 <tr>
-	<td class="row1" width="50%"><span class="gen">{L_PM_IN}:</span><br />
+	<td class="row1 tw50pct"><span class="gen">{L_PM_IN}:</span><br />
 		<span class="gensmall">{L_PM_IN_EXPLAIN}</span></td>
 	<td class="row2">
 		<label><input type="radio" name="allowpmin" value="1" {ALLOW_PM_IN_YES} /><span class="gen">&nbsp;{L_YES}</span></label>&nbsp;&nbsp;
@@ -353,7 +373,7 @@
 	<tr>
 		<td class="row1"><span class="gen">{L_UPI2DB_WHICH_SYSTEM}</span><br />
 		<span class="gensmall">{L_UPI2DB_WHICH_SYSTEM_EXPLAIN}</span></td>
-		<td class="row2" valign="top">
+		<td class="row2">
 		<input type="radio" name="upi2db_which_system" value="0" {COOKIE_SYSTEM} /><span class="gen">{L_COOKIE_SYSTEM}</span>&nbsp;&nbsp;
 		<input type="radio" name="upi2db_which_system" value="1" {UPI2DB_SYSTEM} /><span class="gen">{L_UPI2DB_SYSTEM}</span>
 		</td>
@@ -365,7 +385,7 @@
 			<span class="gen">{L_UPI2DB_NEW_WORD}:</span><br />
 			<span class="gensmall">{L_UPI2DB_NEW_WORD_EXPLAIN}</span>
 		</td>
-		<td class="row2" valign="top">
+		<td class="row2">
 			<input type="radio" name="upi2db_new_word" value="1" {UPI2DB_NEW_WORD_YES} />
 			<span class="gen">{L_YES}</span>&nbsp;&nbsp;
 			<input type="radio" name="upi2db_new_word" value="0" {UPI2DB_NEW_WORD_NO} />
@@ -377,7 +397,7 @@
 			<span class="gen">{L_UPI2DB_EDIT_WORD}:</span><br />
 			<span class="gensmall">{L_UPI2DB_EDIT_WORD_EXPLAIN}</span>
 		</td>
-		<td class="row2" valign="top">
+		<td class="row2">
 			<input type="radio" name="upi2db_edit_word" value="1" {UPI2DB_EDIT_WORD_YES} />
 			<span class="gen">{L_YES}</span>&nbsp;&nbsp;
 			<input type="radio" name="upi2db_edit_word" value="0" {UPI2DB_EDIT_WORD_NO} />
@@ -386,7 +406,7 @@
 	</tr>
 	<tr>
 		<td class="row1"><span class="gen">{L_UPI2DB_UNREAD_COLOR}:</span></td>
-		<td class="row2" valign="top">
+		<td class="row2">
 			<input type="radio" name="upi2db_unread_color" value="1" {UPI2DB_UNREAD_COLOR_YES} />
 			<span class="gen">{L_YES}</span>&nbsp;&nbsp;
 			<input type="radio" name="upi2db_unread_color" value="0" {UPI2DB_UNREAD_COLOR_NO} />
@@ -437,10 +457,10 @@
 	<td class="row-header" colspan="2"><span>{L_AVATAR_PANEL}</span></td>
 </tr>
 <tr>
-	<td class="row1" colspan="2"><table width="70%" cellspacing="2" cellpadding="0" border="0" align="center">
+	<td class="row1" colspan="2"><table class="talignc tw70pct">
 	<tr>
 		<td width="65%"><span class="gensmall">{L_AVATAR_EXPLAIN}</span></td>
-		<td align="center"><span class="gensmall">{L_CURRENT_IMAGE}</span><br />{AVATAR}<br /><label><input type="checkbox" name="avatardel" />&nbsp;<span class="gensmall">{L_DELETE_AVATAR}</span></label></td>
+		<td class="tdalignc"><span class="gensmall">{L_CURRENT_IMAGE}</span><br />{AVATAR}<br /><label><input type="checkbox" name="avatardel" />&nbsp;<span class="gensmall">{L_DELETE_AVATAR}</span></label></td>
 	</tr>
 	</table></td>
 </tr>

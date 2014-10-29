@@ -21,7 +21,7 @@ function ColorExample(ColorCode)
 {ERROR_BOX}
 
 <form action="{S_PROFILE_ACTION}" {S_FORM_ENCTYPE} method="post">
-<table class="forumline" width="100%" cellspacing="0" cellpadding="0" border="0">
+<table class="forumline">
 <tr><th colspan="2">{L_REGISTRATION_INFO}</th></tr>
 <tr><td class="row2" colspan="2"><span class="gensmall">{L_ITEMS_REQUIRED}</span></td></tr>
 <tr>
@@ -58,6 +58,10 @@ function ColorExample(ColorCode)
 	<td class="row2"><input class="post" type="text" name="phone" size="35" maxlength="150" value="{PHONE}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_500PX}</span></td>
+	<td class="row2"><input class="post" type="text" name="500px" size="20" maxlength="255" value="{500PX}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_AIM}</span></td>
 	<td class="row2"><input class="post" type="text" name="aim" size="20" maxlength="255" value="{AIM}" /></td>
 </tr>
@@ -70,12 +74,20 @@ function ColorExample(ColorCode)
 	<td class="row2"><input class="post" type="text" name="flickr" size="20" maxlength="255" value="{FLICKR}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_GITHUB}</span></td>
+	<td class="row2"><input class="post" type="text" name="github" size="20" maxlength="255" value="{GITHUB}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_GOOGLEPLUS}</span></td>
 	<td class="row2"><input class="post" type="text" name="googleplus" size="20" maxlength="255" value="{GOOGLEPLUS}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_ICQ_NUMBER}</span></td>
 	<td class="row2"><input class="post" type="text" name="icq" size="10" maxlength="15" value="{ICQ}" /></td>
+</tr>
+<tr>
+	<td class="row1"><span class="gen">{L_INSTAGRAM}</span></td>
+	<td class="row2"><input class="post" type="text" name="instagram" size="20" maxlength="255" value="{INSTAGRAM}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_JABBER}</span></td>
@@ -90,12 +102,20 @@ function ColorExample(ColorCode)
 	<td class="row2"><input class="post" type="text" name="msn" size="20" maxlength="255" value="{MSN}" /></td>
 </tr>
 <tr>
+	<td class="row1"><span class="gen">{L_PINTEREST}</span></td>
+	<td class="row2"><input class="post" type="text" name="pinterest" size="20" maxlength="255" value="{PINTEREST}" /></td>
+</tr>
+<tr>
 	<td class="row1"><span class="gen">{L_SKYPE}</span></td>
 	<td class="row2"><input class="post" type="text" name="skype" size="20" maxlength="255" value="{SKYPE}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_TWITTER}</span></td>
 	<td class="row2"><input class="post" type="text" name="twitter" size="20" maxlength="255" value="{TWITTER}" /></td>
+</tr>
+<tr>
+	<td class="row1"><span class="gen">{L_VIMEO}</span></td>
+	<td class="row2"><input class="post" type="text" name="vimeo" size="20" maxlength="255" value="{VIMEO}" /></td>
 </tr>
 <tr>
 	<td class="row1"><span class="gen">{L_YAHOO}</span></td>
@@ -184,7 +204,7 @@ function ColorExample(ColorCode)
 <!-- END switch_custom_fields -->
 <!-- BEGIN custom_fields -->
 <tr>
-	<td class="row1" valign="top"><span class="gen">{custom_fields.NAME}:{custom_fields.REQUIRED}{custom_fields.ADMIN_ONLY}</span>
+	<td class="row1"><span class="gen">{custom_fields.NAME}:{custom_fields.REQUIRED}{custom_fields.ADMIN_ONLY}</span>
 	<!-- BEGIN switch_description -->
 	<br /><span class="gensmall">{custom_fields.switch_description.DESCRIPTION}</span>
 	<!-- END switch_description -->
@@ -364,7 +384,7 @@ function ColorExample(ColorCode)
 		<span class="gen">{L_TIME_MODE}</span><br />
 		<span class="gensmall">{L_TIME_MODE_TEXT}</span>
 	</td>
-	<td class="row2" nowrap="nowrap">
+	<td class="row2 tdnw">
 		<span class="gen">{L_TIME_MODE_MANUAL}</span><br />
 		<span class="gen">&nbsp;&nbsp;{L_TIME_MODE_DST}:</span>
 		<input type="radio" name="time_mode" value="1" {TIME_MODE_MANUAL_DST_CHECKED} /><span class="gen">{L_YES}{L_TIME_MODE_DST_ON}</span>&nbsp;
@@ -385,10 +405,10 @@ function ColorExample(ColorCode)
 </tr>
 <tr align="center">
 	<td class="row1" colspan="2">
-		<table width="70%" cellspacing="2" cellpadding="0" border="0">
+		<table class="tw70pct s2px">
 		<tr>
 			<td width="65%"><span class="gensmall">{L_AVATAR_EXPLAIN}</span></td>
-			<td align="center">
+			<td class="tdalignc">
 				<span class="gensmall">{L_CURRENT_IMAGE}</span><br />
 				{AVATAR}<br />
 				<input type="checkbox" name="avatardel" />&nbsp;<span class="gensmall">{L_DELETE_AVATAR}</span>
@@ -528,6 +548,6 @@ function ColorExample(ColorCode)
 	<td class="row1"><span class="gen"><strong><i>{L_DELETE_USER}</i></strong></span></td>
 	<td class="row2"><input type="checkbox" name="deleteuser" />&nbsp;{L_DELETE_USER_EXPLAIN}</td>
 </tr>
-<tr><td class="cat" colspan="2" align="center">{S_HIDDEN_FIELDS}<input type="submit" name="submit" value="{L_SUBMIT}" class="mainoption" />&nbsp;&nbsp;<input type="reset" value="{L_RESET}" class="liteoption" /></td></tr>
+<tr><td class="cat tdalignc" colspan="2">{S_HIDDEN_FIELDS}<input type="submit" name="submit" value="{L_SUBMIT}" class="mainoption" />&nbsp;&nbsp;<input type="reset" value="{L_RESET}" class="liteoption" /></td></tr>
 </table>
 </form>

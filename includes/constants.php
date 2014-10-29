@@ -20,9 +20,9 @@ if (!defined('IN_ICYPHOENIX'))
 	die('Hacking attempt');
 }
 
-define('ICYPHOENIX_VERSION', '2.0.9.95');
+define('ICYPHOENIX_VERSION', '2.0.12.98');
 
-// FOUNDER ID, this is the ID of the main admin of the site, only this user canc access special features of the site and this ID is also used to send Welcome and Birthday PM
+// FOUNDER ID, this is the ID of the main admin of the site, only this user can access special features of the site and this ID is also used to send Welcome and Birthday PM
 define('FOUNDER_ID', '2');
 // ALLOW ONLY FOUNDER ACP, by setting this to true only the FOUNDER will be able to access ACP
 define('ONLY_FOUNDER_ACP', false);
@@ -375,7 +375,7 @@ define('SORT_ALPH_DEC', 3);
 define('TOP_LIST', -1);
 define('BOTTOM_LIST', 1);
 
-// Custom Profile Fields MOD - BEGIN
+// Custom Profile Fields - BEGIN
 define('TEXT_FIELD', 0);
 define('TEXTAREA', 1);
 define('RADIO', 2);
@@ -399,7 +399,7 @@ define('ABOUT', 2);
 define('AUTHOR', 1);
 define('ABOVE_SIGNATURE', 2);
 define('BELOW_SIGNATURE', 3);
-// Custom Profile Fields MOD - END
+// Custom Profile Fields - END
 
 // Ajax Shoutbox - BEGIN
 define('AJAX_SHOUTBOX_NO_ERROR', 0);
@@ -505,7 +505,6 @@ define('SITE_HISTORY_TABLE', $table_prefix . 'site_history');
 define('SMILIES_TABLE', $table_prefix . 'smilies');
 define('STATS_CONFIG_TABLE', $table_prefix . 'stats_config');
 define('STATS_MODULES_TABLE', $table_prefix . 'stats_modules');
-define('THANKS_TABLE', $table_prefix . 'thanks');
 define('THEMES_TABLE', $table_prefix . 'themes');
 define('TICKETS_CAT_TABLE', $table_prefix . 'tickets_cat');
 define('TITLE_INFOS_TABLE', $table_prefix . 'title_infos');

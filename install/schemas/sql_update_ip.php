@@ -100,6 +100,9 @@ switch ($req_version)
 	case '20894': $current_ip_version = '2.0.8.94'; break;
 	case '20995': $current_ip_version = '2.0.9.95'; break;
 	case '201096': $current_ip_version = '2.0.10.96'; break;
+	case '201197': $current_ip_version = '2.0.11.97'; break;
+	case '201298': $current_ip_version = '2.0.12.98'; break;
+	case '201399': $current_ip_version = '2.0.13.99'; break;
 }
 
 // We need to force this because in MySQL 5.5.5 the new default DB Engine is InnoDB, not MyISAM any more
@@ -112,6 +115,32 @@ if (substr($mode, 0, 6) == 'update')
 	switch ($current_ip_version)
 	{
 		case '':
+
+		$sql[] = "CREATE TABLE `" . $table_prefix . "search_results` (
+			`search_id` INT(11) unsigned NOT NULL DEFAULT '0',
+			`session_id` VARCHAR(32) NOT NULL DEFAULT '',
+			`search_array` MEDIUMTEXT NOT NULL,
+			`search_time` INT(11) NOT NULL DEFAULT '0',
+			PRIMARY KEY (`search_id`),
+			KEY `session_id` (`session_id`)
+		)";
+
+		$sql[] = "CREATE TABLE `" . $table_prefix . "search_wordlist` (
+			`word_text` VARCHAR(50) binary NOT NULL DEFAULT '',
+			`word_id` MEDIUMINT(8) unsigned NOT NULL auto_increment,
+			`word_common` TINYINT(1) unsigned NOT NULL DEFAULT '0',
+			PRIMARY KEY (`word_text`),
+			KEY `word_id` (`word_id`)
+		)";
+
+		$sql[] = "CREATE TABLE `" . $table_prefix . "search_wordmatch` (
+			`post_id` MEDIUMINT(8) unsigned NOT NULL DEFAULT '0',
+			`word_id` MEDIUMINT(8) unsigned NOT NULL DEFAULT '0',
+			`title_match` TINYINT(1) NOT NULL DEFAULT '0',
+			KEY `post_id` (`post_id`),
+			KEY `word_id` (`word_id`)
+		)";
+
 		$sql[] = "ALTER TABLE " . $table_prefix . "config CHANGE `config_value` `config_value` TEXT";
 
 		$sql[] = "CREATE TABLE `" . $table_prefix . "acronyms` (
@@ -320,7 +349,7 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "ALTER TABLE `" . $table_prefix . "banlist` ADD `ban_pub_reason_mode` TINYINT(1) DEFAULT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "banlist` ADD `ban_pub_reason` TEXT DEFAULT NULL";
 
-		$sql[] = "ALTER TABLE `" . $table_prefix . "categories` ADD `cat_main_type` CHAR(1) DEFAULT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "categories` ADD `cat_main_type` CHAR(1) DEFAULT 'c'";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "categories` ADD `cat_main` MEDIUMINT(8) UNSIGNED DEFAULT '0' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "categories` ADD `cat_desc` TEXT";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "categories` ADD `icon` VARCHAR(255) DEFAULT NULL";
@@ -339,14 +368,13 @@ if (substr($mode, 0, 6) == 'update')
 			`time` int(10) NOT NULL default '0'
 		)";
 
-		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `thank` TINYINT(1) DEFAULT '1' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_notify` TINYINT(1) UNSIGNED DEFAULT '1' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_link` VARCHAR(255) DEFAULT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_link_internal` TINYINT(1) DEFAULT '0' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_link_hit_count` TINYINT(1) DEFAULT '0' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_link_hit` BIGINT(20) UNSIGNED DEFAULT '0' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `icon` VARCHAR(255) DEFAULT NULL";
-		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `main_type` CHAR(1) DEFAULT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `main_type` CHAR(1) DEFAULT 'c'";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `auth_news` TINYINT(2) DEFAULT '2' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `auth_cal` TINYINT(2) DEFAULT '0' NOT NULL";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `auth_ban` TINYINT(2) DEFAULT '3' NOT NULL";
@@ -845,12 +873,6 @@ if (substr($mode, 0, 6) == 'update')
 			PRIMARY KEY (`module_id`)
 		)";
 
-		$sql[] = "CREATE TABLE `" . $table_prefix . "thanks` (
-			`topic_id` mediumint(8) NOT NULL default '0',
-			`user_id` mediumint(8) NOT NULL default '0',
-			`thanks_time` int(11) NOT NULL default '0'
-		)";
-
 		$sql[] = "CREATE TABLE `" . $table_prefix . "title_infos` (
 			`id` int(11) NOT NULL auto_increment,
 			`title_info` varchar(255) NOT NULL default '',
@@ -1263,7 +1285,6 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('xs_template_time', '1132930673')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('xs_version', '7')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('url_rw', '0')";
-		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('xmas_fx', '0')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('switch_header_table', '0')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('header_table_text', 'Text')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('fast_n_furious', '0')";
@@ -1807,8 +1828,6 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('upi2db_max_new_posts', '1000')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('upi2db_version', '3.0.7')";
 
-		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('switch_header_dropdown', '1')";
-
 		$sql[] = "ALTER TABLE " . $table_prefix . "forums ADD forum_postcount TINYINT(1) DEFAULT '1' NOT NULL";
 
 		$sql[] = "INSERT INTO " . $table_prefix . "config VALUES ('switch_poster_info_topic', '0')";
@@ -2121,7 +2140,7 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "INSERT INTO `" . $table_prefix . "cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (12, 'Links', '', 'l', 4, 1, 'links', 0, 1, 0, 1, 1, 1, 1, '')";
 		$sql[] = "INSERT INTO `" . $table_prefix . "cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (13, 'Statistics', '', 'r', 3, 1, 'statistics', 0, 1, 0, 1, 1, 1, 1, '')";
 		$sql[] = "INSERT INTO `" . $table_prefix . "cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (14, 'Wordgraph', '', 'b', 2, 1, 'wordgraph', 0, 1, 0, 0, 0, 0, 1, '')";
-		$sql[] = "INSERT INTO `" . $table_prefix . "cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (15, 'Welcome', '<table class=\"empty-table\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\r\n	<tr>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small.png\" alt=\"\" /></td>\r\n		<td width=\"90%\" align=\"center\"><div class=\"post-text\">Welcome To <b>Icy Phoenix</b></div><br /><br /></td>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small_l.png\" alt=\"\" /></td>\r\n	</tr>\r\n</table>', 'c', 2, 1, '', 0, 1, 0, 1, 1, 1, 1, '')";
+		$sql[] = "INSERT INTO `" . $table_prefix . "cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (15, 'Welcome', '<table>\r\n	<tr>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small.png\" alt=\"\" /></td>\r\n		<td width=\"90%\" align=\"center\"><div class=\"post-text\">Welcome To <b>Icy Phoenix</b></div><br /><br /></td>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small_l.png\" alt=\"\" /></td>\r\n	</tr>\r\n</table>', 'c', 2, 1, '', 0, 1, 0, 1, 1, 1, 1, '')";
 
 		$sql[] = "INSERT INTO `" . $table_prefix . "cms_config` (`id`, `bid`, `config_name`, `config_value`) VALUES (1, 0, 'default_portal', '1')";
 		$sql[] = "INSERT INTO `" . $table_prefix . "cms_config` (`id`, `bid`, `config_name`, `config_value`) VALUES (2, 0, 'header_width', '180')";
@@ -2196,7 +2215,6 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('auth_view_pic_upload', '1')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('enable_postimage_org', '0')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('enable_new_messages_number', '1')";
-		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('disable_thanks_topics', '0')";
 		$sql[] = "INSERT INTO " . $table_prefix . "config (config_name, config_value) VALUES ('show_calendar_box_index', '0')";
 
 		$sql[] = "CREATE TABLE `" . $table_prefix . "ajax_shoutbox_sessions` (
@@ -3110,7 +3128,7 @@ if (substr($mode, 0, 6) == 'update')
 			$sql[] = "CREATE TABLE `___forums___` (
 				`forum_id` smallint(5) unsigned NOT NULL default '0',
 				`cat_id` mediumint(8) unsigned NOT NULL default '0',
-				`main_type` char(1) default NULL,
+				`main_type` char(1) default 'c',
 				`forum_name` varchar(150) default NULL,
 				`forum_desc` TEXT NOT NULL,
 				`forum_status` tinyint(4) NOT NULL default '0',
@@ -3119,7 +3137,6 @@ if (substr($mode, 0, 6) == 'update')
 				`forum_topics` mediumint(8) unsigned NOT NULL default '0',
 				`forum_last_post_id` mediumint(8) unsigned NOT NULL default '0',
 				`forum_postcount` tinyint(1) NOT NULL default '1',
-				`forum_thanks` tinyint(1) NOT NULL default '0',
 				`forum_notify` tinyint(1) unsigned NOT NULL default '1',
 				`forum_similar_topics` TINYINT(1) NOT NULL DEFAULT '0',
 				`forum_tags` TINYINT(1) NOT NULL DEFAULT '0',
@@ -3171,7 +3188,7 @@ if (substr($mode, 0, 6) == 'update')
 			)";
 
 			$sql[] = "INSERT INTO `___forums___`
-			SELECT f.forum_id, f.cat_id, f.main_type, f.forum_name, f.forum_desc, f.forum_status, f.forum_order, f.forum_posts, f.forum_topics, f.forum_last_post_id, f.forum_postcount, f.thank, f.forum_notify, 0, 0, 0, 0, 0, 1, forum_link, f.forum_link_internal, f.forum_link_hit_count, f.forum_link_hit, f.icon, f.prune_next, f.prune_enable, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_globalannounce, f.auth_news, f.auth_cal, f.auth_vote, f.auth_pollcreate, f.auth_attachments, f.auth_download, f.auth_ban, f.auth_greencard, f.auth_bluecard, f.auth_rate
+			SELECT f.forum_id, f.cat_id, f.main_type, f.forum_name, f.forum_desc, f.forum_status, f.forum_order, f.forum_posts, f.forum_topics, f.forum_last_post_id, f.forum_postcount, f.forum_notify, 0, 0, 0, 0, 0, 1, forum_link, f.forum_link_internal, f.forum_link_hit_count, f.forum_link_hit, f.icon, f.prune_next, f.prune_enable, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_globalannounce, f.auth_news, f.auth_cal, f.auth_vote, f.auth_pollcreate, f.auth_attachments, f.auth_download, f.auth_ban, f.auth_greencard, f.auth_bluecard, f.auth_rate
 			FROM `" . $table_prefix . "forums` f
 			ORDER BY f.forum_id";
 
@@ -3194,7 +3211,7 @@ if (substr($mode, 0, 6) == 'update')
 		$sql[] = "CREATE TABLE `___categories___` (
 			`cat_id` mediumint(8) unsigned NOT NULL auto_increment,
 			`cat_main` mediumint(8) unsigned NOT NULL default '0',
-			`cat_main_type` char(1) default NULL,
+			`cat_main_type` char(1) default 'c',
 			`cat_title` varchar(100) default NULL,
 			`cat_desc` TEXT NOT NULL,
 			`icon` varchar(255) default NULL,
@@ -3862,7 +3879,7 @@ if (substr($mode, 0, 6) == 'update')
 		)";
 
 		$sql[] = "INSERT INTO `" . $table_prefix . "config` (`config_name`, `config_value`) VALUES ('disable_likes_posts', '1')";
-		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_likes` tinyint(1) NOT NULL DEFAULT '0' AFTER `forum_thanks`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` ADD `forum_likes` tinyint(1) NOT NULL DEFAULT '0' AFTER `forum_postcount`";
 		$sql[] = "ALTER TABLE `" . $table_prefix . "posts` ADD `post_likes` mediumint(8) unsigned NOT NULL DEFAULT '0' AFTER `post_bluecard`";
 
 		// Still not sure which one of this code will do the trick... anyway it's not really important... :-)
@@ -4534,19 +4551,49 @@ if (substr($mode, 0, 6) == 'update')
 
 		/* Updating from IP 2.0.8.94 */
 		case '2.0.8.94':
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `exif` text NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `camera_model` varchar(255) DEFAULT '' NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `lens` varchar(255) DEFAULT '' NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `focal_length` varchar(255) DEFAULT '' NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `exposure` varchar(255) DEFAULT '' NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `aperture` varchar(255) DEFAULT '' NOT NULL";
-			$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `iso` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `exif` text NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `camera_model` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `lens` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `focal_length` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `exposure` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `aperture` varchar(255) DEFAULT '' NOT NULL";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "images` ADD `iso` varchar(255) DEFAULT '' NOT NULL";
 
 		/* Updating from IP 2.0.9.95 */
 		case '2.0.9.95':
+		$sql[] = "ALTER TABLE `" . $table_prefix . "users` ADD `user_vimeo` varchar(255) DEFAULT '' NOT NULL AFTER `user_youtube`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "users` ADD `user_pinterest` varchar(255) DEFAULT '' NOT NULL AFTER `user_youtube`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "users` ADD `user_instagram` varchar(255) DEFAULT '' NOT NULL AFTER `user_youtube`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "users` ADD `user_github` varchar(255) DEFAULT '' NOT NULL AFTER `user_youtube`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "users` ADD `user_500px` varchar(255) DEFAULT '' NOT NULL AFTER `user_youtube`";
 
 		/* Updating from IP 2.0.10.96 */
 		case '2.0.10.96':
+		$sql[] = "DELETE FROM `" . $table_prefix . "config` WHERE `config_name` = 'disable_thanks_topics'";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "forums` DROP `forum_thanks`";
+		$sql[] = "ALTER TABLE `" . $table_prefix . "topics` ADD `topic_likes` MEDIUMINT(8) unsigned NOT NULL DEFAULT '0' AFTER `topic_replies`";
+		$sql[] = "INSERT IGNORE INTO `" . $table_prefix . "posts_likes` SELECT th.topic_id, t.topic_first_post_id, th.user_id, th.thanks_time FROM `" . $table_prefix . "thanks` th, `" . $table_prefix . "topics` t WHERE t.topic_id = th.topic_id";
+
+		$sql[] = "ALTER IGNORE TABLE `" . $table_prefix . "posts_likes` ADD UNIQUE INDEX unique_idx_name (topic_id, post_id, user_id)";
+		$sql[] = "ALTER IGNORE TABLE `" . $table_prefix . "posts_likes` DROP INDEX unique_idx_name";
+		//$sql[] = "DELETE n1 FROM `" . $table_prefix . "posts_likes` n1, `" . $table_prefix . "posts_likes` n2 WHERE n1.like_time > n2.like_time AND ((n1.topic_id = n2.topic_id) AND (n1.post_id = n2.post_id) AND (n1.user_id = n2.user_id))";
+		$sql[] = "DROP TABLE IF EXISTS `" . $table_prefix . "thanks`";
+		$sql[] = "DELETE pl FROM `" . $table_prefix . "posts_likes` pl, `" . $table_prefix . "posts` p WHERE pl.post_id = p.post_id AND pl.user_id = p.poster_id";
+		$sql[] = "UPDATE `" . $table_prefix . "posts` p SET p.post_likes = (SELECT COUNT(pl.post_id) FROM `" . $table_prefix . "posts_likes` pl WHERE pl.post_id = p.post_id)";
+		$sql[] = "UPDATE `" . $table_prefix . "posts` p, `" . $table_prefix . "posts_likes` pl SET pl.topic_id = p.topic_id WHERE pl.post_id = p.post_id";
+		$sql[] = "UPDATE `" . $table_prefix . "topics` t SET t.topic_likes = (SELECT COUNT(pl.topic_id) FROM `" . $table_prefix . "posts_likes` pl WHERE pl.topic_id = t.topic_id)";
+
+		$sql[] = "DELETE FROM `" . $table_prefix . "config` WHERE `config_name` = 'switch_header_dropdown'";
+		$sql[] = "DELETE FROM `" . $table_prefix . "config` WHERE `config_name` = 'xmas_fx'";
+
+		/* Updating from IP 2.0.11.97 */
+		case '2.0.11.97':
+
+		/* Updating from IP 2.0.12.98 */
+		case '2.0.12.98':
+
+		/* Updating from IP 2.0.13.99 */
+		case '2.0.12.98':
 
 	}
 

@@ -7,6 +7,7 @@
 
 <link rel="shortcut icon" href="{FULL_SITE_PATH}images/favicon.ico" />
 <link rel="stylesheet" href="{FULL_SITE_PATH}{T_TPL_PATH}style_{CSS_COLOR}.css" type="text/css" />
+<link rel="stylesheet" href="{FULL_SITE_PATH}{T_COMMON_TPL_PATH}ip_sprites_famfamfam.css" type="text/css" />
 <!-- BEGIN css_style_include -->
 <link rel="stylesheet" href="{FULL_SITE_PATH}{T_TPL_PATH}{css_style_include.CSS_FILE}" type="text/css" />
 <!-- END css_style_include -->
@@ -15,10 +16,6 @@
 <!-- END css_include -->
 
 <!-- INCLUDE overall_inc_header_js.tpl -->
-
-<!-- IF S_XMAS_FX -->
-<script type="text/javascript" src="{FULL_SITE_PATH}{T_COMMON_TPL_PATH}js/snowstorm.js"></script>
-<!-- ENDIF -->
 
 <!-- BEGIN switch_new_download -->
 <script type="text/javascript">

@@ -1,28 +1,14 @@
-//**************************************************************************
-//                               ajax_core.js
-//                            -------------------
-//   begin                : Saturday, Jul 16, 2005
-//   copyright            : (C) 2005 alcaeus
-//   email                : mods@alcaeus.org
-//
-//   $Id$
-//
-//**************************************************************************
+/**
+* 
+* @file $Id ajax_core.js
+* @copyright (C) 2005
+* @author alcaeus
+* @email < mods@alcaeus.org >
+*
+**/
 
-//**************************************************************************
-//
-//   This program is free software; you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-//
-//**************************************************************************
-
-
-//
 // This is the only value you should change
 // It defines the time in milliseconds that the script waits before automatically submitting the fields for usernames (New PM and username search)
-//
 var KEYUP_TIMEOUT = 500;
 
 var request = null;
@@ -54,9 +40,7 @@ var AJAX_DEBUG_RESULTS = 0;
 var AJAX_DEBUG_REQUEST_ERRORS = 0;
 var AJAX_DEBUG_HTML_ERRORS = 0;
 
-//
 // Determine whether AJAX is available
-//
 if (window.XMLHttpRequest)
 {
 	var tempvar = new XMLHttpRequest();
@@ -75,9 +59,7 @@ else
 	ajax_core_defined = 0;
 }
 
-//
 // General function. This one is the mother of all AJAX functions ;)
-//
 function loadXMLDoc(url, params, submitmethod, changehandler)
 {
 	if ((submitmethod != 'GET') && (submitmethod != 'POST'))
@@ -150,10 +132,7 @@ function getFirstTagValue(tagname, haystack)
 	return '';
 }
 
-
-//
 // This function is used to parse any standard error file
-//
 function error_req_change()
 {
 	//Check if the request is completed, if not, just skip over
@@ -182,15 +161,11 @@ function error_req_change()
 	}
 }
 
-//
-// Just like sprintf() in php
-// replacements can be any type
-//
+// Just like sprintf() in php, replacements can be any type
 function sprintf(text, replacements)
 {
 	var i = 0;
-	//This prevents us from having to create an array for replacements with one value
-	//checking for type 'object' may not be really smart, but who cares ;)
+	//This prevents us from having to create an array for replacements with one value checking for type 'object' may not be really smart, but who cares ;)
 	if ((typeof replacements) != 'object')
 	{
 		var repl = Array(1);

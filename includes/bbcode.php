@@ -1175,8 +1175,8 @@ class bbcode
 				$style = ($color || $bgcolor) ? (' style="' . ($color ? 'color: ' . $color . ';' : '') . ($bgcolor ? 'background-color: ' . $bgcolor . ';' : '') . '"') : '';
 
 				$html .= '<div class="mg_attachtitle"' . $style . '>' . $params['title'] . '</div>';
-				$html .= '<div class="mg_attachdiv"><table width="100%" cellpadding="0" cellspacing="0" border="0">';
-				$html .= '<tr><td width="15%"><b class="gensmall">' . $lang['Description'] . ':</b></td><td width="75%"><span class="gensmall">' . $params['description'] . '</span></td><td rowspan="3" width="10%" class="row-center"><img src="' . $params['icon'] . '" alt="' . $params['description'] . '" /><br /><a href="' . append_sid($download_url) . '" title="' . $lang['Download'] . ' ' . $params['title'] . '"><b>' . $lang['Download'] . '</b></a></td></tr>';
+				$html .= '<div class="mg_attachdiv"><table>';
+				$html .= '<tr><td style="width: 15%;"><b class="gensmall">' . $lang['Description'] . ':</b></td><td style="width: 75%;"><span class="gensmall">' . $params['description'] . '</span></td><td rowspan="3" class="row-center" style="width: 10%;"><img src="' . $params['icon'] . '" alt="' . $params['description'] . '" /><br /><a href="' . append_sid($download_url) . '" title="' . $lang['Download'] . ' ' . $params['title'] . '"><b>' . $lang['Download'] . '</b></a></td></tr>';
 				$html .= '<tr><td><b class="gensmall">' . $lang['FILESIZE'] . ':</b></td><td><span class="gensmall">' . round(($attachment_details['filesize'] / 1024), 2) . ' KB</span></td></tr>';
 				$html .= '<tr><td><b class="gensmall">' . $lang['DOWNLOADED'] . ':</b></td><td><span class="gensmall">' . $attachment_details['download_count'] . '</span></td></tr>';
 				$html .= '</table></div>';
@@ -2091,7 +2091,7 @@ class bbcode
 					}
 
 					$sql = "SELECT *
-						FROM " . THANKS_TABLE . "
+						FROM " . POSTS_LIKES_TABLE . "
 						WHERE topic_id = " . intval($topic_id) . "
 						AND user_id = " . $user->data['user_id'];
 					$db->sql_return_on_error(true);
@@ -2493,7 +2493,7 @@ class bbcode
 				$opacity = '100';
 			}
 			$opacity_dec = $opacity / 100;
-			$html = '<div style="display: inline; width: 100%; opacity: ' . $opacity_dec . '; filter: Alpha(Opacity=' . $opacity . ');" onmouseout="fade2(this,' . $opacity . ');" onmouseover="fade2(this,100);">';
+			$html = '<div class="opacity" style="opacity: ' . $opacity_dec . '; filter: Alpha(Opacity=' . $opacity . ');">';
 			return array(
 				'valid' => true,
 				'start' => $html,
@@ -2682,7 +2682,7 @@ class bbcode
 			}
 			else
 			{
-				$table_class = 'empty-table';
+				$table_class = '';
 			}
 
 			for($i = 0; $i < sizeof($extras); $i++)
@@ -4440,14 +4440,14 @@ class bbcode
 				$orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($acronyms[$i]['acronym'], "/") . "(?=.\W|\W.|\W$)/";
 				*/
 				$orig[] = '#\b(' . str_replace('\*', '\w*?', preg_quote(stripslashes($acronyms[$i]['acronym']), '#')) . ')\b#i';
-				$repl[] = '<acronym title="' . $acronyms[$i]['description'] . '">' . $acronyms[$i]['acronym'] . '</acronym>'; ;
+				$repl[] = '<abbr title="' . $acronyms[$i]['description'] . '">' . $acronyms[$i]['acronym'] . '</abbr>'; ;
 			}
 		}
 
 		if(sizeof($orig))
 		{
 
-			$segments = preg_split('#(<acronym.+?>.+?</acronym>|<.+?>)#s' , $text, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+			$segments = preg_split('#(<abbr.+?>.+?</abbr>|<.+?>)#s' , $text, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 			//<?php
 			//Insert for formating purpose
 			$text = '';

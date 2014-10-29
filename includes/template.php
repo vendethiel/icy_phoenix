@@ -205,30 +205,30 @@ class Template {
 		$up = array();
 		// list of outdated variables
 		$outdated = array(
-			'xs_versoin',	// was a typo in one of previous versions
-			'xs_separator',	// no longer used
-			'xs_cache_dir_absolute',	// no longer used
-			'xs_cache_dir',	// no longer used
-			'xs_use_isset',	// no longer used
+			'xs_versoin', // was a typo in one of previous versions
+			'xs_separator', // no longer used
+			'xs_cache_dir_absolute', // no longer used
+			'xs_cache_dir', // no longer used
+			'xs_use_isset', // no longer used
 			);
 		// list of default values
 		$default = array(
-			'xs_auto_compile'				=> 1,
-			'xs_auto_recompile'			=> 1,
-			'xs_use_cache'					=> 1,
-			'xs_php'								=> PHP_EXT,
-			'xs_def_template'				=> 'default',
-			'xs_check_switches'			=> 1,
-			'xs_warn_includes'			=> 1,
-			'xs_add_comments'				=> 0,
-			'xs_ftp_host'						=> '',
-			'xs_ftp_login'					=> '',
-			'xs_ftp_path'						=> '',
-			'xs_downloads_count'		=> '0',
-			'xs_downloads_default'	=> '0',
-			'xs_shownav'						=> '1',
-			'xs_template_time'			=> '0',
-			);
+			'xs_auto_compile' => 1,
+			'xs_auto_recompile' => 1,
+			'xs_use_cache' => 1,
+			'xs_php' => PHP_EXT,
+			'xs_def_template' => 'default',
+			'xs_check_switches' => 1,
+			'xs_warn_includes' => 1,
+			'xs_add_comments' => 0,
+			'xs_ftp_host' => '',
+			'xs_ftp_login' => '',
+			'xs_ftp_path' => '',
+			'xs_downloads_count' => '0',
+			'xs_downloads_default' => '0',
+			'xs_shownav' => '1',
+			'xs_template_time' => '0',
+		);
 		// checking if all variables exist
 		foreach($default as $var => $value)
 		{

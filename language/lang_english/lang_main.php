@@ -2125,7 +2125,7 @@ $lang = array_merge($lang, array(
 	'Reserved_Topic' => '[ RESERVED TOPIC ]',
 	'Reserved_Post' => '[ RESERVED POST ]',
 
-	'THANKS_RECEIVED' => 'Thanks received',
+	'THANKS_RECEIVED' => 'Likes received',
 
 	'RECENT_USER_ACTIVITY' => 'Recent user activity',
 	'USER_TOPICS_STARTED' => 'Topics started',
@@ -2262,6 +2262,7 @@ $lang = array_merge($lang, array(
 	'CLEAN_NAME' => 'Clean Name',
 	'CLEAN_NAME_EXPLAIN' => 'Only alpha-numeric chars and dashes allowed',
 	'TOPIC_TAGS' => 'Tags And Keywords',
+	'TOPIC_TAGS_REPLACE' => 'Replace Tag',
 	'TOPIC_TAGS_EXPLAIN' => 'Separate each tag using comma',
 	'TOPIC_TAGS_CLOUDS' => 'Tags And Keywords Cloud',
 	'TOPIC_TAGS_LIST' => 'Tags And Keywords List',
@@ -2491,7 +2492,6 @@ $lang = array_merge($lang, array(
 	'SOCIAL_CONNECT_REGISTER_INFO' => 'Your profile will be automatically filled with the information retrieved from your profile in the social network.',
 	'SOCIAL_CONNECT_LINK_ACCOUNT' => 'Please login to link your social network account to your account',
 	'SOCIAL_CONNECT_LINK_ACCOUNT_MSG' => 'We couldn\'t find any social network account linked with your %s account. You can either register or link an existing account with your %s account.<br /><br />Click %shere%s if you already have an account.<br/ ><br />Click %shere%s to create a new account.',
-	'FACEBOOK' => 'Facebook',
 
 	'IMG_BA_SHOW_ONLY_BEFORE' => 'Show Only Before',
 	'IMG_BA_SHOW_ONLY_AFTER' => 'Show Only After',
@@ -2504,6 +2504,12 @@ $lang = array_merge($lang, array(
 	'EVENTS_REG_USER' => 'Add a user to the event',
 
 	'NOTES_MOD' => 'Moderation notes',
+
+	'500PX' => '500px',
+	'GITHUB' => 'GitHub',
+	'INSTAGRAM' => 'Instagram',
+	'PINTEREST' => 'Pinterest',
+	'VIMEO' => 'Vimeo',
 
 	)
 );

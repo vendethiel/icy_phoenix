@@ -40,8 +40,6 @@ function submitform()
 			{rate.RATE_TOPIC_USER}
 			<!-- END rate -->
 
-			<!-- IF S_THANKS --><br /><br /><input type="checkbox" name="thanks_user" value="1" />&nbsp;{L_THANKS_ADD_RATE}<br /><br /><!-- ENDIF -->
-
 			<!-- BEGIN noauth -->
 			{noauth.RATE_TOPIC_USER}
 			<!-- END noauth -->
@@ -51,10 +49,10 @@ function submitform()
 	</td>
 </tr>
 <tr>
-	<th width="25%">{L_RATE_AVERAGE}</th>
-	<th width="25%">{L_RATE_MINIMUM}</th>
-	<th width="25%">{L_RATE_MAXIMUM}</th>
-	<th width="25%">{L_Number_of_Rates}</th>
+	<th class="tw25pct">{L_RATE_AVERAGE}</th>
+	<th class="tw25pct">{L_RATE_MINIMUM}</th>
+	<th class="tw25pct">{L_RATE_MAXIMUM}</th>
+	<th class="tw25pct">{L_Number_of_Rates}</th>
 </tr>
 <tr>
 	<td class="row1 row-center"><span class="gen">{RATE_TOPIC_STATS}</span></td>

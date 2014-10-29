@@ -20,9 +20,9 @@ function openAllSmiles()
 </script>
 <script type="text/javascript" src="{FULL_SITE_PATH}{T_COMMON_TPL_PATH}js/bbcb_mg.js"></script>
 
-<table width="99%" border="0" cellspacing="0" cellpadding="2">
+<table class="tw98pct p2px">
 <tr>
-	<td width="100%" align="left" nowrap="nowrap">
+	<td class="tw100pct tdnw">
 		&nbsp;
 		<select style="height: 18px;" name="ft" onchange="BBCft(); this.selectedIndex=0;" onmouseover="helpline('ft')">
 			<option value="" class="genmed" style="font-family: Verdana;">{L_FONT_TYPE}</option>
@@ -94,14 +94,14 @@ function openAllSmiles()
 		<a href="{U_BBCODE_COLORPICKER}" onclick="popup('{U_BBCODE_COLORPICKER}', 640, 480, '_color_picker'); return false;"><img src="{BBCB_MG_IMG_PATH}colorpicker{BBCB_MG_IMG_EXT}" onmouseover="helpline('fc')" alt="{L_BBCB_MG_COLOR_PICKER}" title="{L_BBCB_MG_COLOR_PICKER}" style="vertical-align: middle;" class="bbimages" /></a>
 		<!-- ENDIF -->
 	</td>
-	<td width="20%" align="right" nowrap="nowrap" valign="middle">
+	<td class="tw20pct tdalignr tvalignm tdnw">
 		<div class="genmed"><a href="{U_BBCODE_HELP}" class="gensmall" target="_blank"><img src="{BBCB_MG_IMG_PATH}help{BBCB_MG_IMG_EXT}" name="help" onmouseover="helpline('help')" alt="{L_BBCODE_HELP}" title="{L_BBCODE_HELP}" /></a></div>
 		<!-- <span class="moderators">&nbsp;<a href="javascript:bbstyle(-1)" onmouseover="helpline('a')">{L_BBCODE_CLOSE_TAGS}</a>&nbsp;</span> -->
 	</td>
 </tr>
 <tr>
-	<td width="100%" align="left" valign="middle" colspan="2">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<td class="tvalignm" colspan="2">
+		<table>
 		<tr>
 			<td>
 				<div class="gennull">
@@ -140,6 +140,7 @@ function openAllSmiles()
 					<a href="javascript:BBCvideo()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}video{BBCB_MG_IMG_EXT}" name="video" onmouseover="helpline('video')" alt="{L_BBCB_MG_VID}" title="{L_BBCB_MG_VID}" class="bbimages" /></a>
 					<a href="javascript:BBCgooglevideo()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}googlevideo{BBCB_MG_IMG_EXT}" name="googlevideo" onmouseover="helpline('googlevideo')" alt="{L_BBCB_MG_GVID}" title="{L_BBCB_MG_GVID}" class="bbimages" /></a>
 					<a href="javascript:BBCyoutube()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}youtube{BBCB_MG_IMG_EXT}" name="youtube" onmouseover="helpline('youtube')" alt="{L_BBCB_MG_YOUTUBE}" title="{L_BBCB_MG_YOUTUBE}" class="bbimages" /></a>
+					<a href="javascript:BBCvimeo()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}vimeo{BBCB_MG_IMG_EXT}" name="vimeo" onmouseover="helpline('vimeo')" alt="{L_BBCB_MG_VIMEO}" title="{L_BBCB_MG_VIMEO}" class="bbimages" /></a>
 					<a href="javascript:BBCram()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}ram{BBCB_MG_IMG_EXT}" name="ram" onmouseover="helpline('ram')" alt="{L_BBCB_MG_RAM}" title="{L_BBCB_MG_RAM}" class="bbimages" /></a>
 					<a href="javascript:BBCquick()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}quick{BBCB_MG_IMG_EXT}" name="quick" onmouseover="helpline('quick')" alt="Quicktime" title="Quicktime" class="bbimages" /></a>
 					<a href="javascript:BBCstream()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}sound{BBCB_MG_IMG_EXT}" name="stream" onmouseover="helpline('stream')" alt="{L_BBCB_MG_STRM}" title="{L_BBCB_MG_STRM}" class="bbimages" /></a>
@@ -175,6 +176,7 @@ function openAllSmiles()
 					<a href="javascript:BBCimgl()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}image_linkl{BBCB_MG_IMG_EXT}" name="imgl" onmouseover="helpline('imgl')" alt="{L_BBCB_MG_IMGL}" title="{L_BBCB_MG_IMGL}" class="bbimages" /></a>
 					<a href="javascript:BBCimg()" accesskey="p"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}image_link{BBCB_MG_IMG_EXT}" name="img" onmouseover="helpline('img')" alt="{L_BBCB_MG_IMG}" title="{L_BBCB_MG_IMG}" class="bbimages" /></a>
 					<a href="javascript:BBCimgr()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}image_linkr{BBCB_MG_IMG_EXT}" name="imgr" onmouseover="helpline('imgr')" alt="{L_BBCB_MG_IMGR}" title="{L_BBCB_MG_IMGR}" class="bbimages" /></a>
+					<a href="javascript:BBCimgba()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}image_link_ba{BBCB_MG_IMG_EXT}" name="imgba" onmouseover="helpline('imgba')" alt="{L_BBCB_MG_IMGBA}" title="{L_BBCB_MG_IMGBA}" class="bbimages" /></a>
 					<span class="genmed">&nbsp;&nbsp;</span>
 
 					<a href="javascript:BBCalbumimgl()"><img src="{FULL_SITE_PATH}{BBCB_MG_IMG_PATH}image_gall{BBCB_MG_IMG_EXT}" name="albumimgl" onmouseover="helpline('albumimgl')" alt="{L_BBCB_MG_ALBUMIMGL}" title="{L_BBCB_MG_ALBUMIMGL}" class="bbimages" /></a>

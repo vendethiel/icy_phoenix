@@ -298,7 +298,7 @@ INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`
 INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (12, 'Links', '', 'l', 4, 1, 'links', 0, 1, 0, 1, 1, 1, 1, '');
 INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (13, 'Statistics', '', 'r', 3, 1, 'statistics', 0, 1, 0, 1, 1, 1, 1, '');
 INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (14, 'Wordgraph', '', 'b', 2, 1, 'wordgraph', 0, 1, 0, 0, 0, 0, 1, '');
-INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (15, 'Welcome', '<table class=\"empty-table\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\r\n	<tr>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small.png\" alt=\"\" /></td>\r\n		<td width=\"90%\" align=\"center\"><div class=\"post-text\">Welcome To <b>Icy Phoenix</b></div><br /><br /></td>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small_l.png\" alt=\"\" /></td>\r\n	</tr>\r\n</table>', 'c', 2, 1, '', 0, 1, 0, 1, 1, 1, 1, '');
+INSERT INTO `phpbb_cms_blocks` (`bid`, `title`, `content`, `bposition`, `weight`, `active`, `blockfile`, `view`, `layout`, `type`, `border`, `titlebar`, `background`, `local`, `groups`) VALUES (15, 'Welcome', '<table>\r\n	<tr>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small.png\" alt=\"\" /></td>\r\n		<td width=\"90%\" align=\"center\"><div class=\"post-text\">Welcome To <b>Icy Phoenix</b></div><br /><br /></td>\r\n		<td width=\"5%\"><img src=\"images/icy_phoenix_small_l.png\" alt=\"\" /></td>\r\n	</tr>\r\n</table>', 'c', 2, 1, '', 0, 1, 0, 1, 1, 1, 1, '');
 
 INSERT INTO `phpbb_cms_config` (`id`, `bid`, `config_name`, `config_value`) VALUES (1, 0, 'default_portal', '1');
 INSERT INTO `phpbb_cms_config` (`id`, `bid`, `config_name`, `config_value`) VALUES (2, 0, 'header_width', '180');
@@ -397,7 +397,6 @@ INSERT INTO `phpbb_config` (`config_name`, `config_value`) VALUES ('auth_view_pi
 ########################################
 INSERT INTO `phpbb_config` (`config_name`, `config_value`) VALUES ('enable_postimage_org', '0');
 INSERT INTO `phpbb_config` (`config_name`, `config_value`) VALUES ('enable_new_messages_number', '1');
-INSERT INTO `phpbb_config` (`config_name`, `config_value`) VALUES ('disable_thanks_topics', '0');
 ## INSERT INTO `phpbb_config` (`config_name`, `config_value`) VALUES ('show_calendar_box_index', '0');
 
 
@@ -1403,7 +1402,7 @@ ALTER TABLE `phpbb_privmsgs_archive` ADD COLUMN `privmsgs_text` text AFTER `priv
 CREATE TABLE `___forums___` (
 	`forum_id` smallint(5) unsigned NOT NULL default '0',
 	`cat_id` mediumint(8) unsigned NOT NULL default '0',
-	`main_type` char(1) default NULL,
+	`main_type` char(1) default 'c',
 	`forum_name` varchar(150) default NULL,
 	`forum_desc` TEXT NOT NULL,
 	`forum_status` tinyint(4) NOT NULL default '0',
@@ -1412,7 +1411,6 @@ CREATE TABLE `___forums___` (
 	`forum_topics` mediumint(8) unsigned NOT NULL default '0',
 	`forum_last_post_id` mediumint(8) unsigned NOT NULL default '0',
 	`forum_postcount` tinyint(1) NOT NULL default '1',
-	`forum_thanks` tinyint(1) NOT NULL default '0',
 	`forum_notify` tinyint(1) unsigned NOT NULL default '1',
 	`forum_similar_topics` tinyint(1) NOT NULL default '0',
 	`forum_tags` tinyint(1) NOT NULL default '0',
@@ -1453,7 +1451,7 @@ CREATE TABLE `___forums___` (
 );
 
 INSERT INTO `___forums___`
-SELECT f.forum_id, f.cat_id, f.main_type, f.forum_name, f.forum_desc, f.forum_status, f.forum_order, f.forum_posts, f.forum_topics, f.forum_last_post_id, f.forum_postcount, f.thank, f.forum_notify, 0, 0, 0, 0, 0, 1, forum_link, f.forum_link_internal, f.forum_link_hit_count, f.forum_link_hit, f.icon, f.prune_next, f.prune_enable, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_globalannounce, f.auth_news, f.auth_cal, f.auth_vote, f.auth_pollcreate, f.auth_attachments, f.auth_download, f.auth_ban, f.auth_greencard, f.auth_bluecard, f.auth_rate
+SELECT f.forum_id, f.cat_id, f.main_type, f.forum_name, f.forum_desc, f.forum_status, f.forum_order, f.forum_posts, f.forum_topics, f.forum_last_post_id, f.forum_postcount, f.forum_notify, 0, 0, 0, 0, 0, 1, forum_link, f.forum_link_internal, f.forum_link_hit_count, f.forum_link_hit, f.icon, f.prune_next, f.prune_enable, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_globalannounce, f.auth_news, f.auth_cal, f.auth_vote, f.auth_pollcreate, f.auth_attachments, f.auth_download, f.auth_ban, f.auth_greencard, f.auth_bluecard, f.auth_rate
 FROM `phpbb_forums` f
 ORDER BY f.forum_id;
 
@@ -1473,7 +1471,7 @@ DELETE FROM `phpbb_cms_nav_menu` WHERE `menu_link` = 'site_hist.php';
 CREATE TABLE `___categories___` (
 	`cat_id` mediumint(8) unsigned NOT NULL auto_increment,
 	`cat_main` mediumint(8) unsigned NOT NULL default '0',
-	`cat_main_type` char(1) default NULL,
+	`cat_main_type` char(1) default 'c',
 	`cat_title` varchar(100) default NULL,
 	`cat_desc` TEXT NOT NULL,
 	`icon` varchar(255) default NULL,
