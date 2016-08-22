@@ -25,6 +25,18 @@ $settings_details = array(
 	'clear_cache' => false,
 );
 
+$groups_sql = "SELECT * FROM " . GROUPS_TABLE . " WHERE group_single_user = 0";
+$result = $db->sql_query($groups_sql);
+$all_groups = $db->sql_fetchrowset();
+$db->sql_freeresult($result);
+$groups = array();
+foreach ($all_groups as $group)
+{
+  // V: use "-" prefix so we're sure it's not gonna use a lang key...
+  $groups['- ' . $group['group_name']] = $group['group_id'];
+}
+$groups['- (None)'] = -1;
+
 $settings_data = array();
 $settings_data = array(
 
@@ -48,6 +60,14 @@ $settings_data = array(
 		'type' => 'SMALLINT',
 		'default' => 255,
 	),
+
+  'max_sig_chars_exclude' => array(
+    'lang_key' => 'Group_exclude_max',
+    'explain' => 'Group_exclude_max_explain',
+    'type' => 'LIST_CHECKBOX',
+    'default' => 0,
+    'values' => $groups,
+  ),
 
 	'sig_line' => array(
 		'lang_key' => 'sig_divider',

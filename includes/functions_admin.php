@@ -27,6 +27,22 @@ function fix_config_values($config_name, $config_value)
 {
 	global $config;
 
+  if ($config_name == 'max_sig_chars_exclude')
+  {
+    // make sure SQL injection is impossible
+    foreach ($config_value as &$val)
+    {
+      if ($val == -1)
+      {
+        $config_value = array();
+        break;
+      }
+      if (!is_numeric($val))
+        $val = -1;
+    }
+    $config_value = implode(',', $config_value);
+  }
+
 	if (in_array($config_name, array('header_table_text')))
 	{
 		$config_value = htmlspecialchars_decode($config_value, ENT_COMPAT);

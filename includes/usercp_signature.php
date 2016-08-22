@@ -60,7 +60,14 @@ if ($submit)
 
 	if (isset($signature))
 	{
-		if (strlen($signature) > $config['max_sig_chars'])
+    $sql = "SELECT group_id, user_id
+      FROM " . USER_GROUP_TABLE . "
+      WHERE user_id = " . $user->data['user_id'] . "
+        AND group_id IN (" . $config['max_sig_chars_exclude'] . ")
+      LIMIT 1";
+    $result_sig_groups = $db->sql_query($sql);
+    $row_sig_groups = $db->sql_fetchrow($result_sig_groups);
+		if (empty($row_sig_groups['group_id']) && strlen($signature) > $config['max_sig_chars'])
 		{
 			$save_message = $lang['Signature_too_long'];
 		}

@@ -73,6 +73,8 @@ class class_form
 			case 'LIST_CHECKBOX':
 			case 'LIST_FLAGS':
 				@reset($properties['values']);
+        if (!is_array($default))
+          $default = explode(',', $default);
 				while (list($key, $val) = @each($properties['values']))
 				{
 					if ($properties['type'] == 'LIST_FLAGS')
@@ -394,7 +396,7 @@ class class_form
 				{
 					foreach ($config_value as $k => $v)
 					{
-						if (!in_array($k, $config_data['values']))
+						if (!in_array($v, $config_data['values']))
 						{
 							unset($config_value[$k]);
 						}
